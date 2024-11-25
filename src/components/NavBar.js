@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 // use an import function array
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/img/logo.png';
-import navIcon1 from '../assets/img/nav-icon1.svg';
+// import navIcon1 from '../assets/img/nav-icon1.svg';
 // import navIcon2 from '../assets/img/nav-icon2.svg';
 // import navIcon3 from '../assets/img/nav-icon3.svg';
 import navIcon5 from '../assets/img/nav-icon5.svg';
-import { HashLink } from 'react-router-hash-link';
+// import { HashLink } from 'react-router-hash-link';
 import {
   BrowserRouter as Router
 } from "react-router-dom";
