@@ -27,7 +27,6 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 75px;
 }
-
 body {
   font-weight: 400; /* 400 is considered normal */
   overflow-x: hidden;
@@ -57,7 +56,6 @@ ul {
 a:hover {
   text-decoration: none;
 }
-
 img {
   width: 100%;
   height: auto;
@@ -94,7 +92,7 @@ nav.navbar {
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 9999;
+  z-index: 99;
   transition: 0.32s ease-in-out;
 }
 nav.navbar.scrolled {
@@ -268,45 +266,68 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 /************ Sidebar ************/
+.App{
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.main-content {
+  transition: margin-left 0.3s ease-in-out;
+  margin-left: 4rem; /* Initial margin matches closed sidebar width */
+  width: calc(100% - 4rem);
+}
+
+.main-content.sidebar-open {
+  margin-left: 15rem; /* Expanded margin matches open sidebar width */
+  width: calc(100% - 15rem);
+}
 .sidebar-container {
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
+  display: flex;
+  align-items: flex-start;
 }
 
 .sidebar {
-  height: 90%;
-  margin: 1rem;
+  justify-content: space-between;
+  height: 100%;
+  margin: 0;
   padding: 1rem;
   background: rgba(18, 18, 18, 0.8);
   backdrop-filter: blur(8px);
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
+  width: 100%; /* This ensures the sidebar takes up full container width */
 }
 
 .toggle-button {
+  z-index: 1001;
   display: flex;
   align-self: flex-end;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-radius: 0.5rem;
   color: white;
   cursor: pointer;
+  margin-top: 1rem;
+  position: relative; /* Ensures the button stays within the sidebar */
 }
 
 .sidebar-content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%; /* Ensures content takes full width of sidebar */
 }
 
 .sidebar-section {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%; /* Ensures section takes full width of content */
 }
 
 .sidebar-item {
@@ -316,17 +337,40 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-radius: 0.5rem;
   color: white;
   gap: 1rem;
+  width: 100%; /* Ensures items take full width of section */
 }
 
 .sidebar-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 24px; /* Ensures consistent icon width */
 }
 
 .sidebar-item span {
   white-space: nowrap;
   font-size: 1rem;
+}
+/* --- Sidebar Responsive adjustments ---- */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 4rem;
+    width: calc(100% - 4rem);
+  }
+  
+  .main-content.sidebar-open {
+    margin-left: 4rem; /* On mobile, content doesn't shift */
+    width: calc(100% - 4rem);
+  }
+  
+  .sidebar-container {
+    width: 15rem;
+    transform: translateX(-11rem); /* Hide most of sidebar except for toggle */
+  }
+  
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
 }
 /************ Banner Css ************/
 .banner {

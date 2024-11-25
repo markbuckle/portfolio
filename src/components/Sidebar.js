@@ -35,20 +35,22 @@ const SidebarItem = ({ icon, name, isOpen }) => {
   );
 };
 
-export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export const Sidebar = ({ isOpen, setIsOpen }) => {
   const sidebarVariants = {
     open: {
       width: "15rem",
       transition: {
-        duration: 0.3
+        duration: 0.3,
+        type: "spring",
+        damping: 20
       }
     },
     closed: {
       width: "4rem",
       transition: {
-        duration: 0.3
+        duration: 0.3,
+        type: "spring",
+        damping: 20
       }
     }
   };
