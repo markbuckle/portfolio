@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
-import { NavBar } from "./components/NavBar";
+// import { NavBar } from "./components/NavBar";
 import { Banner } from "./components/Banner";
 import { Skills2 } from "./components/Skills2"; 
 import { Projects } from "./components/Projects";
@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      {/* <NavBar /> */}
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <Banner />
