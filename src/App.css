@@ -272,7 +272,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   overflow-x: hidden;
 }
 .main-content {
-  transition: margin-left 0.3s ease-in-out;
   margin-left: 4rem; /* Initial margin matches closed sidebar width */
   width: calc(100% - 4rem);
 }
@@ -290,7 +289,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: flex;
   align-items: flex-start;
 }
-
 .sidebar {
   justify-content: space-between;
   height: 100%;
@@ -300,8 +298,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: auto;
   width: 100%; /* This ensures the sidebar takes up full container width */
+  border-right: 1px solid #79d7ff; 
 }
 
 .toggle-button {
@@ -314,6 +313,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   cursor: pointer;
   margin-top: 1rem;
   position: relative; /* Ensures the button stays within the sidebar */
+}
+.toggle-button:hover {
+  color: #79d7ff;
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 .sidebar-content {
@@ -329,7 +333,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   gap: 0.5rem;
   width: 100%; /* Ensures section takes full width of content */
 }
-
+.sidebar-link {
+  text-decoration: none;
+}
 .sidebar-item {
   display: flex;
   align-items: center;
@@ -346,10 +352,76 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   justify-content: center;
   min-width: 24px; /* Ensures consistent icon width */
 }
-
+.sidebar-item:hover {
+  color: #79d7ff;
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
 .sidebar-item span {
   white-space: nowrap;
   font-size: 1rem;
+}
+.sidebar-headshot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.headshot-image {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #79d7ff;
+  transition: transform 0.3s ease;
+}
+
+.headshot-image:hover {
+  transform: scale(1.05);
+}
+
+.sidebar-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  opacity: 0.7;
+}
+
+.social-icon {
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #79d7ff;
+  transform: scale(1.2);
+}
+.sidebar-item,
+.sidebar-social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-headshot,
+.sidebar-social-icons {
+  opacity: 1;
+  /* transition: opacity 0.25s ease, visibility 0s ease; */
+}
+.sidebar-container[data-state="closed"] .sidebar-item {
+  flex-direction: column;
+  gap: 1rem;
+}
+.sidebar-container[data-state="closed"] .sidebar-headshot,
+.sidebar-container[data-state="closed"] .sidebar-social-icons {
+  opacity: 0;
+  visibility: hidden;
+}
+.sidebar-container[data-state="closed"] .sidebar-content {
+  margin-bottom: auto;
+  transition: all 0.3s ease;
 }
 /* --- Sidebar Responsive adjustments ---- */
 @media (max-width: 768px) {
@@ -375,7 +447,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 /************ Banner Css ************/
 .banner {
   margin-top: 0;
-  padding: 260px 0 100px 0;
+  padding: 10rem 3rem 10rem 3rem;
   background-image: url("./assets/img/banner-bg.png");
   background-position: top center;
   background-size: cover;
@@ -396,16 +468,39 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: inline-block;
 }
 .banner h1 {
-  font-size: 65px;
-  font-weight: 700;
+  color: #79d7ff;
+  font-size: 50px;
+  font-weight: 600;
   letter-spacing: 0.8px;
   line-height: 1;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  display: block;
+}
+.banner h2 {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  margin-bottom: 15px;
+  display: block;
+}
+.banner h3 {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  margin-bottom: 10px;
   display: block;
 }
 @media (max-width: 768px) {
   .banner h1  {
     font-size: 44px;
+  }
+  .banner h2  {
+    font-size: 18px;
+  }
+  .banner h3  {
+    font-size: 24px;
   }
 }
 
@@ -416,7 +511,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .banner p {
-  color: #b8b8b8;
+  color: #ffffff;
   font-size: 18px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
@@ -456,11 +551,114 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 .txt-rotate > .wrap {
   border-right: 0.08em solid #666;
+  color: #a9a9a9;
+}
+
+/************ About Css ************/
+.about-section {
+  margin-top: 2rem;
+  background-color: #121212; /* Adjust to match your portfolio's background */
+}
+.about-section h1 {
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 10px;
+  color: #79d7ff;
+  margin-bottom: 2rem;
+}
+.about-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.about-description {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  text-align: justify;
+}
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.about-image-container {
+  flex: auto;
+  max-width: 400px;
+}
+.about-headshot {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1.5px solid #79d7ff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
+.about-text-container {
+  flex: auto;
+}
+.about-tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.about-tab-button {
+  background: none;
+  border: none;
+  color: #adb7be;
+  margin-right: 20px;
+  font-size: 1.1rem;
+  position: relative;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding-bottom: 5px;
+}
+
+.about-tab-button.active {
+  color: #fff;
+}
+
+.about-tab-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: #79d7ff;
+}
+
+.about-tab-content {
+  margin-top: 20px;
+}
+
+.about-list {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.about-list li {
+  margin-bottom: 10px;
+}
+/* --- About Responsive adjustments --- */
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-image-container {
+    max-width: 300px;
+    margin-bottom: 30px;
+  }
+
+  .about-tabs {
+    justify-content: center;
+  }
 }
 
 /************ Skills Css ************/
 .skill {
-  padding: 15px 0 20px 0px;
+  padding: 15px 0 0 0px;
   position: relative;
   align-items: center;
 }
@@ -490,11 +688,11 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 .skill-bx {
   background: #151515;
-  padding-top: 25px;
-  margin-top: 25px;
+  padding-top: 2rem;
+  /* margin-top: 25px; */
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 50px;
+  margin-bottom: 1rem;
   padding-bottom: 20px;
   text-align: center;
   border-radius: 50px;
@@ -515,15 +713,17 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   }
 }
 .skill h1 {
+  font-size: 50px;
+  font-weight: 600;
   text-align: center;
   padding-top: 10px;
-  margin-top: 0;
+  color: #79d7ff;
+  margin-bottom: 1rem;
 }
 .skill h2 {
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 1rem;
   color: white;
 }
 .skill h3 {
@@ -920,10 +1120,10 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   position: relative;
   background-color: black;
 }
-
-.project h2 {
-  font-size: 45px;
-  font-weight: 700;
+.project h1 {
+  font-size: 50px;
+  color:#79d7ff;
+  font-weight: 600;
   text-align: center;
 }
 .project p {
