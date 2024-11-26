@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import 'react-multi-carousel/lib/styles.css';
 import colorSharp from "../assets/img/color-sharp.png";
 
-export const Skills2 = () => {
+export const Skills = () => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -29,9 +29,9 @@ export const Skills2 = () => {
           <div className="col">
             <div className="skill-bx">
               <h1 className="skill">Skills</h1>
-              <p className="skill-subheading">
+              {/* <p className="skill-subheading">
                 * Note: These ratings are subjective as it is near impossible to know 100% of any programming language or PM skillset. These bars illustrate my best attempt at providing an unbiased review on my overall experience level with each category.
-              </p>
+              </p> */}
               <Carousel interval={null} touch={false} responsive={responsive} infinite={true} className="skill-slider skill2">
                 <Carousel.Item>
                   <div className="item">
@@ -40,11 +40,11 @@ export const Skills2 = () => {
                       <p><h3>HTML</h3>
                         <span className="bar"><span className="skill-html"></span></span>
                       </p>
-                      <p><h3>Handlebars</h3>
-                        <span className="bar"><span className="handlebars"></span></span>
-                      </p>
                       <p><h3>CSS</h3>
                         <span className="bar"><span className="css"></span></span>
+                      </p>
+                      <p><h3>Handlebars</h3>
+                        <span className="bar"><span className="handlebars"></span></span>
                       </p>
                       <p><h3>Javascript</h3>
                         <span className="bar"><span className="javascript"></span></span>
@@ -65,14 +65,14 @@ export const Skills2 = () => {
                       <p><h3>Python</h3>
                         <span className="bar"><span className="python"></span></span>
                       </p>
-                      <p><h3>Java</h3>
-                        <span className="bar"><span className="java"></span></span>
-                      </p>
                       <p><h3>NodeJS</h3>
                         <span className="bar"><span className="nodejs"></span></span>
                       </p>
                       <p><h3>ExpressJS/PassportJS</h3>
                         <span className="bar"><span className="ep"></span></span>
+                      </p>
+                      <p><h3>Java</h3>
+                        <span className="bar"><span className="java"></span></span>
                       </p>
                       <p><h3>PHP</h3>
                         <span className="bar"><span className="php"></span></span>
