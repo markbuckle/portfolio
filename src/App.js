@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 // import { NavBar } from "./components/NavBar";
 import { Banner } from "./components/Banner";
-import { Skills2 } from "./components/Skills2"; 
+import { Skills } from "./components/Skills"; 
 import { Projects } from "./components/Projects";
 import { Sidebar } from "./components/Sidebar";
 // import { Contact } from "./components/Contact";
@@ -15,9 +15,19 @@ function App() {
   // By using the useEffect Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our “effect”), and call it later after performing the DOM updates.
   useEffect(() => {
     fetch("/api")
-    .then((res) => res.json())
-    .then((data) => { console.log(data)})
-  }, [])
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => { 
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  }, []);
 
   return (
     <div className="App">
@@ -25,7 +35,7 @@ function App() {
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <Banner />
-        <Skills2 />
+        <Skills />
         <Projects />
         {/* <Contact /> */}
         <Footer />
