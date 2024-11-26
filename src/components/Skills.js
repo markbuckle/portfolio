@@ -28,7 +28,7 @@ export const Skills = () => {
         <div className="row">
           <div className="col">
             <div className="skill-bx">
-              <h1 className="skill">Skills</h1>
+              <h1>Skills</h1>
               {/* <p className="skill-subheading">
                 * Note: These ratings are subjective as it is near impossible to know 100% of any programming language or PM skillset. These bars illustrate my best attempt at providing an unbiased review on my overall experience level with each category.
               </p> */}
