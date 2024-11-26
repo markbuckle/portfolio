@@ -44,9 +44,9 @@ export const Projects = () => {
             <TrackVisibility>
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                  <h2>My Projects</h2><br></br>
-                  <p>This web portfolio was built with React and Animate CSS. It was deployed with Cloudflare.</p>
-                  <p>Please check out two of my favourite projects below. If you hover over the photo and click on the title it will take you to that project. Note that I am currently revising my third project.</p><br></br>
+                  <h1>My Projects</h1><br></br>
+                  <p>This portfolio was built with React and Animate CSS. It was deployed with Cloudflare.</p>
+                  <p>Please check out my favourite projects below. If you hover over the photo and click on the title it will take you to that project. Note that I am currently revising my third project.</p><br></br>
                   {/* Copy, paste and modify below from react bootstrap "Pills" section */}
                   <Tab.Container id="projects-tabs" defaultActiveKey="first">
                     <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
