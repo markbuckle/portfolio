@@ -1,129 +1,144 @@
-import { Container, Row, Col, Tab, Nav } from "react-bootstrap";
-import { ProjectCard } from "./ProjectCard";
+import React, { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
+// import { Link } from "react-router-dom";
 import projImg1 from "../assets/img/project-img1.png";
 import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
-import 'animate.css';
-import TrackVisibility from 'react-on-screen';
-// import colorSharp2 from "../assets/img/color-sharp2.png"
+
+const projectsData = [
+  {
+    id: 1,
+    title: "HealthLync",
+    description: "Personalized Health Tracker",
+    image: projImg3,
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "https://the-health-tracker.vercel.app/",
+    techStack: "Built with html, css, and JavaScript"
+  },
+  {
+    id: 2,
+    title: "DocChat",
+    description: "AI PDF Upload Chatbot",
+    image: projImg2,
+    url: "https://thepdfchatbot.streamlit.app/",
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "https://thepdfchatbot.streamlit.app/",
+    techStack: "Built with html, css, and JavaScript"
+  },
+  {
+    id: 3,
+    title: "FeedFlo",
+    description: "User Feedback Tool",
+    image: projImg1,
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "https://saasdashboard.vercel.app/",
+    techStack: "Built with html, css, and JavaScript"
+  }
+];
+
+// const ProjectTag = ({ name, onClick, isSelected }) => {
+//   const buttonStyles = isSelected ? "selected-tag" : "tag"
+//   return (
+//     <button
+//       className={`${buttonStyles} tag-base`}
+//       onClick={() => onClick(name)}
+//     >
+//       {name}
+//     </button>
+//   );
+// };
+
+const ProjectCard = ({ imgUrl, title, description, techStack, gitUrl, previewUrl }) => { 
+    return ( 
+      <div className="project-card-full"> 
+        <div className="project-card-image">
+          <img className="project-card" src={imgUrl} alt={title} />
+          <div className="overlay">
+            <div className="overlay-txt">
+              <a href={gitUrl} className="icon-button" target="_blank" rel="noopener noreferrer">
+                <CodeBracketIcon className="icon" />
+              </a>
+              <a href={previewUrl} className="icon-button" target="_blank" rel="noopener noreferrer">
+                <EyeIcon className="icon" />
+              </a>
+            </div>
+            <div className="overlay-tech-stack">{techStack}</div> 
+          </div>
+        </div>
+        <div className="project-card-content"> 
+          <h5 className="project-title">{title}</h5>
+          <p className="project-description">{description}</p> 
+        </div> 
+      </div> 
+    );
+};
 
 export const Projects = () => {
+  const [tag, setTag] = useState("All");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
 
-  const projects1 = [
-    {
-      title: "HealthLync",
-      description: "Personalized Health Tracker",
-      imgUrl: projImg3,
-      url: "https://the-health-tracker.vercel.app/"
-    }
-  ];
+  // const handleTagChange = (newTag) => {
+  //   setTag(newTag);
+  // };
 
-  const projects2 = [
-    {
-      title: "AI-PDF-Chatbot",
-      description: "AI Chatbot using Retrieval-Augmented Generation (RAG)",
-      imgUrl: projImg2,
-      url: "https://thepdfchatbot.streamlit.app/"
-    },
-  ];
+  const filteredProjects = projectsData.filter((project) =>
+    project.tag.includes(tag)
+  );
 
-  const projects3 = [
-    {
-      title: "FeedFlo",
-      description: "User Feedback Tool",
-      imgUrl: projImg1,
-      url: "https://saasdashboard.vercel.app/"
-    },
-  ];
+  const cardVariants = {
+    initial: { y: 50, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+  };
 
   return (
-    <section className="project" id="projects">
-      <Container>
-        <Row class="row" id="row">
-          <Col size={12}>
-            <TrackVisibility>
-              {({ isVisible }) =>
-                <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                  <h1>My Projects</h1><br></br>
-                  <p>This portfolio was built with React and Animate CSS. It was deployed with Cloudflare.</p>
-                  <p>Please check out my favourite projects below. If you hover over the photo and click on the title it will take you to that project. Note that I am currently revising my third project.</p><br></br>
-                  {/* Copy, paste and modify below from react bootstrap "Pills" section */}
-                  <Tab.Container id="projects-tabs" defaultActiveKey="first">
-                    <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
-                      <Nav.Item>
-                        <Nav.Link eventKey="first">Project 1</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="second">Project 2</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                      <Nav.Link eventKey="third">Project 3</Nav.Link>
-                    </Nav.Item>
-                    </Nav>
-                    <Tab.Content className={isVisible ? "animate__animated animate__slideInUp" : ""}>
-                      <Tab.Pane eventKey="third">
-                        <p>FeedFlo allows for businesses to seamlessly integrate feedback from their users. This B2B SaaS app enables users to collect feedback from their websites and the feedback collection widget is easy to embed. It also includes an admin dashboard and a subscription model.</p>
-                        <Row>
-                          {
-                            // For each project and index, return project title before we create the card
-                            projects3.map((project, index) => {
-                              return (
-                                <ProjectCard
-                                  key={index}
-                                  {...project}
-                                />
-                              )
-                            })
-                          }
-                        </Row>
-                        <br></br><p>Dashboard built with NextJs, TypeScript, Shadcn-UI, Clerk, Supabase/PostgresSQL, Drizzle and Stripe</p>
-                        <p>Widget built with React, Vite, Shadcn-UI, and Lucide</p>
-                        <p>Deployed with Vercel</p>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="first">
-                        <p>HealthLync is an interactive dashboard that allows the user to make sense of their health data.</p>
-                        <Row>
-                          {
-                            // For each project and index, return project title before we create the card
-                            projects1.map((project, index) => {
-                              return (
-                                <ProjectCard
-                                  key={index}
-                                  {...project}
-                                />
-                              )
-                            })
-                          }
-                        </Row>
-                        <br></br><p>Built with html, handlebars, css, javascript, node.js, express.js, passport.js, and MongoDB</p>
-                        <p>Deployed with Vercel</p>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                      <p>This AI Chatbot uses Retrieval-Augmented Generation (RAG). Large Language Models (LLMs) are great at generating text but they lack information about the users projects as most AI databases are not open-sourced. RAGs = LLM + project specific knowledge database. RAGs allow for more specific and accurate responses from the AI Chatbot. </p>
-                      <Row>
-                        {
-                          // For each project and index, return project title before we create the card
-                          projects2.map((project, index) => {
-                            return (
-                              <ProjectCard
-                                key={index}
-                                {...project}
-                                />
-                            )
-                          })
-                        }
-                      </Row>
-                      <br></br><p>Built with Python and Streamlit</p>
-                      <p>Deployed with Streamlit Community Cloud</p>
-                    </Tab.Pane>
-                    </Tab.Content>
-                  </Tab.Container>
-                </div>}
-            </TrackVisibility>
-          </Col>
-        </Row>
-      </Container>
-      {/* <img className="background-image-right" src={colorSharp2} alt="Image2"/> */}
+    <section id="projects">
+      <h1 className="projects-title">
+        My Projects
+      </h1>
+      <p className="projects-subtitle">This portfolio was built with React and Animate CSS. It was deployed with Cloudflare.</p>
+      {/* <div className="tags-container">
+        <ProjectTag
+          onClick={handleTagChange}
+          name="All"
+          isSelected={tag === "All"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="Web"
+          isSelected={tag === "Web"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="Mobile"
+          isSelected={tag === "Mobile"}
+        />
+      </div> */}
+      <ul ref={ref} className="projects-list">
+        {filteredProjects.map((project, index) => (
+          <motion.div
+            key={index}
+            variants={cardVariants}
+            initial="initial"
+            animate={isInView ? "animate" : "initial"}
+            transition={{ duration: 0.3, delay: index * 0.4 }}
+          >
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              imgUrl={project.image}
+              gitUrl={project.gitUrl}
+              previewUrl={project.previewUrl}
+              techStack={project.techStack}
+            />
+          </motion.div>
+        ))}
+      </ul>
     </section>
-  )
-}
+  );
+};

@@ -1,21 +1,16 @@
 import React from "react";
 import { motion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import CodeIcon from '@mui/icons-material/Code';
 import ComputerIcon from '@mui/icons-material/Computer';
-// import EmailIcon from '@mui/icons-material/Email';
-// import ContactPageIcon from '@mui/icons-material/ContactPage';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const SidebarItem = ({ icon, name, to, isOpen }) => {
-  const location = useLocation();
-  const isActive = location.pathname === to;
-
   return (
-    <Link to={to} className={`sidebar-link ${isActive ? 'active' : ''}`}>
+    <Link smooth to={to} className={`sidebar-link`}>
       <motion.div 
         className='sidebar-item'
         whileHover={{
@@ -117,12 +112,12 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
 
         <div className="sidebar-content">
           <div className="sidebar-section">
-            <SidebarItem icon={<HomeIcon />} name="Home" to="/" isOpen={isOpen} />
-            <SidebarItem icon={<PersonIcon />} name="About" to="/about" isOpen={isOpen} />
-            <SidebarItem icon={<ComputerIcon />} name="Skills" to="/skills" isOpen={isOpen} />
-            <SidebarItem icon={<CodeIcon />} name="Projects" to="/projects" isOpen={isOpen} />
-            {/* <SidebarItem icon={<ContactPageIcon />} name="Resume" to="/resume" isOpen={isOpen} /> */}
-            {/* <SidebarItem icon={<EmailIcon />} name="Contact" to="/contact" isOpen={isOpen} /> */}
+            <SidebarItem icon={<HomeIcon />} name="Home" to="#banner" isOpen={isOpen} />
+            <SidebarItem icon={<PersonIcon />} name="About" to="#about" isOpen={isOpen} />
+            <SidebarItem icon={<ComputerIcon />} name="Skills" to="#skills" isOpen={isOpen} />
+            <SidebarItem icon={<CodeIcon />} name="Projects" to="#projects" isOpen={isOpen} />
+            {/* <SidebarItem icon={<ContactPageIcon />} name="Resume" to="#resume" isOpen={isOpen} /> */}
+            {/* <SidebarItem icon={<EmailIcon />} name="Contact" to="#contact" isOpen={isOpen} /> */}
           </div>
         </div>
       </motion.div>

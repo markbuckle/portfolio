@@ -86,6 +86,7 @@ p.success {
 p.danger {
   color: red;
 }
+
 /************ Navbar Css ************/
 nav.navbar {
   padding: 18px 0;
@@ -292,8 +293,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .sidebar {
   justify-content: space-between;
   height: 100%;
-  margin: 0;
-  padding: 1rem;
+  padding: 0 1rem 0.5rem 1rem;
   background: rgba(18, 18, 18, 0.8);
   backdrop-filter: blur(8px);
   display: flex;
@@ -420,7 +420,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   visibility: hidden;
 }
 .sidebar-container[data-state="closed"] .sidebar-content {
-  margin-bottom: auto;
+  margin-bottom: 10rem;
   transition: all 0.3s ease;
 }
 /* --- Sidebar Responsive adjustments ---- */
@@ -1114,7 +1114,241 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   opacity: 0%;
   mix-blend-mode: screen;
 }
-/************ Projects Css ************/
+/* ------ Projects #1 .css ------- */
+
+.projects-title {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 10px;
+    color: #79d7ff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.projects-subtitle {
+  font-size: 18px;
+  text-align: center;
+  padding-top: 10px;
+  color: white;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+.tags-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+}
+
+.tag-base {
+  position: relative;
+  display: inline-block;
+  border-radius: 25px;
+  padding: 0.5rem 1.25rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 1; /* Ensure the button content is above the pseudo-element */ 
+  background: transparent;
+  color: white;
+}
+
+.tag {
+  color: #ADB7BE;
+  border: 2px solid #6B7280;
+}
+.selected-tag { 
+  border: 2px solid transparent; /* Use transparent border to ensure consistent size */
+}
+.selected-tag::before, .selected-tag::after { 
+  content: ""; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  border-radius: 25px; /* Match the border radius */ 
+  z-index: -1; /* Ensure the gradient is behind the button content */
+}
+.selected-tag::before { 
+  background: linear-gradient(135deg, rgba(185, 0, 236, 0.584), rgba(103, 182, 252, 0.594)); 
+  padding: 4px; /* Thickness of the border */ 
+  background-clip: padding-box; /* Ensures the gradient is used for the border */ 
+}
+
+.selected-tag::after { 
+    background: #171717; /* Background color of the button */ 
+    padding: 3px; /* Compensate for the border size to fit within the padding-box */ 
+    background-clip: content-box;
+    width: auto;
+}
+
+.selected-tag { 
+  color: white; 
+  border: 2px solid transparent; /* Set to transparent to rely on pseudo-element for the gradient */ 
+}
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .projects-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.project-card-full{
+  border: 2px solid #87CEEB; /* Light blue border */
+  border-radius: 0.75rem;
+}
+.project-card-image {
+  height: 250px;
+  overflow: hidden;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  position: relative;
+}
+
+.project-card {
+  z-index: 220;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.project-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.project-card-image:hover .overlay {
+  opacity: 1;
+}
+.overlay::before {
+  content: "";
+  background: linear-gradient(90.21deg, #aa367c -5.91%, #4a2fbd 111.58%);
+  opacity: 0.85;
+  position: absolute;
+  width: 100%;
+  height: 0;
+  transition: 0.4s ease-in-out;
+}
+.overlay:hover::before {
+  height: 100%;
+}
+.overlay-tech-stack {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+  color: #fffbfb;
+  margin-bottom: 1rem;
+  z-index: 200;
+}
+.overlay-txt {
+  position: absolute;
+  text-align: center;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+.project-card-image:hover .overlay-txt {
+  opacity: 1;
+}
+.overlay-txt h4 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.1em;
+}
+.overlay-txt span {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+}
+.icon-button {
+  position: absolute;
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-right: 0.5rem;
+  border: 2px solid #ADB7BE;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+.project-card-image:hover .icon-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.icon-button:hover {
+  border-color: white;
+}
+
+.icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  color: #ADB7BE;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: color 0.3s ease;
+}
+
+.icon-button:hover .icon {
+  color: white;
+}
+.icon-button:first-child {
+  left: 35%;
+}
+.icon-button:last-child {
+  right: 35%;
+}
+.project-card-content {
+  color: white;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  background: #181818;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.project-description {
+  color: #ADB7BE;
+}
+
+/************ Projects #2 Css ************/
 .project {
   padding: 75px 0;
   position: relative;
@@ -1237,7 +1471,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 
 .row {
   display: flex;
-}
+} */
 
 /************ Contact Form Css ************/
 .contact {
