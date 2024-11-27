@@ -7,7 +7,6 @@ import { Banner } from "./components/Banner";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills"; 
 import { Projects } from "./components/Projects";
-import { Projects2 } from "./components/Projects2";
 import { Sidebar } from "./components/Sidebar";
 import { Footer } from "./components/Footer";
 
@@ -46,9 +45,6 @@ function App() {
           </section>
           <section id="projects">
             <Projects />
-          </section>
-          <section id="projects2">
-            <Projects2 />
           </section>
           <Footer />
         </main>

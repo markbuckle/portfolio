@@ -13,9 +13,9 @@ const projectsData = [
     description: "Personalized Health Tracker",
     image: projImg3,
     tag: ["All", "Web"],
-    gitUrl: "/",
+    gitUrl: "https://github.com/markbuckle/health-tracker",
     previewUrl: "https://the-health-tracker.vercel.app/",
-    techStack: "Built with html, css, and JavaScript"
+    techStack: "Built with html, handlebars, css, javascript, node.js, express.js, passport.js, and MongoDB"
   },
   {
     id: 2,
@@ -24,9 +24,9 @@ const projectsData = [
     image: projImg2,
     url: "https://thepdfchatbot.streamlit.app/",
     tag: ["All", "Web"],
-    gitUrl: "/",
+    gitUrl: "https://github.com/markbuckle/ai-pdf-chatbot",
     previewUrl: "https://thepdfchatbot.streamlit.app/",
-    techStack: "Built with html, css, and JavaScript"
+    techStack: "Built with Python and Streamlit"
   },
   {
     id: 3,
@@ -34,9 +34,9 @@ const projectsData = [
     description: "User Feedback Tool",
     image: projImg1,
     tag: ["All", "Web"],
-    gitUrl: "/",
+    gitUrl: "https://github.com/markbuckle/saas-app",
     previewUrl: "https://saasdashboard.vercel.app/",
-    techStack: "Built with html, css, and JavaScript"
+    techStack: "Built with React, NextJs, Vite, Shadcn-UI, Clerk, Supabase/PostgresSQL, Drizzle and Stripe"
   }
 ];
 
@@ -52,7 +52,7 @@ const projectsData = [
 //   );
 // };
 
-const ProjectCard = ({ imgUrl, title, description, techStack, gitUrl, previewUrl }) => { 
+const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack}) => { 
     return ( 
       <div className="project-card-full"> 
         <div className="project-card-image">
