@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Banner } from "./components/Banner";
+import { Sidebar } from "./components/Sidebar";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills"; 
 import { Projects } from "./components/Projects";
-import { Sidebar } from "./components/Sidebar";
+// import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
           <section id="projects">
             <Projects />
           </section>
+          {/* <section id="contact">
+            <Contact />
+          </section> */}
           <Footer />
         </main>
       </div>
