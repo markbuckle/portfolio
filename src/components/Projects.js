@@ -78,7 +78,7 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack
 };
 
 export const Projects = () => {
-  const [tag, setTag] = useState("All");
+  const [tag] = useState("All"); // add in setTag next to tag if using tags
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
