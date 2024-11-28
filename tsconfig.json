@@ -19,6 +19,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "types": [
       "jest",
       "parse-json",
@@ -29,6 +34,18 @@
     ]
   },
   "include": [
-    "src"
-, "archive/App copy.js", "archive/Sidebar copy 2.js", "archive/Sidebar copy.js", "archive/App copy2.js", "archive/Sidebar copy2.js"  ]
+    "src", "archive/Contact.js", "archive/EmailSection.jsx" ],
+  "exclude": [
+    "node_modules",
+    "archive/App copy.js", 
+    "archive/Sidebar copy 2.js", 
+    "archive/Sidebar copy.js", 
+    "archive/App copy2.js", 
+    "archive/Sidebar copy2.js", 
+    "archive/Projects2.js", 
+    "archive/ProjectCard.js", 
+    "archive/NavBar.js", 
+    "archive/Contact2.js", 
+    "archive/route copy.js" 
+  ]
 }
