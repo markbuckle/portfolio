@@ -1473,6 +1473,63 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .row {
   display: flex;
 } */
+/************ Resume ***************/
+.resume-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.resume-title h1{
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 10px;
+    color: #79d7ff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+/* Resume.css */
+
+#resume {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem 4rem 1rem;
+}
+
+.resume-title {
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #79d7ff;
+}
+
+.resume-button {
+  font-size: 20px;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 15px;
+  border: 1px solid #79d7ff;
+  color: rgb(255, 255, 255);
+  display: inline-block;
+  text-align: center;
+  min-width: 150px;
+  width: fit-content; /* Ensures buttons are not too wide */
+  /* background-image: linear-gradient(to bottom right, #79d7ff, #fefcff); */
+  background-color: #9c4a9c;
+  /* background-color: #79d7ff; */
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.resume-button:hover {
+  background-color: #79d7ff;
+  color: black;
+}
+
 /************ Contact Form 1 Css ************/
 
 .contact-section {
@@ -1489,7 +1546,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
     grid-template-columns: 1fr 1fr;
   }
 }
-
 .bg-gradient {
   background: radial-gradient(ellipse at center, #3f3d56, transparent);
   border-radius: 50%;
@@ -1551,7 +1607,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .form-input {
   background-color: #18191E;
   border: 1px solid #33353F;
-  placeholder: #9CA2A9;
+  /* placeholder: #9CA2A9; */
   color: #f7fafc;
   font-size: 0.875rem;
   border-radius: 0.5rem;
