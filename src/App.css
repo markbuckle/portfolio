@@ -22,7 +22,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+:root {
+ --primary-900: #1e3a8a; 
+ --tw-gradient-stops: var(--primary-900), transparent;
+}
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 75px;
@@ -80,11 +83,12 @@ select:focus {
 }
 
 p.success {
-  color: green;
+  color: #94dfff;
+  font-weight: semi-bold;
 }
 
 p.danger {
-  color: red;
+  color: rgb(255, 0, 0);
 }
 
 /************ Navbar Css ************/
@@ -423,6 +427,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   margin-bottom: 10rem;
   transition: all 0.3s ease;
 }
+.sidebar-container[data-state="closed"] .sidebar-section {
+  margin-bottom: auto;
+}
 /* --- Sidebar Responsive adjustments ---- */
 @media (max-width: 768px) {
   .main-content {
@@ -570,6 +577,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .about-container {
   max-width: 1100px;
   margin: 0 auto;
+  margin-bottom: 2.5rem;
   padding: 0 20px;
 }
 .about-description {
@@ -655,8 +663,162 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
     justify-content: center;
   }
 }
+/* *********** Skills Css **************/
 
-/************ Skills Css ************/
+.skills {
+  position: relative;
+  background-color: #000000;
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
+
+.skills-gradient {
+  position: absolute;
+  top: -30rem;
+  right: -30rem;
+  width: 60rem; /* Adjust the size as needed */
+  height: 60rem; /* Adjust the size as needed */
+  background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
+  z-index: 0;
+}
+.skills-gradient-top-right {
+  position: absolute;
+  top: -30rem;
+  right: -30rem;
+  width: 60rem; /* Adjust the size as needed */
+  height: 60rem; /* Adjust the size as needed */
+  background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
+  border-radius: 100%;
+  z-index: 0;
+}
+.skills-gradient-bottom-left {
+  overflow: visible;
+  position: absolute;
+  bottom: -30rem;
+  left: -30rem;
+  width: 60rem; /* Adjust the size as needed */
+  height: 60rem; /* Adjust the size as needed */
+  background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
+  border-radius: 100%;
+  z-index: 0;
+}
+
+.skills-content {
+  position: relative;
+  z-index: 1; /* Ensure content is above the gradient */
+}
+
+.skills-title {
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 3rem;
+  color: #79d7ff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.skills-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.tag-base {
+  padding: 10px 20px;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.selected-tag {
+  background-color: #79d7ff;
+  color: #fff;
+  border: 1px solid #79d7ff;
+}
+
+.tag-base:hover {
+  background-color: #79d7ff;
+  color: #fff;
+}
+.skills-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+}
+.skills-grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.skills-card-full {
+  width: 100%;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills-card-full:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skills-card-full i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #4a90e2;
+}
+@media (max-width: 768px) {
+  .skills-list-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+/* .skills-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+} */
+
+/* .skills-card-full {
+  width: 180px;
+  padding: 20px;
+  border: 1.5px solid transparent;
+  border-radius: 25px;
+  background-color: transparent;
+  color: #79d7ff;
+  font-size: 3rem;
+  display: flex;
+  transition: transform 0.3s, box-shadow 0.3s;
+} */
+
+.skills-card-content {
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.skill-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: rgb(153, 78, 153);
+}
+
+.skill-description {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+/* *********** Skills (Old) Css *********** /
 .skill {
   padding: 15px 0 0 0px;
   position: relative;
@@ -687,9 +849,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   }
 }
 .skill-bx {
-  background: #151515;
+  background: #1e1e1e;
   padding-top: 2rem;
-  /* margin-top: 25px; */
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1rem;
@@ -773,7 +934,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   color: #fff;
   padding-bottom: 0px;
   padding-top: 0;
-  /* box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); */
   border-radius: 10px;
   position: relative;
 }
@@ -1113,7 +1273,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   z-index: -4;
   opacity: 0%;
   mix-blend-mode: screen;
-}
+} */
+
 /* ------ Projects #1 .css ------- */
 
 .projects-title {
@@ -1134,12 +1295,12 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   margin-bottom: 3rem;
 }
 .tags-container {
+  margin-top: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.5rem 0;
 }
 
 .tag-base {
@@ -1192,6 +1353,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 2rem;
+  margin-right: 3rem;
+  margin-left: 3rem;
 }
 
 @media (min-width: 768px) {
@@ -1262,6 +1425,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   letter-spacing: 0.8px;
   color: #fffbfb;
   margin-bottom: 2rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
   z-index: 200;
 }
 .overlay-txt {
@@ -1290,8 +1455,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 .icon-button {
   position: absolute;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   margin-right: 0.5rem;
   border: 2px solid #ADB7BE;
   border-radius: 50%;
@@ -1312,8 +1477,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .icon {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
   color: #ADB7BE;
   position: absolute;
   top: 50%;
@@ -1474,30 +1639,55 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: flex;
 } */
 /************ Resume ***************/
-.resume-section {
-  display: flex;
-  justify-content: center;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-.resume-title h1{
-    font-size: 50px;
-    font-weight: 600;
-    text-align: center;
-    padding-top: 10px;
-    color: #79d7ff;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-/* Resume.css */
+/************ Resume ***************/
 
-#resume {
+.resume-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2rem 1rem 4rem 1rem;
+  padding: 4rem 1rem;
+  background-color: #030303;
+  overflow: hidden; /* Ensure gradients don't overflow */
+  z-index: 0;
+}
+
+.resume-gradient-top-right {
+  position: absolute;
+  top: -10rem; /* Adjusted to ensure visibility */
+  right: -35rem; /* Adjusted to ensure visibility */
+  width: 55rem; 
+  height: 55rem; 
+  background: radial-gradient(circle, rgba(54, 91, 107, 0.2), transparent); 
+  border-radius: 50%;
+  z-index: -1; /* Ensure it's below the content */
+}
+
+.resume-gradient-bottom-left {
+  position: absolute;
+  bottom: -10rem; /* Adjusted to ensure visibility */
+  left: -35rem; /* Adjusted to ensure visibility */
+  width: 55rem; 
+  height: 55rem; 
+  background: radial-gradient(circle, rgba(64, 115, 137, 0.2), transparent); 
+  border-radius: 50%; 
+  z-index: -1; /* Ensure it's below the content */
+}
+
+.resume {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 1rem 3rem 1rem;
+  background-color: #030303;
+  margin-top: 2rem;
+  z-index: 1; /* Ensure it's above the gradients */
+  overflow: hidden;
 }
 
 .resume-title {
@@ -1505,6 +1695,10 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   font-weight: 600;
   margin-bottom: 2rem;
   color: #79d7ff;
+}
+
+.resume-buttons {
+  z-index: 1; /* Ensure buttons are above the gradients */
 }
 
 .resume-button {
@@ -1564,7 +1758,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .contact-title {
-  text-align: left;
+  text-align: center;
   font-size: 50px;
   color:#79d7ff;
   font-weight: 600;
@@ -1572,13 +1766,17 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .contact-text {
   color: white;
   margin-bottom: 1rem;
-  max-width: 90%;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  text-align: center;
 }
 
 .social-icons {
   color: white;
   display: flex;
   gap: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .success-message {
@@ -1633,6 +1831,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   background: linear-gradient(90.21deg, #aa367c -5.91%, #4a2fbd 111.58%);
   padding: 2rem;
 }
+.align-items-center{
+  align-items: center;
+}
 .contact-image-container{
   margin-top: 2rem;
   display: flex;
@@ -1644,7 +1845,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   justify-content: left;
 }
 .contact img {
-  width: 55%;
+  width: 100%;
 }
 .contact h2 {
   font-size: 45px;
@@ -1713,6 +1914,15 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 .contact form button:hover::before {
   width: 100%;
+}
+.contact-button-container{
+  display: flex;
+}
+.contact-form-container {
+  margin: 2rem;
+}
+.contact-form-label {
+  color: white;
 }
 
 /************ Footer Css ************/
