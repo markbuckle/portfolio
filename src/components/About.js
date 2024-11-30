@@ -57,11 +57,7 @@ export const About = () => {
             <div className="about-text-container">
                 <p className="about-description">
                     I am a full stack web developer with a passion for creating
-                    interactive and responsive web applications. I have experience
-                    working with JavaScript, React, Redux, Node.js, Express, PostgreSQL,
-                    Sequelize, HTML, CSS, and Git. I am a quick learner and I am always
-                    looking to expand my knowledge and skill set. I am a team player and
-                    I am excited to work with others to create amazing applications.
+                    interactive and responsive web applications. Please check out my background, skills and favourite projects below.
                 </p>
 
                 <div className="about-tabs">
