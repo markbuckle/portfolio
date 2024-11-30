@@ -9,7 +9,7 @@ import { About } from "./components/About";
 import { Skills } from "./components/Skills"; 
 import { Projects } from "./components/Projects";
 import { Resume } from "./components/Resume";
-// import { Contact } from "./components/Contact";
+import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
 function App() {
@@ -51,9 +51,9 @@ function App() {
           <section id="resume">
             <Resume />
           </section>
-          {/* <section id="contact">
+          <section id="contact">
             <Contact />
-          </section> */}
+          </section>
           <Footer />
         </main>
       </div>

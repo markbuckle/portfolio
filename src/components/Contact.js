@@ -1,157 +1,115 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import contactImg from "../assets/img/contact-img.svg";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+import emailjs from '@emailjs/browser';
+
+
 
 export const Contact = () => {
-//   const formInitialDetails = {
-//     email: '',
-//     subject: '',
-//     message: ''
-//   };
+  const form = useRef();
 
-//   const [formDetails, setFormDetails] = useState(formInitialDetails);
   const [buttonText, setButtonText] = useState('Send');
-//   const [status, setStatus] = useState({});
-//   const [emailSubmitted, setEmailSubmitted] = useState(false);
-
-//   const onFormUpdate = (category, value) => {
-//     setFormDetails({
-//       ...formDetails,
-//       [category]: value
-//     });
-//   };
-
-  const handleSubmit = async (e) => {
+  const [status, setStatus] = useState({});
+  
+  // handler function
+  const sendEmail = (e) => {
     e.preventDefault();
     setButtonText("Sending...");
+    emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY);
+    const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID; 
+    const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID; 
+    const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
-    const data = { 
-      email: e.target.email.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
-    };
-    const JSONdata = JSON.stringify(data);
-    const endpoint = "/api/send";
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    
+    // send email using EmailJS
+    emailjs.sendForm(serviceId, templateId, form.current, publicKey)
+    .then(
+      (response) => {
+        setButtonText('Send');
+        setStatus({ 
+          message: 'Email sent successfully!', 
+          success: true 
+        });
+        // Optional: Clear form after success
+        form.current.reset();
       },
-      body: JSONdata,
-    };
+      (error) => {
+        setButtonText('Send');
+        setStatus({ 
+          message: 'Failed to send email. Please try again or email Mark directly.', 
+          success: false 
+        });
+      },
+    );
+};
 
-    const response = await fetch(endpoint, options);
-
-    setButtonText("Send");
-    if (response.status === 200) {
-      console.log("Message sent.");
-//       setEmailSubmitted(true);
-//       setStatus({ success: true, message: 'Message sent successfully' });
-//       setFormDetails(formInitialDetails);
-//     } else {
-//       setStatus({ success: false, message: 'Something went wrong, please try again later.' });
-//     }
-    };
-  }
   return (
     <section className="contact" id="connect">
       <Container>
-        <Row className="align-items-center">
-          <Col size={12} md={6}>
-            <TrackVisibility>
-                {({ isVisible }) =>
-                    <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                    <h1 className="contact-title">Let's Connect</h1>
-                    <p className="contact-text">
-                        {" "}
-                        I&apos;m currently looking for new opportunities, my inbox is always
-                        open. Whether you have a question or just want to say hi, I&apos;ll
-                        try my best to get back to you!
-                    </p>
-                    </div>}
+        <div className="align-items-center">
+          <h1 className="contact-title">Let's Connect</h1>
+          <p className="contact-text">
+            If you have an idea you want to bring to life or just a question, my inbox is open. I'll try my best to get back to you asap!
+          </p>
+          <Row>
+            <Col size={12} md={6}>
+              <div>
+                <TrackVisibility>
+                  {({ isVisible }) =>
+                    <form ref={form} onSubmit={sendEmail} className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+                      <Row>
+                        <Col className="contact-form-container px-1">
+                          <label className="contact-form-label">Name</label>
+                          <input 
+                            type="text" 
+                            name="user_name" 
+                            placeholder="First and Last Name" 
+                          />
+                          <label className="contact-form-label">Email</label>
+                          <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Email Address" 
+                          />
+                          <label className="contact-form-label">Subject</label>
+                          <input 
+                            type="text" 
+                            name="subject" 
+                            placeholder="Subject" 
+                          />
+                          <label className="contact-form-label">Message</label>
+                          <textarea 
+                            type="text" 
+                            rows="6" 
+                            name="message" 
+                            placeholder="Message" 
+                          />
+                          <div className="contact-button-container"><button type="submit"><span>{buttonText}</span></button></div>
+                        </Col>
+                        {
+                          status.message &&
+                          <Col>
+                            <p className={status.success ? "success" : "danger"}>{status.message}</p>
+                          </Col>
+                        }
+                      </Row>
+                    </form>
+                  }
                 </TrackVisibility>
-                <TrackVisibility className="contact-image-container">
-                {({ isVisible }) =>
-                    <img className={isVisible ? "animate__animated animate__zoomIn" : "contact-image"} src={contactImg} alt="Contact Us"/>
-                }
-                </TrackVisibility>
-                <div className="contact-icons-container">
-                    <div className="social-icons">
-                            <a
-                            href="https://github.com/markbuckle"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="social-icon"
-                            >
-                            <FaGithub size={35} />
-                            </a>
-                            <a
-                            href="https://www.linkedin.com/in/mark-buckle-146316326/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="social-icon"
-                            >
-                            <FaLinkedin size={35} />
-                            </a>
-                        </div>
-                </div>
+              </div>
             </Col>
             <Col size={12} md={6}>
-                <TrackVisibility>
+              <TrackVisibility>
                 {({ isVisible }) =>
-                    <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                    <h2 className="contact-title">Get In Touch</h2>
-                    <form onSubmit={handleSubmit}>
-                        <Row>
-                        <Col size={12} sm={6} className="px-1">
-                            <input 
-                            name="email"
-                            type="email" 
-                            id="email"
-                            placeholder="Email Address" 
-                            // value={formDetails.email} 
-                            // onChange={(e) => onFormUpdate('email', e.target.value)} 
-                            />
-                        </Col>
-                        <Col size={12} sm={6} className="px-1">
-                            <input 
-                            name="subject"
-                            type="text" 
-                            id="subject"
-                            placeholder="Subject" 
-                            // value={formDetails.subject} 
-                            // onChange={(e) => onFormUpdate('subject', e.target.value)}
-                            />
-                        </Col>
-                        <Col size={12} className="px-1">
-                            <textarea 
-                                name="message"
-                                id="message"
-                                rows="6" 
-                                placeholder="Message" 
-                                // value={formDetails.message} 
-                                // onChange={(e) => onFormUpdate('message', e.target.value)}
-                            />
-                            <button type="submit" class="contact-button"><span>{buttonText}</span></button>
-                        </Col>
-                        {/* {
-                            status.message &&
-                            <Col>
-                            <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
-                            </Col>
-                        } */}
-                        </Row>
-                    </form>
-                    </div>}
-                </TrackVisibility>
+                  <img className={isVisible ? "animate__animated animate__zoomIn" : ""} src={contactImg} alt="Contact Us"/>
+                }
+              </TrackVisibility>
             </Col>
-        </Row>
+          </Row>
+        </div>
       </Container>
     </section>
   );
-}
+};
