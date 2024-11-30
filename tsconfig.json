@@ -18,12 +18,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "types": [
       "jest",
       "parse-json",
@@ -34,7 +28,7 @@
     ]
   },
   "include": [
-    "src", "archive/Contact.js", "archive/EmailSection.jsx" ],
+    "src"],
   "exclude": [
     "node_modules",
     "archive/App copy.js", 
@@ -46,6 +40,11 @@
     "archive/ProjectCard.js", 
     "archive/NavBar.js", 
     "archive/Contact2.js", 
-    "archive/route copy.js" 
+    "archive/route copy.js",
+    "archive/Contact.js", 
+    "archive/EmailSection.jsx",
+    "archive/Contact copy.js",
+    "archive/Skills copy.js",
+    "archive/Resume copy.js"
   ]
 }
