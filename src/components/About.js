@@ -7,8 +7,8 @@ const TAB_DATA = [
     id: "education",
     content: (
       <ul className="about-list">
-        <li>Memorial University of Newfoundland - B.Eng</li>
-        <li>University of Calgary - Precision Health</li>
+        <li>Memorial University of Newfoundland<br></br>B.Eng</li>
+        <li>University of Calgary<br></br>Precision Health <br></br>Post-Graduate Program</li>
       </ul>
     ),
   },

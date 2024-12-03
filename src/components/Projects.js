@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/outline";
-// import { Link } from "react-router-dom";
 import projImg1 from "../assets/img/project-img1.png";
 import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
+// import { Link } from "react-router-dom";
 
 const projectsData = [
   {
@@ -15,7 +15,7 @@ const projectsData = [
     tag: ["All", "Web"],
     gitUrl: "https://github.com/markbuckle/health-tracker",
     previewUrl: "https://the-health-tracker.vercel.app/",
-    techStack: "Built with html, handlebars, css, javascript, node.js, express.js, passport.js, and MongoDB"
+    techStack: "Built with html, handlebars, css, javascript, node.js, express.js, passport.js, JWT and MongoDB"
   },
   {
     id: 2,
@@ -39,18 +39,6 @@ const projectsData = [
     techStack: "Built with React, NextJs, Vite, Shadcn-UI, Clerk, Supabase/PostgresSQL, Drizzle and Stripe"
   }
 ];
-
-// const ProjectTag = ({ name, onClick, isSelected }) => {
-//   const buttonStyles = isSelected ? "selected-tag" : "tag"
-//   return (
-//     <button
-//       className={`${buttonStyles} tag-base`}
-//       onClick={() => onClick(name)}
-//     >
-//       {name}
-//     </button>
-//   );
-// };
 
 const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack}) => { 
     return ( 
@@ -78,13 +66,9 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack
 };
 
 export const Projects = () => {
-  const [tag] = useState("All"); // add in setTag next to tag if using tags
+  const [tag] = useState("All");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  // const handleTagChange = (newTag) => {
-  //   setTag(newTag);
-  // };
 
   const filteredProjects = projectsData.filter((project) =>
     project.tag.includes(tag)
@@ -101,23 +85,6 @@ export const Projects = () => {
         My Projects
       </h1>
       <p className="projects-subtitle">This portfolio was built with React and Animate CSS.</p>
-      {/* <div className="tags-container">
-        <ProjectTag
-          onClick={handleTagChange}
-          name="All"
-          isSelected={tag === "All"}
-        />
-        <ProjectTag
-          onClick={handleTagChange}
-          name="Web"
-          isSelected={tag === "Web"}
-        />
-        <ProjectTag
-          onClick={handleTagChange}
-          name="Mobile"
-          isSelected={tag === "Mobile"}
-        />
-      </div> */}
       <div ref={ref} className="projects-list">
         {filteredProjects.map((project, index) => (
           <motion.div

@@ -60,7 +60,7 @@ export const Contact = () => {
                   {({ isVisible }) =>
                     <form ref={form} onSubmit={sendEmail} className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                       <Row>
-                        <Col className="contact-form-container px-1">
+                        <div className="contact-form-container px-1">
                           <label className="contact-form-label">Name</label>
                           <input 
                             type="text" 
@@ -87,12 +87,12 @@ export const Contact = () => {
                             placeholder="Message" 
                           />
                           <div className="contact-button-container"><button type="submit"><span>{buttonText}</span></button></div>
-                        </Col>
+                        </div>
                         {
                           status.message &&
-                          <Col>
+                          <div>
                             <p className={status.success ? "success" : "danger"}>{status.message}</p>
-                          </Col>
+                          </div>
                         }
                       </Row>
                     </form>
