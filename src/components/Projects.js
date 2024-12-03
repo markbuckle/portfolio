@@ -100,7 +100,7 @@ export const Projects = () => {
       <h1 className="projects-title">
         My Projects
       </h1>
-      <p className="projects-subtitle">This portfolio was built with React and Animate CSS. It was deployed with Cloudflare.</p>
+      <p className="projects-subtitle">This portfolio was built with React and Animate CSS.</p>
       {/* <div className="tags-container">
         <ProjectTag
           onClick={handleTagChange}
@@ -118,7 +118,7 @@ export const Projects = () => {
           isSelected={tag === "Mobile"}
         />
       </div> */}
-      <ul ref={ref} className="projects-list">
+      <div ref={ref} className="projects-list">
         {filteredProjects.map((project, index) => (
           <motion.div
             key={index}
@@ -138,7 +138,7 @@ export const Projects = () => {
             />
           </motion.div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 };

@@ -82,7 +82,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
         </motion.div>
 
-        <div>
+        <div className="spacer">
           {/* Headshot Section */}
           <div className={`sidebar-headshot ${isOpen ? 'visible' : 'hidden'}`}>
             <img

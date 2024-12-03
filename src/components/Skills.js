@@ -1,159 +1,202 @@
-import Carousel from 'react-bootstrap/Carousel';
-import 'react-multi-carousel/lib/styles.css';
-import colorSharp from "../assets/img/color-sharp.png";
+import React, { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import 'boxicons/css/boxicons.min.css';
+
+const skillsData = [
+  {
+    id: 1,
+    title: "JavaScript",
+    description: "API calls. Sync and Async behavior. Frontend and backend JS frameworks.",
+    icon: "bx bxl-javascript",
+    tag: ["All", "Frontend"],
+  },
+  {
+    id: 2,
+    title: "TypeScript",
+    description: "Enums, Interfaces, Classes, Constructors, Datatypes, Decorators, Modules, Any, using strict mode.",
+    icon: "bx bxl-react",
+    tag: ["All", "Frontend"],
+  },
+  {
+    id: 3,
+    title: "React",
+    description: "Components, TSX, JSX, React Props, State, Hooks, Async Data, Conditional Rendering, Async/Await, Data Fetching",
+    icon: "bx bxl-react",
+    tag: ["All", "Frontend"],
+  },
+  {
+    id: 4,
+    title: "Node.js",
+    description: "Express JS, PassportJS, JWTs, OAuth, and file handling",
+    icon: "bx bxl-nodejs",
+    tag: ["All", "Backend"],
+  },
+  {
+    id: 5,
+    title: "Python",
+    description: "Data Analysis and Machine Learning concepts. Django Web Frameworks",
+    icon: "bx bxl-python",
+    tag: ["All", "Backend"],
+  },
+  {
+    id: 6,
+    title: "Java",
+    description: "Object-oriented programming, encapsulation, constructors, inheritance, Maven, and Scala.",
+    icon: "bx bxl-java",
+    tag: ["All", "Backend"],
+  },
+
+  {
+    id: 7,
+    title: "HTML/HTML5",
+    description: "Block and Inline level modern tags, tables, forms, templating, code formatting.",
+    icon: "bx bxl-html5",
+    tag: ["All", "Frontend"],
+  },
+  {
+    id: 8,
+    title: "CSS",
+    description: "Flexbox, Grids, Layering, Responsive Design. Used CSS frameworks such as Tailwind and BootStrap.",
+    icon: "bx bxl-css3",
+    tag: ["All", "Frontend"],
+  },
+  {
+    id: 9,
+    title: "PostgreSQL",
+    description: "Queries and connecting DB with various backend frameworks like Django, Spring Boot, NodeJS.",
+    icon: "bx bxl-postgresql",
+    tag: ["All", "Database"],
+  },
+  {
+    id: 10,
+    title: "MongoDB",
+    description: "Queries, Connections, Clusters and connecting with other frameworks.",
+    icon: "bx bxl-mongodb",
+    tag: ["All", "Database"],
+  },
+  {
+    id: 11,
+    title: "AWS",
+    description: "SDK, IAM, Lambda, EC2, S3, Cloudwatch, Beanstalk",
+    icon: "bx bxl-aws",
+    tag: ["All", "Cloud"],
+  },
+  {
+    id: 12,
+    title: "Project Management",
+    description: "Agile and Waterfall Methodology. Earned-Value Management.",
+    icon: "bx bx-group",
+    tag: ["All", "Other"],
+  },
+];
+
+const SkillTag = ({ name, onClick, isSelected }) => {
+  const buttonStyles = isSelected ? "selected-tag" : "tag";
+  return (
+    <button
+      className={`${buttonStyles} tag-base`}
+      onClick={() => onClick(name)}
+    >
+      {name}
+    </button>
+  );
+};
+
+const SkillCard = ({ title, description, icon }) => {
+  return (
+    <div className="skills-card-full">
+      <i className={`bx ${icon}`}></i>
+      <div className="skills-card-content">
+        <h5 className="skill-title">{title}</h5>
+        <p className="skill-description">{description}</p>
+      </div>
+    </div>
+  );
+};
 
 export const Skills = () => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+  const [tag, setTag] = useState("All");
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  const handleTagChange = (newTag) => {
+    setTag(newTag);
+    setIsVisible(false); // Reset visibility for re-animation 
+    setTimeout(() => setIsVisible(true), 100); // Add slight delay to restart animation
+  };
+
+  const filteredSkills = tag === "All"
+    ? skillsData
+    : skillsData.filter((skill) =>
+        skill.tag.includes(tag)
+      );
+
+  const cardVariants = {
+    initial: { y: 0, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
   };
 
   return (
-    <section className="skill" id="skills">
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <div className="skill-bx">
-              <h1>Skills</h1>
-              {/* <p className="skill-subheading">
-                * Note: These ratings are subjective as it is near impossible to know 100% of any programming language or PM skillset. These bars illustrate my best attempt at providing an unbiased review on my overall experience level with each category.
-              </p> */}
-              <Carousel interval={null} touch={false} responsive={responsive} infinite={true} className="skill-slider skill2">
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Frontend Development</h2></p>
-                      <p><h3>HTML</h3>
-                        <span className="bar"><span className="skill-html"></span></span>
-                      </p>
-                      <p><h3>CSS</h3>
-                        <span className="bar"><span className="css"></span></span>
-                      </p>
-                      <p><h3>Handlebars</h3>
-                        <span className="bar"><span className="handlebars"></span></span>
-                      </p>
-                      <p><h3>Javascript</h3>
-                        <span className="bar"><span className="javascript"></span></span>
-                      </p>
-                      <p><h3>React</h3>
-                        <span className="bar"><span className="react"></span></span>
-                      </p>
-                      <p><h3>Ruby on Rails</h3>
-                        <span className="bar"><span className="ruby"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Backend Development</h2></p>
-                      <p><h3>Python</h3>
-                        <span className="bar"><span className="python"></span></span>
-                      </p>
-                      <p><h3>NodeJS</h3>
-                        <span className="bar"><span className="nodejs"></span></span>
-                      </p>
-                      <p><h3>ExpressJS/PassportJS</h3>
-                        <span className="bar"><span className="ep"></span></span>
-                      </p>
-                      <p><h3>Java</h3>
-                        <span className="bar"><span className="java"></span></span>
-                      </p>
-                      <p><h3>PHP</h3>
-                        <span className="bar"><span className="php"></span></span>
-                      </p>
-                      <p><h3>C# & Blazor</h3>
-                        <span className="bar"><span className="Csharp"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Databases</h2></p>
-                      <p><h3>MongoDB</h3>
-                        <span className="bar"><span className="mongo"></span></span>
-                      </p>
-                      <p><h3>DynamoDB</h3>
-                        <span className="bar"><span className="dynamo"></span></span>
-                      </p>
-                      <p><h3>PostgresSQL</h3>
-                        <span className="bar"><span className="postgreSQL"></span></span>
-                      </p>
-                      <p><h3>MySQL</h3>
-                        <span className="bar"><span className="mySQL"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Cloud Computing</h2></p>
-                      <p><h3>Amazon Web Services</h3>
-                        <span className="bar"><span className="amazon"></span></span>
-                      </p>
-                      <p><h3>Microsoft Azure</h3>
-                        <span className="bar"><span className="azure"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Project Management</h2></p>
-                      <p><h3>Data Analysis</h3>
-                        <span className="bar"><span className="pc"></span></span>
-                      </p>
-                      <p><h3>Scrum / Agile Development</h3>
-                        <span className="bar"><span className="scrum"></span></span>
-                      </p>
-                      <p><h3>Waterfall Method</h3>
-                        <span className="bar"><span className="waterfall"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="item">
-                    <div className="skill2">
-                      <p><h2>Other</h2></p>
-                      <p><h3>WebFlow</h3>
-                        <span className="bar"><span className="webflow"></span></span>
-                      </p>
-                      <p><h3>Automation / Scripting</h3>
-                        <span className="bar"><span className="automation"></span></span>
-                      </p>
-                      <p><h3>Machine Learning</h3>
-                        <span className="bar"><span className="ml"></span></span>
-                      </p>
-                    </div>
-                  </div>
-                </Carousel.Item>
-              </Carousel>
-            </div>
-          </div>
+    <section className="skills" id="skills">
+      <div className="skills-gradient-top-right"></div>
+      <div className="skills-gradient-bottom-left"></div>
+      <div className="skills-content">
+        <h1 className="skills-title">
+          My Skills
+        </h1>
+        <div className="tags-container">
+          <SkillTag
+            onClick={handleTagChange}
+            name="All"
+            isSelected={tag === "All"}
+          />
+          <SkillTag
+            onClick={handleTagChange}
+            name="Frontend"
+            isSelected={tag === "Frontend"}
+          />
+          <SkillTag
+            onClick={handleTagChange}
+            name="Backend"
+            isSelected={tag === "Backend"}
+          />
+          <SkillTag
+            onClick={handleTagChange}
+            name="Database"
+            isSelected={tag === "Database"}
+          />
+          <SkillTag
+            onClick={handleTagChange}
+            name="Cloud"
+            isSelected={tag === "Cloud"}
+          />
+          <SkillTag
+            onClick={handleTagChange}
+            name="Other"
+            isSelected={tag === "Other"}
+          />
+        </div>
+        <div ref={ref} className="skills-list-grid">
+          {filteredSkills.map((skill, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              initial="initial"
+              animate={isInView ? "animate" : "initial"}
+              transition={{ duration: 0.3, delay: index * 0.3 }}
+              className="skills-grid-item"
+            >
+              <SkillCard
+                key={skill.id}
+                title={skill.title}
+                description={skill.description}
+                icon={skill.icon}
+              />
+            </motion.div>
+          ))}
         </div>
       </div>
-      <img className="background-image-left" src={colorSharp} alt="imgLeft" />
-      <img className="background-image-right" src={colorSharp} alt="imgRight"/>
     </section>
   );
-}
+};
