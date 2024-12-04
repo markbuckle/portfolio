@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import headshot2 from "../assets/img/headshot2.jpg"
 
 const TAB_DATA = [
   {
@@ -81,7 +82,7 @@ export const About = () => {
             </div>
             <div className="about-image-container">
                     <img 
-                        src="/headshot2.jpg"  // Adjust the path to match your public folder structure
+                        src={headshot2}
                         alt="Mark Buckle Headshot" 
                         className="about-headshot"
                     />

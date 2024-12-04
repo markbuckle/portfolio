@@ -9,6 +9,7 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import EmailIcon from '@mui/icons-material/Email';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import headshot from "../assets/img/headshot.jpg"
 
 const SidebarItem = ({ icon, name, to, isOpen }) => {
   return (
@@ -86,7 +87,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* Headshot Section */}
           <div className={`sidebar-headshot ${isOpen ? 'visible' : 'hidden'}`}>
             <img
-              src="/headshot.jpg"
+              src={headshot}
               alt=""
               className="headshot-image"
             />
