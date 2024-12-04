@@ -32,32 +32,32 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-        <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-          <section id="banner">
-            <Banner />
-          </section>
-          <section id="about">
-            <About />
-          </section>
-          <section id="skills">
-            <Skills />
-          </section>
-          <section id="projects">
-            <Projects />
-          </section>
-          <section id="resume">
-            <Resume />
-          </section>
-          <section id="contact">
-            <Contact />
-          </section>
-          <Footer />
-        </main>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+          <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+                  <section id="banner">
+                    <Banner />
+                  </section>
+                  <section id="about">
+                    <About />
+                  </section>
+                  <section id="skills">
+                    <Skills />
+                  </section>
+                  <section id="projects">
+                    <Projects />
+                  </section>
+                  <section id="resume">
+                    <Resume />
+                  </section>
+                  <section id="contact">
+                    <Contact />
+                  </section>
+            <Footer />
+          </main>
+        </div>
+      </Router>
   );
 }
 

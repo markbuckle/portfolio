@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import headerImg from "../assets/img/spacedeveloper.png";
-// import headerImg from "../assets/img/header-img.svg";
-// import { ArrowRightCircle } from 'react-bootstrap-icons';
 import 'animate.css';
+// import headerImg from "./assets/img/header-img.svg";
+// import { ArrowRightCircle } from 'react-bootstrap-icons';
 // import TrackVisibility from 'react-on-screen';
 
 export const Banner = () => {

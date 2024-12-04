@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import headshot2 from "../assets/img/headshot2.jpg"
+import headshot2 from '../assets/img/headshot2.jpg'
 
 const TAB_DATA = [
   {
