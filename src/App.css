@@ -895,6 +895,7 @@ p.danger {
   gap: 2rem;
   margin-right: 3rem;
   margin-left: 3rem;
+  margin-bottom: 4rem;
 }
 .project-card-full{
   border: 2px solid #87CEEB; /* Light blue border */
@@ -1084,7 +1085,7 @@ p.danger {
   }
 }
 /************ Resume ***************/
-*/
+
 .resume-container {
   position: relative;
   display: flex;
@@ -1096,6 +1097,10 @@ p.danger {
   background-color: #030303;
   overflow: hidden; /* Ensure gradients don't overflow */
   z-index: 0;
+  background-image: url("./assets/img/resume-bg.png");
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .resume-gradient-top-right {
@@ -1121,21 +1126,15 @@ p.danger {
 }
 
 .resume {
-  position: relative;
+  position: static;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 1rem 1rem 3rem 1rem;
+  padding: 0 1rem 3rem 1rem;
   /* padding: 10rem 3rem 10rem 3rem; */
-  background-image: url("./assets/img/resume-bg.png");
-  background-position: top center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: #030303;
-  margin-top: 2rem;
-  z-index: 1; /* Ensure it's above the gradients */
+  z-index: -1; /* Ensure it's above the gradients */
   overflow: hidden;
 }
 
@@ -1184,6 +1183,12 @@ p.danger {
     border-radius: 15px;
     border: 1.5px solid #79d7ff;
     min-width: auto;
+  }
+  .resume-gradient-top-right{
+    visibility: hidden;
+  }
+  .resume-gradient-bottom-left{
+    visibility: hidden;
   }
 }
 /************ Contact Form 1 Css ************/
