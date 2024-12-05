@@ -1083,6 +1083,13 @@ p.danger {
   .project-title {
     margin-bottom: 0.25rem;
   }
+  .overlay-tech-stack {
+    font-size: 12px;
+    margin-bottom: 3rem;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    text-align: center;
+  }
 }
 /************ Resume ***************/
 
@@ -1173,6 +1180,14 @@ p.danger {
   color: black;
 }
 @media (max-width: 768px) {
+  .resume{
+    padding: 0;
+  }
+  .resume-container{
+    margin: 0;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
   .resume-title {
     font-size: 34px;
   }
