@@ -82,15 +82,6 @@ select:focus {
   }
 }
 
-p.success {
-  color: #619d54;
-  font-weight: semi-bold;
-  justify-self: center;
-}
-
-p.danger {
-  color: rgb(255, 0, 0);
-}
 
 /************ Social icons ************/
 
@@ -895,7 +886,7 @@ p.danger {
   gap: 2rem;
   margin-right: 3rem;
   margin-left: 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 .project-card-full{
   border: 2px solid #87CEEB; /* Light blue border */
@@ -1054,8 +1045,9 @@ p.danger {
 @media (max-width: 768px) {
   .projects-list {
     grid-template-columns: repeat(1, 1fr);
-    margin-left: 1.5rem;
+    margin-left: 1rem;
     margin-right: 1rem;
+    margin-bottom: 1rem;
 
   }
   .projects-title {
@@ -1264,7 +1256,15 @@ p.danger {
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
+p.success {
+  color: #619d54;
+  font-weight: semi-bold;
+  justify-self: center;
+}
 
+p.danger {
+  color: rgb(255, 0, 0);
+}
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -1430,6 +1430,9 @@ p.danger {
   .contact form button {
     margin: 0.25rem;
     padding: 0.5rem 1.5rem;
+  }
+  p.success{
+    text-align: center;
   }
 
 }
