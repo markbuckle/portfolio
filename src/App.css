@@ -39,12 +39,6 @@ body {
   font-family: "Centra", sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-  padding: 0;
-  line-height: normal;
-}
-
 p,
 a,
 li,
@@ -85,9 +79,6 @@ select:focus {
 
 /************ Social icons ************/
 
-.ms-auto {
-  display: inline-flex;
-}
 
 .social-icon {
   display: inline-block;
@@ -139,12 +130,12 @@ select:focus {
   overflow-x: hidden;
 }
 .main-content {
-  margin-left: 4rem; /* Initial margin matches closed sidebar width */
+  margin-left: 4rem;
   width: calc(100% - 4rem);
 }
 
 .main-content.sidebar-open {
-  margin-left: 15rem; /* Expanded margin matches open sidebar width */
+  margin-left: 15rem; 
   width: calc(100% - 15rem);
 }
 .sidebar-container {
@@ -257,11 +248,12 @@ select:focus {
 
 .sidebar-social-icons {
   display: flex;
-  justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
   opacity: 0.7;
+  justify-content: left;
+  align-items: left;
 }
 
 .social-icon {
@@ -279,15 +271,9 @@ select:focus {
   align-items: left;
   width: 7.5rem;
 }
-.sidebar-social-icons {
-  display: flex;
-  justify-content: left;
-  align-items: left;
-}
 .sidebar-headshot,
 .sidebar-social-icons {
   opacity: 1;
-  /* transition: opacity 0.25s ease, visibility 0s ease; */
 }
 .sidebar-container[data-state="closed"] .spacer {
   visibility: hidden;
@@ -323,7 +309,7 @@ select:focus {
   }
   
   .main-content.sidebar-open {
-    margin-left: 7rem; /* On mobile, content doesn't shift */
+    margin-left: 7rem;
     width: calc(100% - 3rem);
   }
   .sidebar{
@@ -345,7 +331,7 @@ select:focus {
   }
   .sidebar-container {
     width: 7rem !important;
-    transform: translateX(0rem); /* Hide most of sidebar except for toggle */
+    transform: translateX(0rem);
   }
   .sidebar-container.open {
     transform: translateX(7rem);
@@ -502,7 +488,7 @@ select:focus {
 /************ About Css ************/
 .about-section {
   margin-top: 2rem;
-  background-color: #121212; /* Adjust to match your portfolio's background */
+  background-color: #121212;
 }
 .about-section h1 {
   font-size: 50px;
@@ -620,21 +606,12 @@ select:focus {
   padding: 1rem 2rem;
 }
 
-.skills-gradient {
-  position: absolute;
-  top: -30rem;
-  right: -30rem;
-  width: 60rem; /* Adjust the size as needed */
-  height: 60rem; /* Adjust the size as needed */
-  background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
-  z-index: 0;
-}
 .skills-gradient-top-right {
   position: absolute;
   top: -30rem;
   right: -30rem;
-  width: 60rem; /* Adjust the size as needed */
-  height: 60rem; /* Adjust the size as needed */
+  width: 60rem; 
+  height: 60rem; 
   background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
   border-radius: 100%;
   z-index: 0;
@@ -644,8 +621,8 @@ select:focus {
   position: absolute;
   bottom: -30rem;
   left: -30rem;
-  width: 60rem; /* Adjust the size as needed */
-  height: 60rem; /* Adjust the size as needed */
+  width: 60rem; 
+  height: 60rem; 
   background: radial-gradient(circle, rgba(78, 48, 100, 0.3), transparent);
   border-radius: 100%;
   z-index: 0;
@@ -841,7 +818,7 @@ select:focus {
   padding: 0.5rem 1.25rem;
   font-size: 1.25rem;
   cursor: pointer;
-  z-index: 1; /* Ensure the button content is above the pseudo-element */ 
+  z-index: 1;
   background: transparent;
   color: white;
 }
@@ -851,7 +828,7 @@ select:focus {
   border: 2px solid #6B7280;
 }
 .selected-tag { 
-  border: 2px solid transparent; /* Use transparent border to ensure consistent size */
+  border: 2px solid transparent; 
 }
 .selected-tag::before, .selected-tag::after { 
   content: ""; 
@@ -860,25 +837,25 @@ select:focus {
   left: 0; 
   right: 0; 
   bottom: 0; 
-  border-radius: 25px; /* Match the border radius */ 
-  z-index: -1; /* Ensure the gradient is behind the button content */
+  border-radius: 25px; 
+  z-index: -1; 
 }
 .selected-tag::before { 
   background: linear-gradient(135deg, rgba(185, 0, 236, 0.584), rgba(103, 182, 252, 0.594)); 
-  padding: 4px; /* Thickness of the border */ 
-  background-clip: padding-box; /* Ensures the gradient is used for the border */ 
+  padding: 4px; 
+  background-clip: padding-box; 
 }
 
 .selected-tag::after { 
-    background: #171717; /* Background color of the button */ 
-    padding: 3px; /* Compensate for the border size to fit within the padding-box */ 
+    background: #171717; 
+    padding: 3px; 
     background-clip: content-box;
     width: auto;
 }
 
 .selected-tag { 
   color: white; 
-  border: 2px solid transparent; /* Set to transparent to rely on pseudo-element for the gradient */ 
+  border: 2px solid transparent; 
 }
 .projects-list {
   display: grid;
@@ -889,7 +866,7 @@ select:focus {
   margin-bottom: 3rem;
 }
 .project-card-full{
-  border: 2px solid #87CEEB; /* Light blue border */
+  border: 2px solid #87CEEB;
   border-radius: 0.75rem;
   max-height: 360px;
   min-height: 310px;
@@ -1104,24 +1081,24 @@ select:focus {
 
 .resume-gradient-top-right {
   position: absolute;
-  top: -10rem; /* Adjusted to ensure visibility */
-  right: -35rem; /* Adjusted to ensure visibility */
+  top: -10rem; 
+  right: -35rem; 
   width: 55rem; 
   height: 55rem; 
   background: radial-gradient(circle, rgba(54, 91, 107, 0.2), transparent); 
   border-radius: 50%;
-  z-index: -1; /* Ensure it's below the content */
+  z-index: -1; 
 }
 
 .resume-gradient-bottom-left {
   position: absolute;
-  bottom: -10rem; /* Adjusted to ensure visibility */
-  left: -35rem; /* Adjusted to ensure visibility */
+  bottom: -10rem; 
+  left: -35rem; 
   width: 55rem; 
   height: 55rem; 
   background: radial-gradient(circle, rgba(64, 115, 137, 0.2), transparent); 
   border-radius: 50%; 
-  z-index: -1; /* Ensure it's below the content */
+  z-index: -1; 
 }
 
 .resume {
@@ -1132,8 +1109,7 @@ select:focus {
   align-items: center;
   text-align: center;
   padding: 0 1rem 3rem 1rem;
-  /* padding: 10rem 3rem 10rem 3rem; */
-  z-index: -1; /* Ensure it's above the gradients */
+  z-index: -1; 
   overflow: hidden;
 }
 
@@ -1146,7 +1122,7 @@ select:focus {
 }
 
 .resume-buttons {
-  z-index: 1; /* Ensure buttons are above the gradients */
+  z-index: 1; 
 }
 
 .resume-button {
@@ -1159,8 +1135,7 @@ select:focus {
   display: inline-block;
   text-align: center;
   min-width: 150px;
-  width: fit-content; /* Ensures buttons are not too wide */
-  /* background-image: linear-gradient(to bottom right, #79d7ff, #fefcff); */
+  width: fit-content; 
   background-color: #9c4a9c;
   /* background-color: #79d7ff; */
   transition: background-color 0.3s ease;
@@ -1198,7 +1173,7 @@ select:focus {
     visibility: hidden;
   }
 }
-/************ Contact Form 1 Css ************/
+/************ Contact Form Css ************/
 .contact {
   background: linear-gradient(90.21deg, #aa367cd2 -5.91%, #492fbdce 111.58%);
   padding: 2.5rem 5rem;
