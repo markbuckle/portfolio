@@ -31,10 +31,10 @@ html {
   scroll-padding-top: 75px;
 }
 body {
-  font-weight: 400; /* 400 is considered normal */
+  font-weight: 400; 
   overflow-x: hidden;
   position: relative;
-  background-color: #121212 !important; /** !important incase bootstrap overwrites **/
+  background-color: #121212 !important;
   color: #fff !important;
   font-family: "Centra", sans-serif !important;
 }
@@ -936,9 +936,9 @@ select:focus {
 }
 .overlay-txt {
   position: absolute;
-  text-align: center;
-  top: 60%;
-  left: 50%;
+  text-align: justify;
+  top: 63%;
+  left: 45%;
   transform: translate(-50%, -50%);
   transition: all 0.5s ease;
   opacity: 0;
@@ -1014,6 +1014,20 @@ select:focus {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #a864c7;
+}
+
+.project-title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.project-title-link:hover .project-title {
+  color: #a24ec9;
+  text-decoration: underline;
+  text-decoration-color: #87CEEB;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .project-description {
