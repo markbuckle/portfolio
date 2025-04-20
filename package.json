@@ -48,7 +48,13 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "tss-unused-classes"
+    ],
+    "rules": {
+      "tss-unused-classes/unused-classes": "warn"
+    }
   },
   "browserslist": {
     "production": [
@@ -63,6 +69,11 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "@eslint/js": "^9.16.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-tss-unused-classes": "^1.0.3",
+    "gh-pages": "^6.1.1",
+    "globals": "^15.13.0"
   }
 }
