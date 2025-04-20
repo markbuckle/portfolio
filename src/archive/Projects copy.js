@@ -20,8 +20,8 @@ const projectsData = [
     title: "DocChat",
     description: "AI PDF Upload Chatbot",
     image: projImg2,
+    url: "https://thepdfchatbot.streamlit.app/",
     tag: ["All", "Web"],
-    gitUrl: "https://github.com/markbuckle/chatbot",
     previewUrl: "https://thepdfchatbot.streamlit.app/",
     techStack: "Built with Python and Streamlit"
   },
@@ -37,33 +37,32 @@ const projectsData = [
   }
 ];
 
+// const ProjectCard = ({ imgUrl, title, description, previewUrl, techStack}) => { 
 const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack}) => { 
-  return ( 
-    <div className="project-card-full"> 
-      <div className="project-card-image">
-        <img className="project-card" src={imgUrl} alt={title} />
-        <div className="overlay">
-          <div className="overlay-txt">
-            {gitUrl && (
+    return ( 
+      <div className="project-card-full"> 
+        <div className="project-card-image">
+          <img className="project-card" src={imgUrl} alt={title} />
+          <div className="overlay">
+            <div className="overlay-txt">
               <a href={gitUrl} className="icon-button" target="_blank" rel="noopener noreferrer">
                 <CodeBracketIcon className="icon" />
               </a>
-            )}
-            <a href={previewUrl} className="icon-button preview-button" target="_blank" rel="noopener noreferrer">
-              <EyeIcon className="icon" />
-            </a>
+              <a href={previewUrl} className="icon-button" target="_blank" rel="noopener noreferrer">
+                <EyeIcon className="icon" />
+              </a>
+            </div>
+            <div className="overlay-tech-stack">{techStack}</div> 
           </div>
-          <div className="overlay-tech-stack">{techStack}</div> 
         </div>
-      </div>
-      <div className="project-card-content"> 
-        <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="project-title-link" >
-          <h5 className="project-title">{title}</h5>
-        </a>
-        <p className="project-description">{description}</p> 
+        <div className="project-card-content"> 
+          <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="project-title-link" >
+            <h5 className="project-title">{title}</h5>
+          </a>
+          <p className="project-description">{description}</p> 
+        </div> 
       </div> 
-    </div> 
-  );
+    );
 };
 
 export const Projects = () => {
@@ -100,7 +99,7 @@ export const Projects = () => {
               title={project.title}
               description={project.description}
               imgUrl={project.image}
-              gitUrl={project.gitUrl}
+              // gitUrl={project.gitUrl}
               previewUrl={project.previewUrl}
               techStack={project.techStack}
             />

@@ -14,7 +14,7 @@ const skillsData = [
     id: 2,
     title: "TypeScript",
     description: "Enums, Interfaces, Classes, Constructors, Datatypes, Decorators, Modules, Any, using strict mode.",
-    icon: "bx bxl-typescript",
+    icon: "bx bxl-react",
     tag: ["All", "Frontend"],
   },
   {
@@ -45,6 +45,7 @@ const skillsData = [
     icon: "bx bxl-java",
     tag: ["All", "Backend"],
   },
+
   {
     id: 7,
     title: "HTML/HTML5",
@@ -76,7 +77,7 @@ const skillsData = [
   {
     id: 11,
     title: "AWS",
-    description: "SDK, IAM, Lambda, EC2, S3, Cloudwatch, Beanstalk for scalable cloud deployments.",
+    description: "SDK, IAM, Lambda, EC2, S3, Cloudwatch, Beanstalk",
     icon: "bx bxl-aws",
     tag: ["All", "Cloud"],
   },
@@ -86,125 +87,6 @@ const skillsData = [
     description: "Agile and Waterfall Methodology. Earned-Value Management.",
     icon: "bx bx-group",
     tag: ["All", "Other"],
-  },
-  {
-    id: 13,
-    title: "Docker",
-    description: "Building, managing and deploying containerized applications for consistent environments.",
-    icon: "bx bxl-docker",
-    tag: ["All", "Containers"],
-  },
-  {
-    id: 14,
-    title: "Colima",
-    description: "Container runtime for macOS with Docker compatibility and optimized resource management.",
-    icon: "bx bx-server",
-    tag: ["All", "Containers"],
-  },
-  {
-    id: 15,
-    title: "OpenAI",
-    description: "Integrating GPT models for natural language processing, content generation and analysis.",
-    icon: "bx bx-brain",
-    tag: ["All", "AI Integration"],
-  },
-  {
-    id: 16,
-    title: "Anthropic",
-    description: "Implementing Claude models for conversational AI with enhanced reasoning capabilities.",
-    icon: "bx bx-conversation",
-    tag: ["All", "AI Integration"],
-  },
-  {
-    id: 17,
-    title: "HuggingFace",
-    description: "Leveraging open-source models for text classification, sentiment analysis and language tasks.",
-    icon: "bx bx-chip",
-    tag: ["All", "AI Integration"],
-  },
-  {
-    id: 18,
-    title: "Mistral",
-    description: "Deploying efficient language models for specialized domain applications and content generation.",
-    icon: "bx bx-bot",
-    tag: ["All", "AI Integration"],
-  },
-  {
-    id: 19,
-    title: "SFTP",
-    description: "Implementing secure file transfer protocols for encrypted data transmission in sensitive environments.",
-    icon: "bx bx-lock-alt",
-    tag: ["All", "Cybersecurity"],
-  },
-  {
-    id: 20,
-    title: "OAuth",
-    description: "Setting up federated authentication workflows for secure API access and user authorization.",
-    icon: "bx bx-key",
-    tag: ["All", "Cybersecurity"],
-  },
-  {
-    id: 21,
-    title: "JWT",
-    description: "Implementing JSON Web Tokens for stateless authentication and secure information exchange.",
-    icon: "bx bx-certification",
-    tag: ["All", "Cybersecurity"],
-  },
-  {
-    id: 22,
-    title: "Okta",
-    description: "Configuring identity management services for enterprise-grade authentication and user lifecycle management.",
-    icon: "bx bx-shield-quarter",
-    tag: ["All", "Cybersecurity"],
-  },
-  {
-    id: 23,
-    title: "Windows",
-    description: "Building and deploying applications in Windows environments with .NET integration capabilities.",
-    icon: "bx bxl-windows",
-    tag: ["All", "Operating Systems"],
-  },
-  {
-    id: 24,
-    title: "Linux (Ubuntu)",
-    description: "Managing server environments, shell scripting, and deployment automation for web applications.",
-    icon: "bx bxl-tux",
-    tag: ["All", "Operating Systems"],
-  },
-  {
-    id: 25,
-    title: "Mac",
-    description: "Developing cross-platform applications with macOS-specific optimizations and tooling.",
-    icon: "bx bxl-apple",
-    tag: ["All", "Operating Systems"],
-  },
-  {
-    id: 26,
-    title: "CI/CD",
-    description: "Implementing automated testing and deployment pipelines for continuous software delivery.",
-    icon: "bx bx-infinite",
-    tag: ["All", "DevOps"],
-  },
-  {
-    id: 27,
-    title: "GitHub",
-    description: "Managing repositories, pull requests, actions, and collaborative workflows for effective version control.",
-    icon: "bx bxl-github",
-    tag: ["All", "DevOps"],
-  },
-  {
-    id: 28,
-    title: "VS Code",
-    description: "Utilizing extensions, debugging tools, and integrated terminal for efficient frontend and backend development.",
-    icon: "bx bxl-visual-studio",
-    tag: ["All", "DevOps"],
-  },
-  {
-    id: 29,
-    title: "IntelliJ",
-    description: "Leveraging advanced refactoring, code analysis, and integrated tooling for Java and enterprise application development.",
-    icon: "bx bxl-java",
-    tag: ["All", "DevOps"],
   },
 ];
 
@@ -288,31 +170,6 @@ export const Skills = () => {
             onClick={handleTagChange}
             name="Cloud"
             isSelected={tag === "Cloud"}
-          />
-          <SkillTag
-            onClick={handleTagChange}
-            name="Containers"
-            isSelected={tag === "Containers"}
-          />
-          <SkillTag
-            onClick={handleTagChange}
-            name="AI Integration"
-            isSelected={tag === "AI Integration"}
-          />
-          <SkillTag
-            onClick={handleTagChange}
-            name="Cybersecurity"
-            isSelected={tag === "Cybersecurity"}
-          />
-          <SkillTag
-            onClick={handleTagChange}
-            name="Operating Systems"
-            isSelected={tag === "Operating Systems"}
-          />
-          <SkillTag
-            onClick={handleTagChange}
-            name="DevOps"
-            isSelected={tag === "DevOps"}
           />
           <SkillTag
             onClick={handleTagChange}

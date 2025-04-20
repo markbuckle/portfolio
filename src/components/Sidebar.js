@@ -44,21 +44,20 @@ const SidebarItem = ({ icon, name, to, isOpen }) => {
 };
 
 export const Sidebar = ({ isOpen, setIsOpen }) => {
+  // Updated transition settings to ensure all elements move in sync
   const sidebarVariants = {
     open: {
       width: "15rem",
       transition: {
         duration: 0.3,
-        type: "spring",
-        damping: 20
+        ease: "easeInOut" // Using a simpler easing function
       }
     },
     closed: {
       width: "4rem",
       transition: {
         duration: 0.3,
-        type: "spring",
-        damping: 20
+        ease: "easeInOut" // Same easing for consistency
       }
     }
   };
