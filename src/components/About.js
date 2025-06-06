@@ -10,6 +10,7 @@ const TAB_DATA = [
       <ul className="about-list">
         <li>Memorial University of Newfoundland<br></br>B.Eng</li>
         <li>University of Calgary<br></br>Precision Health <br></br>Post-Graduate Program</li>
+        <li>GetCoding - Intro to Web Development</li>
       </ul>
     ),
   },
@@ -18,7 +19,7 @@ const TAB_DATA = [
     id: "certifications",
     content: (
       <ul className="about-list">
-        <li>GetCoding - Intro to Web Development</li>
+        <li>GetCoding<br></br>Intro to Web Development & Product Design</li>
       </ul>
     ),
   },
@@ -35,7 +36,7 @@ const TabButton = ({ active, selectTab, children }) => {
           animate={active ? "active" : "default"}
           variants={{
             default: { width: 0 },
-            active: { width: "calc(100% - 0.75rem)" }
+            active: { width: "calc(100%)" }
           }}
           className="about-tab-underline"
         ></motion.div>
@@ -57,12 +58,11 @@ export const About = () => {
       <div className="about-content">
             <div className="about-text-container">
                 <p className="about-description">
-                    I transform ideas into interactive digital experiences. With a background in engineering and a passion for healthcare tech, 
-                    I bring a unique perspective to full-stack development that bridges technical expertise with user-centered design.
+                    I'm a product designer who builds. With a technical background and deep passion for healthcare innovation, I bring a unique perspective that bridges technical feasibility with user-centered design.
                 </p>
                 <p className="about-description">
-                    Whether building innovative backends or designing intuitive interfaces, I'm passionate about creating 
-                    technology that's both powerful and accessible.
+                    Whether designing intuitive interfaces or building innovative backends, I'm passionate about creating 
+                    experiences that empower people.
                 </p>
 
                 <div className="about-tabs">
@@ -72,12 +72,12 @@ export const About = () => {
                     >
                     Education
                     </TabButton>
-                    <TabButton
+                    {/* <TabButton
                     selectTab={() => handleTabChange("certifications")}
                     active={tab === "certifications"}
                     >
                     Certifications
-                    </TabButton>
+                    </TabButton> */}
                 </div>
             
                 <div className="about-tab-content">

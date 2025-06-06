@@ -12,21 +12,11 @@ const projectsData = [
     description: "Personalized Health Tracker",
     image: projImg3,
     tag: ["All", "Web"],
-    previewUrl: "https://the-health-tracker.vercel.app/",
-    techStack: "Built with html, handlebars, css, javascript, node.js, express.js, passport.js, JWT and MongoDB"
+    previewUrl: "https://www.earlyhealthlync.com/",
+    techStack: "Built with html, handlebars, css, javascript, and more. Source code available upon request."
   },
   {
     id: 2,
-    title: "DocChat",
-    description: "AI PDF Upload Chatbot",
-    image: projImg2,
-    tag: ["All", "Web"],
-    gitUrl: "https://github.com/markbuckle/chatbot",
-    previewUrl: "https://thepdfchatbot.streamlit.app/",
-    techStack: "Built with Python and Streamlit"
-  },
-  {
-    id: 3,
     title: "FeedFlo",
     description: "User Feedback Tool",
     image: projImg1,
@@ -34,6 +24,16 @@ const projectsData = [
     gitUrl: "https://github.com/markbuckle/saas-app",
     previewUrl: "https://saasdashboard.vercel.app/",
     techStack: "Built with React, NextJs, Vite, Shadcn-UI, Clerk, Supabase/PostgresSQL, Drizzle and Stripe"
+  },
+  {
+    id: 3,
+    title: "DocChat",
+    description: "AI PDF Upload Chatbot",
+    image: projImg2,
+    tag: ["All", "Web"],
+    gitUrl: "https://github.com/markbuckle/chatbot",
+    previewUrl: "https://thepdfchatbot.streamlit.app/",
+    techStack: "Built with Python<br>and Streamlit<br></br>"
   }
 ];
 
@@ -53,7 +53,10 @@ const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack
               <EyeIcon className="icon" />
             </a>
           </div>
-          <div className="overlay-tech-stack">{techStack}</div> 
+          <div 
+              className="overlay-tech-stack" 
+              dangerouslySetInnerHTML={{ __html: techStack }}
+            />
         </div>
       </div>
       <div className="project-card-content"> 
@@ -85,7 +88,7 @@ export const Projects = () => {
       <h1 className="projects-title">
         My Projects
       </h1>
-      <p className="projects-subtitle">This portfolio was built with React and Animate CSS.</p>
+      <p className="projects-subtitle">This portfolio was built with HTML, CSS, JavaScript and React.</p>
       <div ref={ref} className="projects-list">
         {filteredProjects.map((project, index) => (
           <motion.div
