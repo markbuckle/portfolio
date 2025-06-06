@@ -51,7 +51,7 @@ export const Contact = () => {
         <div className="align-items-center">
           <h1 className="contact-title">Let's Connect</h1>
           <p className="contact-text">
-            If you have an idea you want to bring to life or just a question, my inbox is open. I'll try my best to get back to you asap!
+            If you have an idea you want to bring to life or just a question, my inbox is open. I'll try my best to get back to you asap. 
           </p>
           <Row>
             <Col size={12} md={6}>
