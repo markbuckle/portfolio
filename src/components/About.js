@@ -10,7 +10,7 @@ const TAB_DATA = [
       <ul className="about-list">
         <li>Memorial University of Newfoundland<br></br>B.Eng</li>
         <li>University of Calgary<br></br>Precision Health <br></br>Post-Graduate Program</li>
-        <li>GetCoding - Intro to Web Development</li>
+        <li>GetCoding -  Web Development & Product Design</li>
       </ul>
     ),
   },
@@ -19,7 +19,7 @@ const TAB_DATA = [
     id: "certifications",
     content: (
       <ul className="about-list">
-        <li>GetCoding<br></br>Intro to Web Development & Product Design</li>
+        <li>GetCoding<br></br>Web Development & Product Design</li>
       </ul>
     ),
   },
