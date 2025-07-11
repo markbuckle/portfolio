@@ -58,7 +58,7 @@ export const About = () => {
       <div className="about-content">
             <div className="about-text-container">
                 <p className="about-description">
-                    I'm a product designer who builds. With a technical background and deep passion for healthcare innovation, I bring a unique perspective that bridges technical feasibility with user-centered design.
+                    I'm a product designer who builds and ships fast. With a technical background and deep passion for healthcare and cybersecurity innovation, I bring a unique perspective that bridges technical feasibility with user-centered design.
                 </p>
                 <p className="about-description">
                     Whether designing intuitive interfaces or building innovative backends, I'm passionate about creating 
