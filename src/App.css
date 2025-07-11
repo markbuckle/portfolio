@@ -1650,4 +1650,15 @@ p.danger {
   .slogan {
     width: 85% !important;
   }
+  .sidebar-container[data-state="closed"] .sidebar-content {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .sidebar-container[data-state="closed"] .sidebar-section {
+    margin-bottom: 0; /* Override the existing margin-bottom: auto */
+  }
 }
