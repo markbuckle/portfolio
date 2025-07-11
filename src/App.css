@@ -1647,4 +1647,7 @@ p.danger {
   .footer img {
     width: 80%;
   }
+  .slogan {
+    width: 85% !important;
+  }
 }

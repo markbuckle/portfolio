@@ -61,7 +61,7 @@ export const Banner = () => {
             <h1>{`Mark Buckle`}</h1>
             <h3><span className="txt-rotate" dataPeriod="100" data-rotate='[ "Software Developer", "Product Designer"]'>
               <span className="wrap">{text}</span></span></h3>
-            <p>I do product design and full-stack solutions.</p>
+            <p class="slogan">I do product design and full-stack solutions.</p>
               {/* <button className="vvd" onClick={() => console.log('connect')}>Let’s Connect <ArrowRightCircle size={25} /></button> */}
             <span className="tagline">Welcome to my Portfolio</span>
           </Col>
