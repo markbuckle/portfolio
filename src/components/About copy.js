@@ -35,7 +35,7 @@ const TabButton = ({ active, selectTab, children }) => {
           animate={active ? "active" : "default"}
           variants={{
             default: { width: 0 },
-            active: { width: "calc(100% - 0.75rem)" }
+            active: { width: "calc(100% - 0.1rem)" }
           }}
           className="about-tab-underline"
         ></motion.div>
@@ -57,8 +57,12 @@ export const About = () => {
       <div className="about-content">
             <div className="about-text-container">
                 <p className="about-description">
-                    I am a full stack web developer with a passion for creating
-                    interactive and responsive web applications. Please check out my background, skills and favourite projects below.
+                    I transform ideas into interactive digital experiences. With a background in engineering and a passion for healthcare tech, 
+                    I bring a unique perspective to full-stack development that bridges technical expertise with user-centered design.
+                </p>
+                <p className="about-description">
+                    Whether building innovative backends or designing intuitive interfaces, I'm passionate about creating 
+                    technology that's both powerful and accessible.
                 </p>
 
                 <div className="about-tabs">
