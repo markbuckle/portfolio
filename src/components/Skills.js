@@ -241,14 +241,11 @@ const SkillCard = ({ title, description, icon }) => {
 
 export const Skills = () => {
   const [tag, setTag] = useState("All");
-  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
   const handleTagChange = (newTag) => {
     setTag(newTag);
-    setIsVisible(false); // Reset visibility for re-animation 
-    setTimeout(() => setIsVisible(true), 100); // Add slight delay to restart animation
   };
 
   const filteredSkills = tag === "All"

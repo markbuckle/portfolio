@@ -36,10 +36,11 @@ export const Contact = () => {
         form.current.reset();
       },
       (error) => {
+        console.error('EmailJS error:', error);
         setButtonText('Send');
-        setStatus({ 
-          message: 'Failed to send email. Please try again or email Mark directly.', 
-          success: false 
+        setStatus({
+          message: 'Failed to send email. Please try again or email Mark directly.',
+          success: false
         });
       },
     );

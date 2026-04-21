@@ -1,34 +1,18 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Banner } from "./components/Banner";
 import { Sidebar } from "./components/Sidebar";
 import { About } from "./components/About";
-import { Skills } from "./components/Skills"; 
+import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then((data) => { 
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error);
-      });
-  }, []);
 
   return (
       <Router>
