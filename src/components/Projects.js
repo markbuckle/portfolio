@@ -31,7 +31,7 @@ const projectsData = [
     description: "AI PDF Upload Chatbot",
     image: projImg2,
     tag: ["All", "Web"],
-    gitUrl: "https://github.com/markbuckle/chatbot",
+    gitUrl: "https://github.com/markbuckle/ai-pdf-chatbot",
     previewUrl: "https://thepdfchatbot.streamlit.app/",
     techStack: "Built with Python<br>and Streamlit<br></br>"
   }
