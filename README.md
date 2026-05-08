@@ -1,20 +1,25 @@
-# Portfolio — Mark Buckle
+# Portfolio
 
 My updated portfolio showcasing my product design, full-stack development, and engineering work. 
 
-**Stack:** React · Framer Motion · EmailJS · Pure CSS
+**Stack:** React · CSS · Framer Motion · EmailJS
 
 ---
 
 ## Design
 
-The visual system is built without any CSS framework — every token is defined in a `:root` block using CSS custom properties, giving complete control over the design language.
+The visual system is built without any CSS framework. Every token is defined in a `:root` block using CSS custom properties, giving complete control over the design language.
 
-- **Theme** — Deep black background with a teal-to-cyan accent gradient (`#00e5a0` → `#00d4ff`), glow effects via `box-shadow`, and subtle border treatments inspired by Resend's aesthetic
-- **Typography** — Instrument Sans for UI copy + JetBrains Mono for code/technical text; fluid sizing throughout using `clamp()` so nothing snaps at breakpoints
-- **Motion** — Framer Motion drives all entrance animations, sidebar transitions, and scroll-triggered reveals; staggered delays give the page a layered, considered feel
-- **Gradient Borders** — SVG `<rect>` elements with `linearGradient` stroke on the primary CTA button — a pure CSS/SVG technique that avoids the typical `border-image` limitations
-- **Sidebar** — Collapsible navigation that transitions between a 4rem icon rail and a 14rem labelled panel, with smooth label fade-in on expand
+- **Theme** 
+Deep black background with a teal-to-cyan accent gradient, glow effects via `box-shadow`, and subtle border treatments inspired by Resend's aesthetic
+- **Typography** 
+Instrument Sans for UI copy + JetBrains Mono for code/technical text; fluid sizing throughout using `clamp()` so nothing snaps at breakpoints
+- **Motion** 
+Framer Motion drives all entrance animations, sidebar transitions, and scroll-triggered reveals. Staggered delays to give the page a layered, considered feel
+- **Gradient Borders** 
+SVG `<rect>` elements with `linearGradient` stroke on the primary CTA button. A pure CSS/SVG technique that avoids the typical `border-image` limitations
+- **Sidebar**
+Collapsible navigation that transitions between a 4rem icon rail and a 14rem labelled panel, with smooth label fade-in on expand
 
 ---
 
@@ -34,10 +39,14 @@ src/
 └── App.css              # Full design system (CSS variables, globals)
 ```
 
-- **Typewriter effect** — Custom `useEffect` hook that cycles between role titles ("Product Designer" / "Software Developer") with variable timing: 80ms per character added, 40ms per character deleted, 1.8s pause between cycles
-- **Scroll animations** — Framer Motion `whileInView` with `once: true` on every major section; individual list items stagger at `i * 0.03s` for a ripple feel
-- **Form state machine** — Contact form tracks `idle | sending | success | error` states, with a rotating SVG spinner during submission and inline success/error feedback
-- **EmailJS integration** — Serverless email delivery; credentials stored in `.env` and never committed
+- **Typewriter effect**
+Custom `useEffect` hook that cycles between role titles ("Product Designer" / "Software Developer" / "Engineer") with variable timing: 80ms per character added, 40ms per character deleted, 1.8s pause between cycles
+- **Scroll animations**
+Framer Motion `whileInView` with `once: true` on every major section. Individual list items stagger at `i * 0.03s` for a ripple feel
+- **Form state machine**
+Contact form tracks idle, sending, success, and error states, with a rotating SVG spinner during submission and inline success/error feedback
+- **EmailJS integration**
+Serverless email delivery. Credentials stored in `.env`
 
 ---
 
@@ -80,12 +89,18 @@ App.css (:root tokens)
               via var(--token-name)
 ```
 
-- **Design system via CSS variables** — All colours, spacing, radii, and shadows are tokens. Changing the accent colour is a one-line edit in `:root`
-- **Minimal state surface** — App-level state is only the sidebar toggle boolean; everything else is local to the component that owns it
-- **Fluid responsive layout** — `clamp()` for typography, flexbox for layout; no media query walls, no layout shifts at arbitrary breakpoints
-- **Accessibility** — Semantic HTML throughout, explicit `aria-hidden` on decorative SVGs, visible focus styles
-- **Environment config** — Sensitive keys in `.env` (gitignored); the build inlines only what Create React App's `REACT_APP_` prefix whitelists
-- **Performance** — React's default lazy image loading, `whileInView` defers animation work until elements are visible, no unnecessary re-renders from stable state shape
+- **Design system via CSS variables**
+All colours, spacing, radii, and shadows are tokens. Changing the accent colour is a one-line edit in `:root`
+- **Minimal state surface**
+App-level state is only the sidebar toggle boolean; everything else is local to the component that owns it
+- **Fluid responsive layout**
+`clamp()` for typography, flexbox for layout; no media query walls, no layout shifts at arbitrary breakpoints
+- **Accessibility**
+Semantic HTML throughout, explicit `aria-hidden` on decorative SVGs, visible focus styles
+- **Environment config**
+Sensitive keys in `.env` (gitignored); the build inlines only what Create React App's `REACT_APP_` prefix whitelists
+- **Performance**
+React's default lazy image loading, `whileInView` defers animation work until elements are visible, no unnecessary re-renders from stable state shape
 
 ---
 
