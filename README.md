@@ -2,7 +2,7 @@
 
 My updated portfolio showcasing my product design, full-stack development, and engineering work. 
 
-**Stack:** React · CSS · Framer Motion · EmailJS
+**Stack:** React · JavaScript · CSS · Framer Motion · EmailJS
 
 ---
 
