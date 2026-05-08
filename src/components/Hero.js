@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export const Hero = () => {
-  const roles = ['Product Designer', 'Software Developer'];
+  const roles = ['Product Designer', 'Software Developer', 'Engineer'];
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
