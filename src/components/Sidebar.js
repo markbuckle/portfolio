@@ -2,18 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
-import {
-  Home, User, Layers, Code2, Mail,
-  ChevronRight, ChevronLeft, FileDown
-} from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { ChevronRight, ChevronLeft, FileDown } from 'lucide-react';
+import homeIcon from '../assets/icons/nav/home.svg';
+import aboutIcon from '../assets/icons/nav/about.svg';
+import projectsIcon from '../assets/icons/nav/projects.svg';
+import skillsIcon from '../assets/icons/nav/skills.svg';
+import contactIcon from '../assets/icons/nav/contact.svg';
+import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
+import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 
 const navItems = [
-  { icon: <Home size={18} />, name: 'Home', to: '#home' },
-  { icon: <User size={18} />, name: 'About', to: '#about' },
-  { icon: <Code2 size={18} />, name: 'Projects', to: '#projects' },
-  { icon: <Layers size={18} />, name: 'Skills', to: '#skills' },
-  { icon: <Mail size={18} />, name: 'Contact', to: '#contact' },
+  { icon: <img src={homeIcon} alt="Home" width={24} height={24} />, name: 'Home', to: '#home' },
+  { icon: <img src={aboutIcon} alt="About" width={24} height={24} />, name: 'About', to: '#about' },
+  { icon: <img src={projectsIcon} alt="Projects" width={24} height={24} />, name: 'Projects', to: '#projects' },
+  { icon: <img src={skillsIcon} alt="Skills" width={24} height={24} />, name: 'Skills', to: '#skills' },
+  { icon: <img src={contactIcon} alt="Contact" width={24} height={24} />, name: 'Contact', to: '#contact' },
 ];
 
 const SidebarItem = ({ icon, name, to, isOpen }) => (
@@ -67,11 +70,11 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
 
           {/* Social icons */}
           <div className={`sidebar-social ${isOpen ? '' : 'hidden'}`}>
-            <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer">
-              <FaGithub size={16} />
+            <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <GithubIcon width={30} height={30} />
             </a>
-            <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin size={16} />
+            <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <LinkedinIcon width={30} height={30} />
             </a>
           </div>
 
