@@ -142,6 +142,7 @@ section {
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  text-align: center;
 }
 .section-title2 {
   font-size: clamp(2rem, 4vw, 2.4rem);
@@ -150,6 +151,7 @@ section {
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .section-subtitle {
@@ -157,6 +159,9 @@ section {
   color: var(--text-secondary);
   line-height: 1.7;
   max-width: 560px;
+  text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-divider {
@@ -568,20 +573,81 @@ section {
   line-height: 1.8;
   max-width: 600px;
   margin-top: 1.25rem;
+  text-align: justify;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-details-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 1.25rem;
   margin-top: 3rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border);
 }
 
-.about-detail-col {
+.about-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 1px;
+  overflow: hidden;
+  background: #ffffff14;
+}
+
+.about-card::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 78%,
+    #00e5a0e6 87%,
+    #00e5a0e6 93%,
+    transparent 100%
+  );
+  opacity: 0;
+}
+
+/* Figure-8: card 1 arc visible first half, card 2 arc visible second half.
+   Both start near the top-centre gap so the crossover looks like a continuous path. */
+.about-card:first-child::before {
+  animation: about-spin-1 8s linear infinite;
+}
+
+.about-card:last-child::before {
+  animation: about-spin-2 8s linear infinite;
+}
+
+/* Arc sits at 324° in the gradient's local frame.
+   Card 1 target: arc at 90° (right-middle) → element rotation = 90-324 = -234 = 126°
+   Card 2 target: arc at 270° (left-middle) → element rotation = 270-324 = -54 = 306°
+   Both crossovers meet at the mid-gap between the two cards. */
+@keyframes about-spin-1 {
+  0%   { transform: translate(-50%, -50%) rotate(148deg); opacity: 1; }
+  48%  { opacity: 1; }
+  50%  { transform: translate(-50%, -50%) rotate(486deg); opacity: 0; }
+  100% { transform: translate(-50%, -50%) rotate(846deg); opacity: 0; }
+}
+
+@keyframes about-spin-2 {
+  0%   { transform: translate(-50%, -50%) rotate(306deg); opacity: 0; }
+  50%  { transform: translate(-50%, -50%) rotate(306deg); opacity: 0; }
+  52%  { opacity: 1; }
+  98%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(-54deg); opacity: 0; }
+}
+
+.about-card-inner {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-primary);
+  border-radius: calc(var(--radius-lg) - 1px);
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .about-detail-label {
@@ -591,6 +657,18 @@ section {
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.about-detail-list {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-card:first-child .about-detail-list {
+  padding-left: 3rem;
+  padding-right: 1.5rem;
 }
 
 .about-detail-value {
@@ -598,6 +676,7 @@ section {
   font-size: 0.9rem;
   margin-bottom: 0.6rem;
   line-height: 1.6;
+  text-align: left;
 }
 
 /* ============================================================

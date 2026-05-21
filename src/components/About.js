@@ -26,21 +26,27 @@ export const About = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
       >
-        <div className="about-detail-col">
-          <p className="about-detail-label">Education</p>
-          <p className="about-detail-value">B. Eng - Memorial University of Newfoundland</p>
-          <p className="about-detail-value">Web Development & Product Design - GetCoding</p>
-          <p className="about-detail-value">Precision Health certification - University of Calgary</p>
+        <div className="about-card">
+          <div className="about-card-inner">
+            <p className="about-detail-label">Education</p>
+            <div className="about-detail-list">
+              <p className="about-detail-value">B. Eng - Memorial University of Newfoundland</p>
+              <p className="about-detail-value">Web Development & Product Design - GetCoding</p>
+              <p className="about-detail-value">Precision Health certification - University of Calgary</p>
+            </div>
+          </div>
         </div>
 
-        <div className="about-detail-col">
-          <p className="about-detail-label">Focus Areas</p>
-          <p className="about-detail-value">
-                  Full-stack Development
-            <br />Product Design
-            <br />Agile management
-            <br />AI-Powered Products
-          </p>
+        <div className="about-card">
+          <div className="about-card-inner">
+            <p className="about-detail-label">Focus Areas</p>
+            <div className="about-detail-list">
+              <p className="about-detail-value">Full-stack Development</p>
+              <p className="about-detail-value">Product Design</p>
+              <p className="about-detail-value">Agile Management</p>
+              <p className="about-detail-value">AI-Powered Products</p>
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>
