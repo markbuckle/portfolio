@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" fill="none" role="img" aria-label="Mark Buckle email icon">
+  <title>Email · Mark Buckle</title>
+
+  <defs>
+    
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#202020"></stop>
+      <stop offset="40%" stop-color="#0c0c0c"></stop>
+      <stop offset="100%" stop-color="#000000"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="bevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"></stop>
+      <stop offset="55%" stop-color="rgba(255,255,255,0.02)"></stop>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.85)"></stop>
+    </linearGradient>
+
+    
+    <radialGradient id="topright" cx="85%" cy="15%" r="75%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.16)"></stop>
+      <stop offset="35%" stop-color="rgba(255,255,255,0.04)"></stop>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+    </radialGradient>
+
+    
+    <linearGradient id="edge-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)"></stop>
+      <stop offset="30%" stop-color="rgba(255,255,255,0.18)"></stop>
+      <stop offset="60%" stop-color="rgba(255,255,255,0)"></stop>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+    </linearGradient>
+    <linearGradient id="edge-bl" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(94,234,212,0.65)"></stop>
+      <stop offset="25%" stop-color="rgba(0,229,160,0.18)"></stop>
+      <stop offset="55%" stop-color="rgba(0,229,160,0)"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="env" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2a26"></stop>
+      <stop offset="100%" stop-color="#050a08"></stop>
+    </linearGradient>
+    <linearGradient id="env-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.28)"></stop>
+      <stop offset="60%" stop-color="rgba(94,234,212,0.08)"></stop>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.6)"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="env-rim-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.6)"></stop>
+      <stop offset="40%" stop-color="rgba(255,255,255,0.15)"></stop>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+    </linearGradient>
+    <linearGradient id="env-rim-bl" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(94,234,212,0.55)"></stop>
+      <stop offset="35%" stop-color="rgba(0,229,160,0.12)"></stop>
+      <stop offset="60%" stop-color="rgba(0,229,160,0)"></stop>
+    </linearGradient>
+
+    
+    <linearGradient id="flap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)"></stop>
+      <stop offset="100%" stop-color="rgba(94,234,212,0.1)"></stop>
+    </linearGradient>
+    <linearGradient id="flap-bright" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.85)"></stop>
+      <stop offset="40%" stop-color="rgba(255,255,255,0.45)"></stop>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.15)"></stop>
+    </linearGradient>
+
+    
+    <radialGradient id="burst" cx="50%" cy="62%" r="55%">
+      <stop offset="0%" stop-color="rgba(94,234,212,0.55)"></stop>
+      <stop offset="30%" stop-color="rgba(0,229,160,0.22)"></stop>
+      <stop offset="70%" stop-color="rgba(0,229,160,0.04)"></stop>
+      <stop offset="100%" stop-color="rgba(0,229,160,0)"></stop>
+    </radialGradient>
+    <radialGradient id="well" cx="50%" cy="100%" r="55%">
+      <stop offset="0%" stop-color="rgba(94,234,212,0.75)"></stop>
+      <stop offset="40%" stop-color="rgba(0,229,160,0.4)"></stop>
+      <stop offset="100%" stop-color="rgba(0,229,160,0)"></stop>
+    </radialGradient>
+
+    <clipPath id="clip">
+      <path d="M50 8 H190 a42 42 0 0 1 42 42 V190 a42 42 0 0 1 -42 42 H50 a42 42 0 0 1 -42 -42 V50 a42 42 0 0 1 42 -42 Z"></path>
+    </clipPath>
+    <filter id="bloom" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="0.8"></feGaussianBlur>
+    </filter>
+  </defs>
+
+  
+  <path d="M50 8 H190 a42 42 0 0 1 42 42 V190 a42 42 0 0 1 -42 42 H50 a42 42 0 0 1 -42 -42 V50 a42 42 0 0 1 42 -42 Z" fill="url(#body)"></path>
+
+  
+  <g clip-path="url(#clip)">
+    <rect x="0" y="0" width="240" height="240" fill="url(#burst)"></rect>
+    <rect x="0" y="0" width="240" height="240" fill="url(#well)"></rect>
+    <rect x="0" y="0" width="240" height="240" fill="url(#topright)"></rect>
+
+    
+    <g opacity="0.5">
+    <line x1="120" y1="120" x2="120.0" y2="340.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="63.1" y2="332.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="10.0" y2="310.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-35.6" y2="275.6" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-70.5" y2="230.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-92.5" y2="176.9" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-100.0" y2="120.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-92.5" y2="63.1" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-70.5" y2="10.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="-35.6" y2="-35.6" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="10.0" y2="-70.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="63.1" y2="-92.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="120.0" y2="-100.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="176.9" y2="-92.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="230.0" y2="-70.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="275.6" y2="-35.6" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="310.5" y2="10.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="332.5" y2="63.1" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="340.0" y2="120.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="332.5" y2="176.9" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="310.5" y2="230.0" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="275.6" y2="275.6" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="230.0" y2="310.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    <line x1="120" y1="120" x2="176.9" y2="332.5" stroke="rgba(94,234,212,0.18)" stroke-width="0.5"></line>
+    </g>
+
+    
+    <rect x="44" y="66" width="152" height="108" rx="10" fill="url(#env)" stroke="url(#env-edge)" stroke-width="1.2"></rect>
+
+    
+    <rect x="44" y="66" width="152" height="108" rx="10" fill="none" stroke="url(#env-rim-top)" stroke-width="1.2"></rect>
+    <rect x="44" y="66" width="152" height="108" rx="10" fill="none" stroke="url(#env-rim-bl)" stroke-width="1.2"></rect>
+
+    
+    <path d="M44 70 L120 124 L196 70" fill="none" stroke="url(#flap)" stroke-width="2" stroke-linejoin="round" filter="url(#bloom)"></path>
+    <path d="M44 70 L120 124 L196 70" fill="none" stroke="url(#flap-bright)" stroke-width="1" stroke-linejoin="round"></path>
+
+    
+    <path d="M120 124 L196 70" fill="none" stroke="rgba(0,0,0,0.55)" stroke-width="2.2" stroke-linejoin="round"></path>
+    <path d="M120 124 L196 70" fill="none" stroke="rgba(94,234,212,0.08)" stroke-width="1" stroke-linejoin="round"></path>
+
+    
+    <path d="M48 70 L120 120 L192 70 L196 74 L44 74 Z" fill="rgba(0,229,160,0.04)"></path>
+
+    
+    <path d="M44 174 L196 174" stroke="rgba(0,0,0,0.6)" stroke-width="1" opacity="0.6"></path>
+  </g>
+
+  
+  <path d="M50 8 H190 a42 42 0 0 1 42 42 V190 a42 42 0 0 1 -42 42 H50 a42 42 0 0 1 -42 -42 V50 a42 42 0 0 1 42 -42 Z" fill="none" stroke="url(#bevel)" stroke-width="1.5"></path>
+  <path d="M50 8 H190 a42 42 0 0 1 42 42 V190 a42 42 0 0 1 -42 42 H50 a42 42 0 0 1 -42 -42 V50 a42 42 0 0 1 42 -42 Z" fill="none" stroke="url(#edge-top)" stroke-width="1.5"></path>
+  <path d="M50 8 H190 a42 42 0 0 1 42 42 V190 a42 42 0 0 1 -42 42 H50 a42 42 0 0 1 -42 -42 V50 a42 42 0 0 1 42 -42 Z" fill="none" stroke="url(#edge-bl)" stroke-width="1.5"></path>
+</svg>

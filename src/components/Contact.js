@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { Mail } from 'lucide-react';
+import emailLogo from '../assets/logos/email.svg';
 import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
@@ -35,36 +35,32 @@ export const Contact = () => {
   };
 
   return (
-    <div className="section-container">
+    <div className="section-container contact-section">
       <motion.div
+        className="contact-header"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
+        <img src={emailLogo} alt="Email" className="contact-email-logo" />
         <p className="section-label">Contact</p>
-        <h2 className="section-title">Let's connect</h2>
+        <h2 className="section-title">Let's <span className="contact-title-accent">connect</span></h2>
+        <div className="contact-social-row">
+          <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link">
+            <FaGithub size={22} />
+          </a>
+          <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" className="contact-social-link">
+            <FaLinkedin size={22} />
+          </a>
+        </div>
+        <p className="contact-description">
+          I'm always open to learning more about product design, full-stack development and software engineering opportunities.
+          Whether you have a project in mind or just want to learn, please reach out.
+        </p>
       </motion.div>
 
-      <div className="contact-layout">
-        <div className="contact-info">
-          <p>
-            I'm always open to learning more about product design and full-stack development opportunities.
-            Whether you have a project in mind or just want to learn, I'd love to hear from you.
-          </p>
-          <div className="contact-social">
-            <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer">
-              <FaGithub size={18} />
-            </a>
-            <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin size={18} />
-            </a>
-            <a href="mailto:mark@example.com">
-              <Mail size={18} />
-            </a>
-          </div>
-        </div>
-
+      <div className="contact-form-wrapper">
         <form className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
