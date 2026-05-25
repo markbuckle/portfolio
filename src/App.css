@@ -154,6 +154,59 @@ section {
   text-align: center;
 }
 
+.builder-text {
+  background-image: url("./assets/bricks.svg");
+  background-size: 20px 8px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-stroke: 0.5px #777777;
+}
+
+.sweats-word {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(90deg, #8d8d8d 20%, #909090 38%, #a0a0a0 50%, #898989 62%, #898989 80%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: sweats-shimmer 3s linear infinite, sweats-glow 3s ease-in-out infinite;
+}
+
+@keyframes sweats-shimmer {
+  0%   { background-position: 150% center; }
+  100% { background-position: -150% center; }
+}
+
+@keyframes sweats-glow {
+  0%, 18%   { filter: drop-shadow(0 0 2px #a0a0a033); }
+  25%       { filter: drop-shadow(0 0 10px #a0a0a0bf); }
+  32%, 100% { filter: drop-shadow(0 0 2px #a0a0a033); }
+}
+
+.sweat-drop {
+  position: absolute;
+  bottom: -1px;
+  width: 6px;
+  height: 10px;
+  background:
+    radial-gradient(circle at 35% 28%, #ffffffcc 0%, #ffffff00 52%),
+    linear-gradient(160deg, #d8d8d8f0, #90909088);
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  box-shadow: 0 0 5px #c8c8c866, 0 1px 4px #80808044;
+  opacity: 0;
+  animation: sweat-drip-sync 3s linear infinite;
+}
+
+@keyframes sweat-drip-sync {
+  0%, 21%  { opacity: 0;   transform: translateY(0)    scaleY(0);   }
+  25%      { opacity: 1;   transform: translateY(0)    scaleY(1);   }
+  35%      { opacity: 0.6; transform: translateY(18px) scaleY(1.1); }
+  41%      { opacity: 0;   transform: translateY(24px) scaleY(0.5); }
+  42%, 100%{ opacity: 0;   transform: translateY(24px) scaleY(0);   }
+}
+
 .section-subtitle {
   font-size: 1.05rem;
   color: var(--text-secondary);
@@ -189,7 +242,7 @@ section {
   height: 100%;
   padding: 1.25rem 0.75rem;
   background: var(--bg-sidebar);
-  border-right: 1px solid var(--border);
+  position: relative;
   box-shadow: 4px 0 16px #00e5a026, 8px 0 40px #00e5a014, 12px 0 60px #00d4ff0a;
   display: flex;
   flex-direction: column;
@@ -197,6 +250,17 @@ section {
   width: 100%;
   transition: all var(--transition-base);
   backdrop-filter: blur(12px);
+}
+
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to right, #2b2b2ba4, #cdcdcd95);
+  pointer-events: none;
 }
 
 .sidebar-toggle {
@@ -508,7 +572,7 @@ section {
 
 .hero-cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 24px #ffffff1a, 0 0 12px #00e5a04d;
+  box-shadow: 0 4px 24px #ffffff1a, 0 0 14px #00e5a09d;
 }
 
 /* ============================================================
@@ -516,13 +580,17 @@ section {
    ============================================================ */
 
 /*
-  Technique: SVG <rect> with pathLength="600" normalises the perimeter
-  to 600 units regardless of actual button size.
-  stroke-dasharray:600 + stroke-dashoffset:600 → nothing visible.
-  On hover: dashoffset animates to 0 over 0.6s → border draws itself around.
-  On leave: dashoffset resets instantly (transition:0s) while the SVG
-  fades out over 0.3s — user sees a fade, not a reverse-trace.
+  Technique: SVG <rect> with pathLength="600" normalises the perimeter.
+  stroke-dasharray:600 600 (period=1200). dashoffset 600→0 draws the head
+  forward; 0→-600 advances the tail so the stroke erases in the same direction.
+  On leave: animation resets instantly while the SVG fades out.
 */
+@keyframes trace-snake {
+  0%   { stroke-dasharray:   0 600; stroke-dashoffset:  0; }
+  50%  { stroke-dasharray: 601 600; stroke-dashoffset:  0; }
+  100% { stroke-dasharray:   0 600; stroke-dashoffset: -601; }
+}
+
 .btn-trace {
   position: relative;
 }
@@ -541,7 +609,7 @@ section {
 
 .btn-trace:hover .trace-svg {
   opacity: 1;
-  transition: opacity var(--transition-fast);
+  transition: opacity 0s;
 }
 
 /* SVG geometry properties (SVG 2 / all modern browsers) let us inset
@@ -554,14 +622,13 @@ section {
   stroke-width: 1;
   width: calc(100% - 3px);
   height: calc(100% - 3px);
-  stroke-dasharray: 600;
-  stroke-dashoffset: 600;
-  transition: stroke-dashoffset 0s; /* instant reset so leave = fade only */
+  stroke-dasharray: 0 600;
+  stroke-dashoffset: 0;
+  animation: none;
 }
 
 .btn-trace:hover .trace-rect {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.35s linear;
+  animation: trace-snake 1.4s linear forwards;
 }
 
 /* ============================================================
@@ -625,15 +692,15 @@ section {
    Card 2 target: arc at 270° (left-middle) → element rotation = 270-324 = -54 = 306°
    Both crossovers meet at the mid-gap between the two cards. */
 @keyframes about-spin-1 {
-  0%   { transform: translate(-50%, -50%) rotate(148deg); opacity: 1; }
+  0%   { transform: translate(-50%, -50%) rotate(185deg); opacity: 1; }
   48%  { opacity: 1; }
   50%  { transform: translate(-50%, -50%) rotate(486deg); opacity: 0; }
   100% { transform: translate(-50%, -50%) rotate(846deg); opacity: 0; }
 }
 
 @keyframes about-spin-2 {
-  0%   { transform: translate(-50%, -50%) rotate(306deg); opacity: 0; }
-  50%  { transform: translate(-50%, -50%) rotate(306deg); opacity: 0; }
+  0%   { transform: translate(-50%, -50%) rotate(285deg); opacity: 0; }
+  50%  { transform: translate(-50%, -50%) rotate(285deg); opacity: 0; }
   52%  { opacity: 1; }
   98%  { opacity: 1; }
   100% { transform: translate(-50%, -50%) rotate(-54deg); opacity: 0; }

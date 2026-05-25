@@ -11,10 +11,9 @@ export const About = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">About Me</p>
-        <h2 className="section-title2">A builder who sweats the UX</h2>
+        <h2 className="section-title2">A builder who <span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span> the <span style={{ color: '#4ab382' }}>UX</span></h2>
         <p className="about-bio">
-          I design, develop and engineer solutions. With a technical background
-          and a mild obsession for next-level user interfaces, I like putting myself in the
+          I design, develop and engineer solutions. With a mild obsession for next-level user interfaces, I like putting myself in the
           user's shoes when I build products.
         </p>
       </motion.div>
