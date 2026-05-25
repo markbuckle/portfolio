@@ -115,9 +115,9 @@ export const DesignWork = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">Projects</p>
-        <h2 className="section-title">Things I've built</h2>
+        <h2 className="section-title">My shipped projects</h2>
         <p className="section-subtitle">
-          Here are a few of my end-to-end projects spanning product design, full-stack development, and engineering - from user research and system architecture through to the shipped product.
+          Here are a few of my end-to-end products spanning from user research, architecture, design systems, and full-stack development through to the shipped product.
         </p>
       </motion.div>
 

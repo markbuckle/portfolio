@@ -22,6 +22,7 @@
   --accent: #00e5a0;
   --accent-end: #00d4ff;
   --accent-gradient: (135deg, var(--accent) 0%, var(--accent-end) 100%);
+  --teal-dark-gradient: linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%);
   --accent-dim: rgba(0, 229, 160, 0.12);
   --accent-glow: 0 0 12px rgba(0, 229, 160, 0.35), 0 0 4px rgba(0, 212, 255, 0.2);
   --accent-glow-subtle: rgba(0, 229, 160, 0.06);
@@ -266,7 +267,7 @@ section {
 }
 
 .sidebar-toggle {
-  align-self: flex-end;
+  align-self: center;
   padding: 0.35rem;
   border-radius: var(--radius-sm);
   color: var(--text-tertiary);
@@ -276,6 +277,10 @@ section {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.sidebar-container[data-state="open"] .sidebar-toggle {
+  align-self: flex-end;
 }
 
 .sidebar-toggle:hover {
@@ -721,10 +726,13 @@ section {
 
 .about-detail-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
+  background: var(--teal-dark-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.75rem;
   text-align: center;
 }
@@ -734,15 +742,19 @@ section {
   margin-left: auto;
   margin-right: auto;
 }
+.about-card:last-child .about-detail-list {
+  padding-left: 3.5rem;
+  padding-right: 1.5rem;
+}
 
 .about-card:first-child .about-detail-list {
-  padding-left: 3rem;
+  padding-left: 1rem;
   padding-right: 1.5rem;
 }
 
 .about-detail-value {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 0.6rem;
   line-height: 1.6;
   text-align: left;
@@ -788,7 +800,10 @@ section {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent);
+  background: var(--teal-dark-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.75rem;
 }
 
@@ -904,11 +919,14 @@ section {
 
 .skills-group-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent);
+  background: var(--teal-dark-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
@@ -1049,7 +1067,10 @@ section {
 }
 
 .contact-title-accent {
-  color: #4ab382;
+  background: var(--teal-dark-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .contact-description {

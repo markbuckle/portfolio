@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
-import { ChevronRight, ChevronLeft, FileDown } from 'lucide-react';
+import { FileDown } from 'lucide-react';
 import homeIcon from '../assets/icons/nav/home.svg';
+import chevronRightIcon from '../assets/icons/nav/chevron-right.svg';
+import chevronLeftIcon from '../assets/icons/nav/chevron-left.svg';
 import aboutIcon from '../assets/icons/nav/about.svg';
 import projectsIcon from '../assets/icons/nav/projects.svg';
 import skillsIcon from '../assets/icons/nav/skills.svg';
@@ -52,7 +54,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       <div className="sidebar">
         {/* Toggle — pinned top */}
         <div className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+          <img src={isOpen ? chevronLeftIcon : chevronRightIcon} alt={isOpen ? 'Collapse' : 'Expand'} width={18} height={18} />
         </div>
 
         {/* Center group — headshot + social + nav, vertically centered */}

@@ -76,7 +76,7 @@ export const Projects = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">Software Projects</p>
-        <h2 className="section-title">Things I've built</h2>
+        <h2 className="section-title">Products I've shipped</h2>
         <p className="section-subtitle">
           Full-stack applications showcasing my development skills across
           web, AI, and data-driven products.

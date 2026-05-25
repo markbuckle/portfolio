@@ -11,7 +11,7 @@ export const About = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">About Me</p>
-        <h2 className="section-title2">A builder who <span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span> the <span style={{ color: '#4ab382' }}>UX</span></h2>
+        <h2 className="section-title2">A builder who <span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span> the <span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>UX</span></h2>
         <p className="about-bio">
           I design, develop and engineer solutions. With a mild obsession for next-level user interfaces, I like putting myself in the
           user's shoes when I build products.
@@ -42,7 +42,7 @@ export const About = () => {
             <div className="about-detail-list">
               <p className="about-detail-value">Full-stack Development</p>
               <p className="about-detail-value">Product Design</p>
-              <p className="about-detail-value">Agile Management</p>
+              <p className="about-detail-value">Engineering and Architecture</p>
               <p className="about-detail-value">AI-Powered Products</p>
             </div>
           </div>
