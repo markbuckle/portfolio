@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
+import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 import emailLogo from '../assets/logos/email.svg';
 import emailjs from '@emailjs/browser';
 
@@ -47,11 +48,11 @@ export const Contact = () => {
         <p className="section-label">Contact</p>
         <h2 className="section-title">Let's <span className="contact-title-accent">connect</span></h2>
         <div className="contact-social-row">
-          <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link">
-            <FaGithub size={22} />
+          <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="GitHub">
+            <GithubIcon width={45} height={45} />
           </a>
-          <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" className="contact-social-link">
-            <FaLinkedin size={22} />
+          <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="LinkedIn">
+            <LinkedinIcon width={45} height={45} />
           </a>
         </div>
         <p className="contact-description">

@@ -297,7 +297,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
   transition: opacity var(--transition-base);
 }
 
@@ -1071,18 +1071,15 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 50px;
+  height: 50px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  color: #ffffffa6;
+  transition: color var(--transition-fast);
 }
 
 .contact-social-link:hover {
   color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-dim);
 }
 
 .contact-form-wrapper {

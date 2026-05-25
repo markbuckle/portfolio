@@ -8,8 +8,6 @@ import aboutIcon from '../assets/icons/nav/about.svg';
 import projectsIcon from '../assets/icons/nav/projects.svg';
 import skillsIcon from '../assets/icons/nav/skills.svg';
 import contactIcon from '../assets/icons/nav/contact.svg';
-import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
-import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 
 const navItems = [
   { icon: <img src={homeIcon} alt="Home" width={24} height={24} />, name: 'Home', to: '#home' },
@@ -66,16 +64,6 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
               alt="Mark Buckle"
               className="sidebar-headshot"
             />
-          </div>
-
-          {/* Social icons */}
-          <div className={`sidebar-social ${isOpen ? '' : 'hidden'}`}>
-            <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <GithubIcon width={30} height={30} />
-            </a>
-            <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <LinkedinIcon width={30} height={30} />
-            </a>
           </div>
 
           {/* Nav links */}
