@@ -42,9 +42,9 @@ const caseStudies = [
 ];
 
 const gradients = [
-  'linear-gradient(135deg, #0a0a0a 0%, #1a3a2a 100%)',
-  'linear-gradient(135deg, #0a0a0a 0%, #1a2a3a 100%)',
-  'linear-gradient(135deg, #0a0a0a 0%, #2a1a3a 100%)',
+  'linear-gradient(90deg, #0a0a0a 0%, #353535 50%, #0a0a0a 100%)',
+  'linear-gradient(90deg, #111111 0%, #383838 50%, #111111 100%)',
+  'linear-gradient(90deg, #0f0f0f 0%, #363636 50%, #0f0f0f 100%)',
 ];
 
 const CaseStudyCard = ({ study, index }) => (
@@ -65,10 +65,11 @@ const CaseStudyCard = ({ study, index }) => (
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '1.5rem',
-          fontWeight: 600,
-          color: 'var(--accent)',
+          fontSize: '2.5rem',
+          fontWeight: 800,
+          color: '#111111',
           letterSpacing: '-0.02em',
+          textShadow: '0 0 10px rgba(180,180,180,0.2), 0 0 20px rgba(140,140,140,0.1)',
         }}
       >
         {study.title}

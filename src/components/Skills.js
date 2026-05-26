@@ -9,7 +9,7 @@ const designSkills = [
 
 const devSkills = [
   'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python',
-  'Java', 'HTML5', 'CSS3', 'Tailwind CSS',
+  'Java', 'HTML', 'CSS', 'Tailwind CSS',
   'PostgreSQL', 'MongoDB', 'GraphQL', 'FastAPI',
   'AWS', 'Docker', 'Git',
 ];
