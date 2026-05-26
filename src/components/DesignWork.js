@@ -91,7 +91,7 @@ const CaseStudyCard = ({ study, index }) => (
 
       <div className="case-study-links">
         {study.liveUrl && (
-          <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="case-study-link">
+          <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="case-study-link case-study-link-ghost">
             <ExternalLink size={13} /> Live
           </a>
         )}

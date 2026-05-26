@@ -87,7 +87,7 @@ export const Contact = () => {
             required
           />
           <button type="submit" className="hero-cta btn-trace">
-            Send message
+            <span className="hero-cta-label">Send message</span>
             <svg className="trace-svg" aria-hidden="true" focusable="false">
               <defs>
                 <linearGradient id="contact-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">

@@ -49,13 +49,12 @@ export const Hero = () => {
           {/* Passionate about innovation, cybersecurity, and shipping fast. */}
         </p>
         <a href="#projects" className="hero-cta btn-trace">
-          View my work
-          <span style={{ fontSize: '1.1rem' }}>→</span>
+          <span className="hero-cta-label">View my work <span style={{ fontSize: '1.1rem' }}>→</span></span>
           <svg className="trace-svg" aria-hidden="true" focusable="false">
             <defs>
               <linearGradient id="hero-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#1ee5998e" />
-                <stop offset="100%" stopColor="#1ee5998e" />
+                <stop offset="0%" stopColor="#00e5a0" />
+                <stop offset="100%" stopColor="#00d4ff" />
               </linearGradient>
             </defs>
             <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#hero-trace-grad)" />
