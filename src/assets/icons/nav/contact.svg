@@ -11,7 +11,7 @@
   </filter>
   </defs>
   
-  <rect x="30" y="60" width="140" height="80" rx="10" stroke="url(#mono)" stroke-width="9" fill="none" stroke-linejoin="round" filter="url(#glow)"></rect>
+  <rect x="30" y="50" width="140" height="100" rx="10" stroke="url(#mono)" stroke-width="9" fill="none" stroke-linejoin="round" filter="url(#glow)"></rect>
   
-  <path d="M36 68 L100 116 L164 68" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"></path>
+  <path d="M36 60 L100 120 L164 60" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"></path>
 </svg>
