@@ -78,7 +78,7 @@ const CaseStudyCard = ({ study, index }) => (
 
     <div className="case-study-content">
       <p className="case-study-tag">{study.tag}</p>
-      <h3 className="case-study-title">{study.subtitle}</h3>
+      <h3 className="case-study-title white-gradient-text">{study.subtitle}</h3>
       <p className="case-study-description">{study.description}</p>
 
       <div className="case-study-tools">
@@ -116,9 +116,9 @@ export const DesignWork = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">Projects</p>
-        <h2 className="section-title">My shipped projects</h2>
+        <h2 className="section-title"><span className="white-gradient-text">My </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>work</span></h2>
         <p className="section-subtitle">
-          Here are a few of my end-to-end products spanning from user research, architecture, design systems, and full-stack development through to the shipped product.
+          Here are a few of my end-to-end projects spanning from user research, architecture, design systems, and full-stack development through to the shipped product.
         </p>
       </motion.div>
 

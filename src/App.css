@@ -23,6 +23,7 @@
   --accent-end: #00d4ff;
   --accent-gradient: (135deg, var(--accent) 0%, var(--accent-end) 100%);
   --teal-dark-gradient: linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%);
+  --white-text-gradient: linear-gradient(180deg, #aaaaaa 0%, #f0f0f0 45%, #ffffff 55%, #aaaaaa 100%);
   --accent-dim: rgba(0, 229, 160, 0.12);
   --accent-glow: 0 0 12px rgba(0, 229, 160, 0.35), 0 0 4px rgba(0, 212, 255, 0.2);
   --accent-glow-subtle: rgba(0, 229, 160, 0.06);
@@ -50,7 +51,14 @@
   --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* --- Accent text gradient utility --- */
+/* --- Text gradient utilities --- */
+.white-gradient-text {
+  background: var(--white-text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .accent-text {
   background: var(--accent-gradient);
   -webkit-background-clip: text;
@@ -1191,7 +1199,19 @@ section {
 .footer {
   padding: 2rem;
   text-align: center;
-  border-top: 1px solid var(--border);
+  border-top: none;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, rgb(150 150 170 / 0.15) 20%, rgb(200 200 220 / 0.7) 50%, rgb(150 150 170 / 0.15) 80%, transparent 100%);
+  box-shadow: 0 0 8px 1px rgb(180 180 210 / 0.25);
 }
 
 .footer p {

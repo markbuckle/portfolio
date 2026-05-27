@@ -46,7 +46,7 @@ export const Contact = () => {
       >
         <img src={emailLogo} alt="Email" className="contact-email-logo" />
         <p className="section-label">Contact</p>
-        <h2 className="section-title">Let's <span className="contact-title-accent">connect</span></h2>
+        <h2 className="section-title"><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></h2>
         <div className="contact-social-row">
           <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="GitHub">
             <GithubIcon width={45} height={45} />
@@ -57,7 +57,7 @@ export const Contact = () => {
         </div>
         <p className="contact-description">
           I'm always open to learning more about product design, full-stack development and software engineering opportunities.
-          Whether you have a project in mind or just want to learn, please reach out.
+          Whether you have a project in mind or you would like to learn, please reach out.
         </p>
       </motion.div>
 

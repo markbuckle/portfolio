@@ -2,9 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const designSkills = [
-  'Figma', 'NanoBanana', 'Wireframing', 'Prototyping',
-  'Design Systems', 'User Research', 'Usability Testing', 'UI Design',
-  'Interaction Design', 'Information Architecture',
+  'Figma', 'NanoBanana', 'Claude Design', 'Wireframing', 'High Fidelity','Prototyping',
+  'Design Systems', 'User Research', 'Usability Testing', 'Information Architecture',
 ];
 
 const devSkills = [
@@ -42,7 +41,7 @@ export const Skills = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">Skills & Tools</p>
-        <h2 className="section-title">What I work with</h2>
+        <h2 className="section-title white-gradient-text">What I work with</h2>
       </motion.div>
 
       <div className="skills-groups">
