@@ -9,7 +9,7 @@ const caseStudies = [
     title: 'LifeSync',
     subtitle: 'Text-to-Calendar Management Application',
     description:
-      'Designed and built an intelligent calendar management platform that makes booking appointments, events, and meetings easier than ever. Powered by an AI assistant that helps users stay organized like a personal CEO assistant. Deployed as a web and IOS application.',
+      'A calendar management platform that makes booking appointments, events, and meetings easier than ever. Powered by an AI assistant that helps users stay organized like a personal CEO assistant. Shipped as a web and IOS application.',
     tools: ['Figma', 'React', 'TypeScript', 'Tailwind CSS', 'FastAPI', 'GraphQL', 'PostgreSQL', 'Docker', 'Vercel'],
     liveUrl: 'https://thelifesync.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/lifesync',
