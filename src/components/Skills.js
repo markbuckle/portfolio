@@ -41,7 +41,7 @@ export const Skills = () => {
         transition={{ duration: 0.6 }}
       >
         <p className="section-label">Skills & Tools</p>
-        <h2 className="section-title white-gradient-text">What I work with</h2>
+        <h2 className="section-title"><span className="white-gradient-text">What I </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>build</span><span className="white-gradient-text"> with</span></h2>
       </motion.div>
 
       <div className="skills-groups">

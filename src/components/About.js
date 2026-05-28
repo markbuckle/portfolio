@@ -27,23 +27,23 @@ export const About = () => {
       >
         <div className="about-card">
           <div className="about-card-inner">
-            <p className="about-detail-label">Education</p>
-            <div className="about-detail-list">
-              <p className="about-detail-value">B. Eng - Memorial University of Newfoundland</p>
-              <p className="about-detail-value">Web Development & Product Design - GetCoding</p>
-              <p className="about-detail-value">Precision Health certification - University of Calgary</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="about-card">
-          <div className="about-card-inner">
             <p className="about-detail-label">Focus Areas</p>
             <div className="about-detail-list">
               <p className="about-detail-value">Full-stack Development</p>
               <p className="about-detail-value">Product Design</p>
               <p className="about-detail-value">Engineering and Architecture</p>
               <p className="about-detail-value">AI-Powered Products</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="about-card">
+          <div className="about-card-inner">
+            <p className="about-detail-label">Education</p>
+            <div className="about-detail-list">
+              <p className="about-detail-value">B. Eng - Memorial University of Newfoundland</p>
+              <p className="about-detail-value">Web Development & Product Design - GetCoding</p>
+              <p className="about-detail-value">Precision Health certification - University of Calgary</p>
             </div>
           </div>
         </div>
