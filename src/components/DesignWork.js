@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
 
 const caseStudies = [
   {
@@ -47,64 +47,100 @@ const gradients = [
   'linear-gradient(90deg, #0f0f0f 0%, #363636 50%, #0f0f0f 100%)',
 ];
 
-const CaseStudyCard = ({ study, index }) => (
-  <motion.div
-    className="case-study-card"
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.15 }}
-  >
-    {study.image ? (
-      <img src={study.image} alt={study.title} className="case-study-image" />
-    ) : (
-      <div
-        className="case-study-image"
-        style={{
-          background: gradients[index % gradients.length],
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '2.5rem',
-          fontWeight: 800,
-          color: '#111111',
-          letterSpacing: '-0.02em',
-          textShadow: '0 0 10px rgba(180,180,180,0.2), 0 0 20px rgba(140,140,140,0.1)',
-        }}
-      >
-        {study.title}
-      </div>
-    )}
+const CaseStudyCard = ({ study, index }) => {
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [rotation, setRotation] = useState(0);
 
-    <div className="case-study-content">
-      <p className="case-study-tag">{study.tag}</p>
-      <h3 className="case-study-title white-gradient-text">{study.subtitle}</h3>
-      <p className="case-study-description">{study.description}</p>
+  const handleToggle = () => {
+    const next = !toolsOpen;
+    setRotation(r => next ? r + 720 : r - 720);
+    setToolsOpen(next);
+  };
 
-      <div className="case-study-tools">
-        <p className="tools-label">Tools used:</p>
-        <div className="case-study-tools-tags">
-          {study.tools.map((tool) => (
-            <span key={tool} className="tool-tag">{tool}</span>
-          ))}
+  return (
+    <motion.div
+      className="case-study-card"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+    >
+      {study.image ? (
+        <img src={study.image} alt={study.title} className="case-study-image" />
+      ) : (
+        <div
+          className="case-study-image"
+          style={{
+            background: gradients[index % gradients.length],
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            color: '#111111',
+            letterSpacing: '-0.02em',
+            textShadow: '0 0 10px rgba(180,180,180,0.2), 0 0 20px rgba(140,140,140,0.1)',
+          }}
+        >
+          {study.title}
+        </div>
+      )}
+
+      <div className="case-study-content">
+        <p className="case-study-tag">{study.tag}</p>
+        <h3 className="case-study-title white-gradient-text">{study.subtitle}</h3>
+        <p className="case-study-description">{study.description}</p>
+
+        <div className="case-study-tools">
+          <button
+            className="tools-toggle"
+            onClick={handleToggle}
+            aria-expanded={toolsOpen}
+          >
+            <span className="tools-label">Primary tools used</span>
+            <motion.span
+              className="tools-chevron"
+              animate={{ rotate: rotation }}
+              transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              {toolsOpen ? <Minus size={12} strokeWidth={2.5} /> : <Plus size={12} strokeWidth={2.5} />}
+            </motion.span>
+          </button>
+
+          <AnimatePresence initial={false}>
+            {toolsOpen && (
+              <motion.div
+                className="case-study-tools-tags"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                style={{ overflow: 'hidden' }}
+              >
+                {study.tools.map((tool) => (
+                  <span key={tool} className="tool-tag">{tool}</span>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <div className="case-study-links">
+          {study.liveUrl && (
+            <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="case-study-link case-study-link-ghost">
+              <ExternalLink size={13} /> Live
+            </a>
+          )}
+          {study.gitUrl && (
+            <a href={study.gitUrl} target="_blank" rel="noopener noreferrer" className="case-study-link case-study-link-ghost">
+              <Github size={13} /> Code
+            </a>
+          )}
         </div>
       </div>
-
-      <div className="case-study-links">
-        {study.liveUrl && (
-          <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="case-study-link case-study-link-ghost">
-            <ExternalLink size={13} /> Live
-          </a>
-        )}
-        {study.gitUrl && (
-          <a href={study.gitUrl} target="_blank" rel="noopener noreferrer" className="case-study-link case-study-link-ghost">
-            <Github size={13} /> Code
-          </a>
-        )}
-      </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 export const DesignWork = () => {
   return (

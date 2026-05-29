@@ -45,7 +45,7 @@ export const Hero = () => {
           <span className="cursor" />
         </p>
         <p className="hero-description">
-          I design and build products that bridge technical feasibility with user-centered design.
+          I design and build products that bridge user-centered design with technical feasibility.
           {/* Passionate about innovation, cybersecurity, and shipping fast. */}
         </p>
         <a href="#projects" className="hero-cta btn-trace">

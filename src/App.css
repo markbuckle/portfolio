@@ -809,6 +809,9 @@ section {
   flex-direction: column;
   gap: 3rem;
   margin-top: 2.5rem;
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .case-study-card {
@@ -893,6 +896,22 @@ section {
   flex-wrap: wrap;
 }
 
+.tools-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+
+.tools-toggle:hover .tools-label {
+  color: var(--text-primary);
+  transition: color var(--transition-fast);
+}
+
 .tools-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -901,6 +920,27 @@ section {
   letter-spacing: 0.05em;
   margin: 0;
   white-space: nowrap;
+}
+
+.tools-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid #333333;
+  background: linear-gradient(145deg, #242424 0%, #151515 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.205), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color: #616161;
+  transition: border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tools-toggle:hover .tools-chevron {
+  border-color: #444444;
+  color: #808080;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .tool-tag {
