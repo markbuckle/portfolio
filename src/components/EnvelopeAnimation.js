@@ -114,11 +114,11 @@ export const EnvelopeAnimation = ({ width = 120, height = 120 }) => (
 
           <mask id="env-frameMask">
             <rect x="42" y="42" width="416" height="416" rx="90" fill="white"/>
-            <rect x="104" y="164" width="294" height="222" rx="18" fill="black"/>
+            <rect x="104" y="152" width="294" height="197" rx="18" fill="black"/>
           </mask>
 
           <clipPath id="env-interiorClip">
-            <rect x="108" y="172" width="284" height="206" rx="10"/>
+            <rect x="108" y="160" width="284" height="181" rx="10"/>
           </clipPath>
         </defs>
 
@@ -134,50 +134,50 @@ export const EnvelopeAnimation = ({ width = 120, height = 120 }) => (
               fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1.2"/>
 
         {/* Inset cavity */}
-        <rect x="104" y="164" width="294" height="222" rx="18"
-              fill="#050505" filter="url(#env-grain)"/>
-        <rect x="104" y="164" width="294" height="222" rx="16"
-              fill="none" stroke="#000" strokeWidth="1" opacity="0.75"/>
+        <rect x="104" y="152" width="294" height="197" rx="18"
+              fill="#0f0f0f" filter="url(#env-grain)"/>
+        <rect x="104" y="152" width="294" height="197" rx="16"
+              fill="none" stroke="#202020" strokeWidth="1" opacity="0.75"/>
 
         {/* Envelope interior */}
         <g clipPath="url(#env-interiorClip)">
-          <rect x="108" y="172" width="284" height="206" fill="#070707"/>
-          <rect x="108" y="172" width="284" height="206" rx="10"
+          <rect x="108" y="160" width="284" height="181" fill="#070707"/>
+          <rect x="108" y="160" width="284" height="181" rx="10"
                 fill="none" stroke="#000" strokeWidth="7" opacity="0.80"/>
         </g>
 
         {/* Envelope lower body */}
         <g filter="url(#env-grain)">
-          <path d="M 108,172 L 108,365 Q 108,378 120,378 L 380,378 Q 392,378 392,365 L 392,172 L 250,275 Z"
+          <path d="M 108,160 L 108,328 Q 108,341 120,341 L 380,341 Q 392,341 392,328 L 392,160 L 250,263 Z"
                 fill="#0d0d0d" stroke="#000" strokeWidth="2" strokeLinejoin="round"/>
         </g>
 
         {/* Specular lines */}
-        <line x1="390" y1="174" x2="390" y2="364"
+        <line x1="390" y1="162" x2="390" y2="327"
               stroke="rgba(255,255,255,0.55)" strokeWidth="1.2" strokeLinecap="round"
               filter="url(#env-specGlow)"/>
-        <line x1="110" y1="174" x2="250" y2="275"
+        <line x1="110" y1="162" x2="250" y2="263"
               stroke="rgba(255,255,255,0.22)" strokeWidth="0.9" strokeLinecap="round"
               filter="url(#env-specGlow)"/>
-        <line x1="390" y1="174" x2="250" y2="275"
+        <line x1="390" y1="162" x2="250" y2="263"
               stroke="rgba(255,255,255,0.13)" strokeWidth="0.9" strokeLinecap="round"
               filter="url(#env-specGlow)"/>
 
         {/* Animated flap */}
         <g className="env-flap-group">
           <g filter="url(#env-grain)">
-            <path d="M 108,172 L 392,172 L 250,275 Z"
+            <path d="M 108,160 L 392,160 L 250,263 Z"
                   fill="#111" stroke="#000" strokeWidth="2" strokeLinejoin="round"/>
           </g>
-          <line x1="110" y1="173" x2="390" y2="173"
+          <line x1="110" y1="161" x2="390" y2="161"
                 stroke="rgba(180,180,180,0.45)" strokeWidth="1.2" strokeLinecap="round"
                 filter="url(#env-whiteGlow)"/>
-          <line x1="110" y1="173" x2="390" y2="173"
+          <line x1="110" y1="161" x2="390" y2="161"
                 stroke="rgba(180,180,180,0.55)" strokeWidth="0.5" strokeLinecap="round"/>
-          <line x1="111" y1="174" x2="250" y2="274"
+          <line x1="111" y1="162" x2="250" y2="262"
                 stroke="rgba(255,255,255,0.22)" strokeWidth="0.9" strokeLinecap="round"
                 filter="url(#env-specGlow)"/>
-          <line x1="389" y1="174" x2="250" y2="274"
+          <line x1="389" y1="162" x2="250" y2="262"
                 stroke="rgba(255,255,255,0.13)" strokeWidth="0.9" strokeLinecap="round"
                 filter="url(#env-specGlow)"/>
         </g>
