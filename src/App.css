@@ -280,7 +280,7 @@ section {
   border-radius: var(--radius-sm);
   color: var(--text-tertiary);
   cursor: pointer;
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition: color var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -291,11 +291,13 @@ section {
   align-self: flex-end;
 }
 
-.sidebar-toggle:hover {
-  color: var(--text-primary);
-  background: var(--accent-dim);
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: var(--accent);
+.sidebar-toggle img {
+  transition: filter var(--transition-fast), transform var(--transition-fast);
+}
+
+.sidebar-toggle:hover img {
+  filter: drop-shadow(0 0 10px #00e5a0dc) drop-shadow(0 0 15px #00e5a0ae);
+  transform: scale(1.2);
 }
 
 .sidebar-center {
