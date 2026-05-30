@@ -764,7 +764,7 @@ section {
 .about-card-inner {
   position: relative;
   z-index: 1;
-  background: var(--bg-primary);
+  background: var(--bg-card);
   border-radius: calc(var(--radius-lg) - 1px);
   padding: 1.75rem;
   display: flex;
@@ -1085,8 +1085,10 @@ section {
 
 .skill-chip:hover {
   border-color: var(--border-hover);
-  color: var(--text-primary);
-  background: var(--bg-card-hover);
+  background-image: var(--teal-dark-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ============================================================
