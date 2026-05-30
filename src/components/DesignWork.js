@@ -75,7 +75,7 @@ const CaseStudyCard = ({ study, index }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2.5rem',
+            fontSize: '2rem',
             fontWeight: 800,
             color: '#111111',
             letterSpacing: '-0.02em',
