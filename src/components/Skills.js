@@ -10,24 +10,23 @@ const TABS = [
 
 const SKILLS = {
   design: [
-    'Figma', 'NanoBanana', 'Claude Design', 'Wireframing', 'High Fidelity',
+    'Figma', 'Wireframing', 'High Fidelity',
     'Prototyping', 'Design Systems', 'User Research', 'Usability Testing',
-    'Information Architecture',
+    
   ],
   development: [
     'JavaScript', 'TypeScript', 'React', 'Node.js', 'Python',
     'Java', 'HTML', 'CSS', 'Tailwind CSS', 'PostgreSQL',
-    'MongoDB', 'GraphQL', 'FastAPI', 'AWS', 'Docker', 'Git',
+    'MongoDB', 'GraphQL', 'FastAPI', 'AWS', 'Docker', 'Git', 
   ],
   engineering: [
     'Systems Design', 'API Design', 'AI/ML Integration', 'RAG Pipelines',
     'Data Pipelines', 'Cloud Architecture', 'CI/CD', 'Database Architecture',
-    'Performance Optimization', 'Technical Scoping', 'Agile / Scrum',
+    'Performance Optimization', 'Agile / Scrum',
   ],
   ai: [
-    'Anthropic SDK', 'Claude Code', 'Claude API', 'AI Agents',
-    'Prompt Engineering', 'RAG', 'Vector Databases', 'Tool Use',
-    'Multi-agent Systems', 'Model Fine-tuning', 'AI Safety', 'LangChain',
+    'Prompt Engineering', 'RAG', 'Vector Databases', 'Claude Design', 'Claude Code', 'Claude API', 'Anthropic SDK', 'Model Fine-tuning', 'AI Safety', 'LangChain', 'AI Agents',
+    'Multi-agent Systems',
   ],
 };
 
