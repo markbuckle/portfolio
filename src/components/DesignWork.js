@@ -50,11 +50,17 @@ const gradients = [
 const CaseStudyCard = ({ study, index }) => {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [glowX, setGlowX] = useState(null);
 
   const handleToggle = () => {
     const next = !toolsOpen;
     setRotation(r => next ? r + 720 : r - 720);
     setToolsOpen(next);
+  };
+
+  const handleTitleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setGlowX(((e.clientX - rect.left) / rect.width) * 100);
   };
 
   return (
@@ -75,14 +81,15 @@ const CaseStudyCard = ({ study, index }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2rem',
-            fontWeight: 800,
-            color: '#111111',
-            letterSpacing: '-0.02em',
-            textShadow: '0 0 10px rgba(180,180,180,0.2), 0 0 20px rgba(140,140,140,0.1)',
           }}
         >
-          {study.title}
+          <span
+            className="case-study-image-title"
+            data-title={study.title}
+            onMouseMove={handleTitleMouseMove}
+            onMouseLeave={() => setGlowX(null)}
+            style={glowX !== null ? { '--glow-x': `${glowX}%` } : {}}
+          >{study.title}</span>
         </div>
       )}
 

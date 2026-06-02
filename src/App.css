@@ -818,7 +818,6 @@ section {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
   transition: border-color var(--transition-base), transform var(--transition-base);
 }
 
@@ -832,6 +831,44 @@ section {
   height: 4rem;
   object-fit: cover;
   border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 0 1.5rem;
+}
+
+.case-study-image-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 10px #b4b4b433, 0 0 20px #8c8c8c1a;
+  cursor: default;
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.case-study-image-title::before {
+  content: attr(data-title);
+  position: absolute;
+  inset: -1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  text-shadow: 0 0 4px #00e5a042, 0 0 8px #00e5a060;
+  mask: radial-gradient(circle at var(--glow-x, 50%) 50%, black 0%, transparent 70%);
+  -webkit-mask: radial-gradient(circle at var(--glow-x, 50%) 50%, black 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.case-study-image-title:hover::before {
+  opacity: 1;
 }
 
 .case-study-content {
@@ -978,12 +1015,13 @@ section {
   background: var(--accent-dim);
   color: var(--accent);
   border: 1px solid #00e5a033;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .case-study-link:hover {
   background: #00e5a02e;
   border-color: #00e5a066;
+  box-shadow: 0 0 8px #00e5a04f, 0 0 18px #00e5a024;
 }
 
 .case-study-link-ghost {
@@ -1114,6 +1152,10 @@ section {
   transform: translateY(-2px);
 }
 
+.project-card:hover .project-card-title {
+  text-shadow: 0 0 8px #00e5a070, 0 0 18px #00e5a038;
+}
+
 .project-card-img {
   width: 100%;
   height: 160px;
@@ -1130,6 +1172,7 @@ section {
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.35rem;
+  transition: text-shadow var(--transition-fast);
 }
 
 .project-card-desc {
