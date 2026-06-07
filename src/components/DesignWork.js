@@ -23,7 +23,7 @@ const caseStudies = [
     description:
       'Comprehensive health tracking application that enables users to make sense of complex medical information through intelligent data processing, OCR extraction, and AI-powered insights. Features include interactive dashboards, a RAG chatbot for medical information retrieval, and a guided onboarding tutorial system.',
     tools: ['Figma', 'Node.js', 'Express', 'Python', 'MongoDB', 'Plotly.js', 'OpenAI', 'Anthropic Claude', 'Docker'],
-    liveUrl: 'https://www.earlyhealthlync.com/',
+    liveUrl: 'https://healthlync.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/health-tracker',
     image: null,
   },
