@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
-import { FileDown, Menu, X } from 'lucide-react';
+import { FileDown, Menu } from 'lucide-react';
 import homeIcon from '../assets/icons/nav/home.svg';
 import chevronRightIcon from '../assets/icons/nav/chevron-right.svg';
 import chevronLeftIcon from '../assets/icons/nav/chevron-left.svg';
@@ -49,14 +49,16 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-    <button
-      className="mobile-toggle"
-      onClick={() => setIsOpen(!isOpen)}
-      aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
-      aria-expanded={isOpen}
-    >
-      {isOpen ? <X size={20} /> : <Menu size={20} />}
-    </button>
+    {!isOpen && (
+      <button
+        className="mobile-toggle"
+        onClick={() => setIsOpen(true)}
+        aria-label="Open navigation"
+        aria-expanded={false}
+      >
+        <Menu size={20} />
+      </button>
+    )}
     {isOpen && <div className="sidebar-backdrop" onClick={() => setIsOpen(false)} aria-hidden="true" />}
     <motion.div
       className="sidebar-container"

@@ -54,14 +54,18 @@ export const Skills = () => {
       if (!btn || !track) return;
       const bRect = btn.getBoundingClientRect();
       const tRect = track.getBoundingClientRect();
+      const extra = 4; // slightly taller than the button box for a chunkier pill
       setIndicator({
         x: bRect.left - tRect.left,
-        y: bRect.top - tRect.top,
+        y: bRect.top - tRect.top - extra / 2,
         w: bRect.width,
-        h: bRect.height,
+        h: bRect.height + extra,
       });
     };
     measure();
+    // Web fonts often finish loading after this first measure, which reflows
+    // button text width and leaves the pill sized to the fallback font.
+    document.fonts?.ready.then(measure);
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, [activeTab]);
@@ -111,8 +115,8 @@ export const Skills = () => {
               <rect
                 x="0"
                 y="0"
-                rx="20"
-                ry="20"
+                rx={indicator.h / 2}
+                ry={indicator.h / 2}
                 stroke="url(#skills-grad)"
                 strokeWidth="0.75"
                 fill="url(#skills-fill)"

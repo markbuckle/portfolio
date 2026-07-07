@@ -224,7 +224,7 @@ section {
   color: var(--text-secondary);
   line-height: 1.7;
   max-width: 560px;
-  text-align: justify;
+  text-align: left;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1660,6 +1660,53 @@ textarea {
     transform: translateX(0);
   }
 
+  .sidebar-container[data-state="closed"] .sidebar {
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  :root {
+    --sidebar-width-open: 17rem;
+  }
+
+  .sidebar-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sidebar-headshot {
+    width: 130px;
+    height: 130px;
+  }
+
+  .sidebar-headshot:hover {
+    width: 130px;
+    height: 130px;
+  }
+
+  .sidebar-headshot-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-nav {
+    gap: 0.5rem;
+  }
+
+  .sidebar-item {
+    gap: 1.1rem;
+    padding: 0.9rem 0.9rem;
+    font-size: 1.15rem;
+  }
+
+  .sidebar-item-icon {
+    min-width: 28px;
+  }
+
+  .sidebar-item-icon img {
+    width: 28px;
+    height: 28px;
+  }
+
   .mobile-toggle {
     display: flex;
     position: fixed;
@@ -1684,6 +1731,54 @@ textarea {
     gap: 2rem;
   }
 
+  .about-card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* Same figure-8 sweep as desktop, rotated 90° so it travels card1 (bottom)
+     to card2 (top) since the cards stack vertically instead of sitting side by side. */
+  .about-card:first-child::before {
+    animation-name: about-spin-1-mobile;
+  }
+
+  .about-card:last-child::before {
+    animation-name: about-spin-2-mobile;
+  }
+
+  @keyframes about-spin-1-mobile {
+    0%   { transform: translate(-50%, -50%) rotate(275deg); opacity: 1; }
+    48%  { opacity: 1; }
+    50%  { transform: translate(-50%, -50%) rotate(576deg); opacity: 0; }
+    100% { transform: translate(-50%, -50%) rotate(936deg); opacity: 0; }
+  }
+
+  @keyframes about-spin-2-mobile {
+    0%   { transform: translate(-50%, -50%) rotate(375deg); opacity: 0; }
+    50%  { transform: translate(-50%, -50%) rotate(375deg); opacity: 0; }
+    52%  { opacity: 1; }
+    98%  { opacity: 1; }
+    100% { transform: translate(-50%, -50%) rotate(36deg); opacity: 0; }
+  }
+
+  .skills-toggle-outer {
+    overflow-x: visible;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  .skills-toggle-track {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .skills-toggle-btn {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    text-align: center;
+  }
 
   .projects-grid {
     grid-template-columns: 1fr;
