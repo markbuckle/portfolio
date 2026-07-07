@@ -12,7 +12,7 @@ const caseStudies = [
     description:
       "ClauseKit is a full-stack AI legal assistant built in both the browser and a Microsoft Word add-in. Lawyers can ask questions about the contract they're reviewing and receive risk flags, suggested redlines, analysis, and simulated negotiations.",
     tools: ['Claude Design', 'Figma', 'React', 'TypeScript', 'Fluent UI', 'Node.js', 'Express','tRPC','Office.js','MongoDB','Dockerfile','Anthropic SDK', 'Claude', 'GCP'],
-    liveUrl: '',
+    liveUrl: 'https://clause-kit.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/clausekit',
     image: null,
   },
@@ -177,12 +177,11 @@ export const DesignWork = () => {
       if (!btn || !track) return;
       const bRect = btn.getBoundingClientRect();
       const tRect = track.getBoundingClientRect();
-      const extra = 4; // slightly taller than the button box for a chunkier pill
       setIndicator({
         x: bRect.left - tRect.left,
-        y: bRect.top - tRect.top - extra / 2,
+        y: bRect.top - tRect.top,
         w: bRect.width,
-        h: bRect.height + extra,
+        h: bRect.height,
       });
     };
     measure();
@@ -235,8 +234,8 @@ export const DesignWork = () => {
               <rect
                 x="0"
                 y="0"
-                rx={indicator.h / 2}
-                ry={indicator.h / 2}
+                rx="14"
+                ry="14"
                 stroke="url(#projects-grad)"
                 strokeWidth="0.75"
                 fill="url(#projects-fill)"

@@ -54,12 +54,11 @@ export const Skills = () => {
       if (!btn || !track) return;
       const bRect = btn.getBoundingClientRect();
       const tRect = track.getBoundingClientRect();
-      const extra = 4; // slightly taller than the button box for a chunkier pill
       setIndicator({
         x: bRect.left - tRect.left,
-        y: bRect.top - tRect.top - extra / 2,
+        y: bRect.top - tRect.top,
         w: bRect.width,
-        h: bRect.height + extra,
+        h: bRect.height,
       });
     };
     measure();
@@ -115,8 +114,8 @@ export const Skills = () => {
               <rect
                 x="0"
                 y="0"
-                rx={indicator.h / 2}
-                ry={indicator.h / 2}
+                rx="14"
+                ry="14"
                 stroke="url(#skills-grad)"
                 strokeWidth="0.75"
                 fill="url(#skills-fill)"
