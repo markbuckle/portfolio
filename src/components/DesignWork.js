@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
 
 const caseStudies = [
+  {
+    id: 0,
+    // tag: 'Product Design · Full-Stack',
+    title: 'ClauseKit',
+    subtitle: 'AI Legal Contract Review Assistant',
+    description:
+      "ClauseKit is a full-stack AI legal assistant built in both the browser and a Microsoft Word add-in. Lawyers can ask questions about the contract they're reviewing and receive risk flags, suggested redlines, analysis, and simulated negotiations.",
+    tools: ['Claude Design', 'Figma', 'React', 'TypeScript', 'Fluent UI', 'Node.js', 'Express','tRPC','Office.js','MongoDB','Dockerfile','Anthropic SDK', 'Claude', 'GCP'],
+    liveUrl: '',
+    gitUrl: 'https://github.com/markbuckle/clausekit',
+    image: null,
+  },
   {
     id: 1,
     // tag: 'Product Design · Full-Stack',
@@ -69,7 +81,7 @@ const CaseStudyCard = ({ study, index }) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.15 }}
+      transition={{ duration: 0.5 }}
     >
       {study.image ? (
         <img src={study.image} alt={study.title} className="case-study-image" />
@@ -150,6 +162,33 @@ const CaseStudyCard = ({ study, index }) => {
 };
 
 export const DesignWork = () => {
+  const [activeId, setActiveId] = useState(caseStudies[0].id);
+  const [indicator, setIndicator] = useState({ x: 0, y: 0, w: 0, h: 0 });
+  const tabRefs = useRef({});
+  const trackRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const btn = tabRefs.current[activeId];
+      const track = trackRef.current;
+      if (!btn || !track) return;
+      const bRect = btn.getBoundingClientRect();
+      const tRect = track.getBoundingClientRect();
+      setIndicator({
+        x: bRect.left - tRect.left,
+        y: bRect.top - tRect.top,
+        w: bRect.width,
+        h: bRect.height,
+      });
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [activeId]);
+
+  const activeIndex = caseStudies.findIndex((s) => s.id === activeId);
+  const activeStudy = caseStudies[activeIndex];
+
   return (
     <div className="section-container">
       <motion.div
@@ -165,10 +204,68 @@ export const DesignWork = () => {
         </p>
       </motion.div>
 
-      <div className="case-studies">
-        {caseStudies.map((study, i) => (
-          <CaseStudyCard key={study.id} study={study} index={i} />
-        ))}
+      <div className="skills-toggle-wrapper">
+        <div className="skills-toggle-outer">
+          <div className="skills-toggle-track" ref={trackRef} role="tablist">
+            <svg
+              className="skills-toggle-svg"
+              width="100%"
+              height="100%"
+              role="presentation"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="projects-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
+                  <stop offset="100%" style={{ stopColor: '#b0b0b0', stopOpacity: 1 }} />
+                </linearGradient>
+              </defs>
+              <rect
+                x="0"
+                y="0"
+                rx="20"
+                ry="20"
+                stroke="url(#projects-grad)"
+                strokeWidth="1.5"
+                fill="rgba(255, 255, 255, 0.04)"
+                style={{
+                  width: `${indicator.w}px`,
+                  height: `${indicator.h}px`,
+                  transform: `translate(${indicator.x}px, ${indicator.y}px)`,
+                  transition: 'width 0.28s cubic-bezier(0.16,1,0.3,1), height 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1)',
+                }}
+              />
+            </svg>
+
+            {caseStudies.map((study) => (
+              <button
+                key={study.id}
+                ref={(el) => { tabRefs.current[study.id] = el; }}
+                role="tab"
+                aria-selected={activeId === study.id}
+                className={`skills-toggle-btn${activeId === study.id ? ' skills-toggle-btn--active' : ''}`}
+                onClick={() => setActiveId(study.id)}
+              >
+                {study.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <AnimatePresence mode="wait">
+          {activeStudy && (
+            <motion.div
+              key={activeStudy.id}
+              className="case-studies"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              <CaseStudyCard study={activeStudy} index={activeIndex} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
