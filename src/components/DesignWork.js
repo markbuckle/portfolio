@@ -1,6 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
+import { Tilt } from './Tilt';
 
 const caseStudies = [
   {
@@ -77,12 +78,13 @@ const CaseStudyCard = ({ study, index }) => {
 
   return (
     <motion.div
-      className="case-study-card"
+      className="case-study-reveal"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
+    <Tilt className="case-study-card" max={2.5}>
       {study.image ? (
         <img src={study.image} alt={study.title} className="case-study-image" />
       ) : (
@@ -157,6 +159,7 @@ const CaseStudyCard = ({ study, index }) => {
           )}
         </div>
       </div>
+    </Tilt>
     </motion.div>
   );
 };
@@ -219,6 +222,11 @@ export const DesignWork = () => {
                   <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
                   <stop offset="100%" style={{ stopColor: '#b0b0b0', stopOpacity: 1 }} />
                 </linearGradient>
+                <linearGradient id="projects-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#585858" />
+                  <stop offset="45%" stopColor="#2f2f2f" />
+                  <stop offset="100%" stopColor="#181818" />
+                </linearGradient>
               </defs>
               <rect
                 x="0"
@@ -226,8 +234,8 @@ export const DesignWork = () => {
                 rx="20"
                 ry="20"
                 stroke="url(#projects-grad)"
-                strokeWidth="1.5"
-                fill="rgba(255, 255, 255, 0.04)"
+                strokeWidth="0.75"
+                fill="url(#projects-fill)"
                 style={{
                   width: `${indicator.w}px`,
                   height: `${indicator.h}px`,

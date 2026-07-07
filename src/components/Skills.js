@@ -102,6 +102,11 @@ export const Skills = () => {
                   <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
                   <stop offset="100%" style={{ stopColor: '#b0b0b0', stopOpacity: 1 }} />
                 </linearGradient>
+                <linearGradient id="skills-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#585858" />
+                  <stop offset="45%" stopColor="#2f2f2f" />
+                  <stop offset="100%" stopColor="#181818" />
+                </linearGradient>
               </defs>
               <rect
                 x="0"
@@ -109,8 +114,8 @@ export const Skills = () => {
                 rx="20"
                 ry="20"
                 stroke="url(#skills-grad)"
-                strokeWidth="1.5"
-                fill="rgba(255, 255, 255, 0.04)"
+                strokeWidth="0.75"
+                fill="url(#skills-fill)"
                 style={{
                   width: `${indicator.w}px`,
                   height: `${indicator.h}px`,

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
-import { FileDown } from 'lucide-react';
+import { FileDown, Menu, X } from 'lucide-react';
 import homeIcon from '../assets/icons/nav/home.svg';
 import chevronRightIcon from '../assets/icons/nav/chevron-right.svg';
 import chevronLeftIcon from '../assets/icons/nav/chevron-left.svg';
@@ -19,8 +19,8 @@ const navItems = [
   { icon: <img src={contactIcon} alt="Contact" width={24} height={24} />, name: 'Contact', to: '#contact' },
 ];
 
-const SidebarItem = ({ icon, name, to, isOpen }) => (
-  <Link smooth to={to} className="sidebar-link">
+const SidebarItem = ({ icon, name, to, isOpen, onNavigate }) => (
+  <Link smooth to={to} className="sidebar-link" onClick={onNavigate}>
     <div className="sidebar-item" data-label={name}>
       <span className="sidebar-item-icon">{icon}</span>
       {isOpen && (
@@ -43,7 +43,21 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
     closed: { width: 'var(--sidebar-width-closed)', transition: { duration: 0.3, ease: 'easeInOut' } },
   };
 
+  const closeOnMobile = () => {
+    if (window.matchMedia('(max-width: 768px)').matches) setIsOpen(false);
+  };
+
   return (
+    <>
+    <button
+      className="mobile-toggle"
+      onClick={() => setIsOpen(!isOpen)}
+      aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
+      aria-expanded={isOpen}
+    >
+      {isOpen ? <X size={20} /> : <Menu size={20} />}
+    </button>
+    {isOpen && <div className="sidebar-backdrop" onClick={() => setIsOpen(false)} aria-hidden="true" />}
     <motion.div
       className="sidebar-container"
       data-state={isOpen ? 'open' : 'closed'}
@@ -71,7 +85,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* Nav links */}
           <nav className="sidebar-nav">
             {navItems.map((item) => (
-              <SidebarItem key={item.name} {...item} isOpen={isOpen} />
+              <SidebarItem key={item.name} {...item} isOpen={isOpen} onNavigate={closeOnMobile} />
             ))}
           </nav>
         </div>
@@ -96,5 +110,6 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
       </div>
     </motion.div>
+    </>
   );
 };
