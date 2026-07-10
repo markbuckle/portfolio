@@ -1540,14 +1540,6 @@ textarea {
 }
 
 /* ============================================================
-   MAGNETIC
-   ============================================================ */
-.magnetic {
-  display: inline-block;
-  will-change: transform;
-}
-
-/* ============================================================
    FOOTER — REWORKED
    ============================================================ */
 .footer-bottom {
@@ -1560,14 +1552,11 @@ textarea {
   margin: 0 auto;
 }
 
-.footer-bottom .magnetic {
+.back-to-top {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.back-to-top {
   display: flex;
   align-items: center;
   justify-content: center;
