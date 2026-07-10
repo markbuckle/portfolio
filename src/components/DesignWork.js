@@ -11,7 +11,7 @@ const caseStudies = [
     subtitle: 'AI Legal Contract Review Assistant',
     description:
       "ClauseKit is a full-stack AI legal assistant built in both the browser and a Microsoft Word add-in. Lawyers can ask questions about the contract they're reviewing and receive risk flags, suggested redlines, analysis, and simulated negotiations.",
-    tools: ['Claude Design', 'Figma', 'React', 'TypeScript', 'Fluent UI', 'Node.js', 'Express','tRPC','Office.js','MongoDB','Dockerfile','Anthropic SDK', 'Claude', 'GCP'],
+    tools: ['Claude Design', 'Figma', 'React', 'TypeScript', 'Fluent UI', 'Node.js', 'Express','tRPC','Office.js','MongoDB','Dockerfile','Anthropic SDK', 'GCP'],
     liveUrl: 'https://clause-kit.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/clausekit',
     image: null,

@@ -423,6 +423,9 @@ section {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  /* Glow lives here instead of inside the SVGs — baked-in SVG filters force
+     iOS Safari to rasterize the icons at 1x and they render blurry. */
+  filter: drop-shadow(0 0 2px rgba(220, 220, 220, 0.4));
 }
 
 .sidebar-item-label {
@@ -1662,6 +1665,11 @@ textarea {
 
   .sidebar-container[data-state="closed"] .sidebar {
     box-shadow: none;
+  }
+
+  /* backdrop-filter + the slide-in transform makes iOS Safari rasterize the
+     whole sidebar layer softly; the background is near-opaque so drop it. */
+  .sidebar {
     backdrop-filter: none;
   }
 

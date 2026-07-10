@@ -5,15 +5,11 @@
     <stop offset="50%" stop-color="#a0a0a0"></stop>
     <stop offset="100%" stop-color="#5a5a5a"></stop>
   </linearGradient>
-  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur stdDeviation="2" result="b"></feGaussianBlur>
-    <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-  </filter>
   </defs>
-  
-  <path d="M64 55 L24 100 L64 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"></path>
-  
-  <path d="M136 55 L176 100 L136 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)"></path>
-  
-  <path d="M118 55 L82 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" filter="url(#glow)"></path>
+
+  <path d="M64 55 L24 100 L64 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+
+  <path d="M136 55 L176 100 L136 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+
+  <path d="M118 55 L82 145" stroke="url(#mono)" stroke-width="9" stroke-linecap="round"></path>
 </svg>
