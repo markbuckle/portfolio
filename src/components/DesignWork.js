@@ -177,11 +177,14 @@ export const DesignWork = () => {
       if (!btn || !track) return;
       const bRect = btn.getBoundingClientRect();
       const tRect = track.getBoundingClientRect();
+      // Grow the pill vertically so it sits closer to the track edges
+      // (track has 6px padding + 1px border).
+      const grow = 2;
       setIndicator({
         x: bRect.left - tRect.left,
-        y: bRect.top - tRect.top,
+        y: bRect.top - tRect.top - grow,
         w: bRect.width,
-        h: bRect.height,
+        h: bRect.height + grow * 2,
       });
     };
     measure();
@@ -234,8 +237,8 @@ export const DesignWork = () => {
               <rect
                 x="0"
                 y="0"
-                rx="14"
-                ry="14"
+                rx={indicator.h / 2}
+                ry={indicator.h / 2}
                 stroke="url(#projects-grad)"
                 strokeWidth="0.75"
                 fill="url(#projects-fill)"
