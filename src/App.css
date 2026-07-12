@@ -1659,6 +1659,13 @@ textarea {
     backdrop-filter: none;
   }
 
+  /* The collapsed-rail hover tooltip is desktop-only. On touch devices a tap
+     leaves the item stuck in :hover, and once the sidebar slides off-screen
+     the tooltip (offset past the sidebar's right edge) stays visible. */
+  .sidebar-container[data-state="closed"] .sidebar-item::after {
+    display: none;
+  }
+
   :root {
     --sidebar-width-open: 17rem;
   }
