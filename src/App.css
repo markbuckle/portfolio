@@ -1106,7 +1106,9 @@ section {
   background: #080808;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 9999px;
-  padding: 6px;
+  /* Keep this equal on all sides: the active pill matches the button bounds
+     exactly, so this padding IS the gap around the pill. */
+  padding: 4px;
 }
 
 .skills-toggle-svg {
