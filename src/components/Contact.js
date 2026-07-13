@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
-// import emailLogo from '../assets/logos/email.svg';
 import { EnvelopeAnimation } from './EnvelopeAnimation';
 import emailjs from '@emailjs/browser';
 
@@ -45,7 +44,6 @@ export const Contact = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        {/* <img src={emailLogo} alt="Email" className="contact-email-logo" /> */}
         <EnvelopeAnimation width={180} height={180} />
         <p className="section-label">Contact</p>
         <h2 className="section-title"><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></h2>

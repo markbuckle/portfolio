@@ -3,3 +3,8 @@ node_modules/
 .vscode/settings.json
 .env
 build/
+
+# Local-only envelope/email asset experiments
+src/assets/logos/email2.svg
+src/assets/logos/email2.mp4
+src/components/EnvelopeAnimation-old.js
