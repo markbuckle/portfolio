@@ -120,11 +120,11 @@ export const Hero = () => {
           <span className="cursor" />
         </p>
         <p className="hero-description hero-fade">
-          I design and build products that bridge user-centered design with technical feasibility
+          I build products to help people and companies scale
         </p>
         <div className="hero-fade">
-          <a href="#projects" className="hero-cta btn-trace">
-            <span className="hero-cta-label">View my work <span style={{ fontSize: '1.1rem' }}>→</span></span>
+          <a href="#about" className="hero-cta btn-trace">
+            <span className="hero-cta-label">About Me <span style={{ fontSize: '1.1rem' }}>→</span></span>
             <svg className="trace-svg" aria-hidden="true" focusable="false">
               <defs>
                 <linearGradient id="hero-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
