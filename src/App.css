@@ -744,7 +744,7 @@ section {
 
 .about-details-row {
   display: flex;
-  gap: 1.25rem;
+  gap: 1.75rem;
   margin-top: 3rem;
   justify-content: center;
 }
@@ -754,8 +754,22 @@ section {
   border-radius: var(--radius-lg);
   padding: 1px;
   overflow: hidden;
-  background: #ffffff14;
+  /* Cut edge of the slab, lit from the upper-left to match the plate's bevel.
+     The conic ::before sweep paints over this inside the 1px gutter. */
+  background: linear-gradient(
+    158deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0.03) 70%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
   width: fit-content;
+  max-width: 100%;
+  /* Cast shadow lives out here — overflow:hidden would clip it off the inner. */
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07),
+    0 24px 48px rgba(0, 0, 0, 0.75),
+    0 5px 12px rgba(0, 0, 0, 0.65);
 }
 
 .about-card::before {
@@ -804,44 +818,102 @@ section {
   100% { transform: translate(-50%, -50%) rotate(-54deg); opacity: 0; }
 }
 
+/* Solid gradient face, colour-matched to the case-study card header
+   (the `gradients` array in DesignWork.js): near-black at the edges lifting
+   to #353535 through the centre. Fully opaque, so the ::before glow only
+   reads at the rim. Realism comes from the lighting and bevel, not texture:
+   a vertical falloff over the base puts the light source above the plate. */
 .about-card-inner {
   position: relative;
   z-index: 1;
-  background: var(--bg-card);
+  background-color: #1c1c1c;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055) 0%,
+      rgba(255, 255, 255, 0.012) 30%,
+      rgba(0, 0, 0, 0.1) 62%,
+      rgba(0, 0, 0, 0.34) 100%
+    ),
+    linear-gradient(90deg, #0a0a0a 0%, #353535 50%, #0a0a0a 100%);
   border-radius: calc(var(--radius-lg) - 1px);
-  padding: 1.75rem;
+  padding: 2rem 2.25rem 2.25rem;
   display: flex;
   flex-direction: column;
   height: 100%;
+  /* Bevel: lit top lip and left edge, dark right and bottom edge. */
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.22),
+    inset 0 3px 3px rgba(255, 255, 255, 0.07),
+    inset 2px 0 0 rgba(255, 255, 255, 0.07),
+    inset -2px 0 0 rgba(0, 0, 0, 0.7),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.9),
+    inset 0 -6px 8px rgba(0, 0, 0, 0.45);
 }
 
+/* Raised teal title — drop-shadow, not text-shadow, so the bevel survives
+   the background-clipped fill. */
 .about-detail-label {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  background: var(--teal-dark-gradient);
+  color: #05cd8f;
+  background-image: linear-gradient(180deg, #5cf2bb 0%, #05cd8f 54%, #03875f 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.75rem;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.22))
+    drop-shadow(0 1px 0 rgba(0, 0, 0, 0.92))
+    drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+  margin-bottom: 0.85rem;
   text-align: center;
+}
+
+/* Groove engraved under the title, fading out before the edges. */
+.about-card-rule {
+  height: 2px;
+  border-radius: 2px;
+  margin: 0 0 1.5rem;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 18%,
+    rgba(0, 0, 0, 0.65) 82%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .about-detail-list {
   display: table;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
+/* Raised off the plate: plate-coloured type, lit from above, casting down.
+   Neutral grey to sit in the same family as the charcoal face. */
 .about-detail-value {
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-  margin-bottom: 0.6rem;
-  line-height: 1.6;
+  color: #767676;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-bottom: 1rem;
+  line-height: 1.5;
   text-align: left;
+  text-shadow:
+    0 -1px 0 rgba(255, 255, 255, 0.32),
+    0 1px 0 rgba(0, 0, 0, 0.9),
+    0 2px 2px rgba(0, 0, 0, 0.7),
+    0 3px 6px rgba(0, 0, 0, 0.45);
+}
+
+.about-detail-value:last-child {
+  margin-bottom: 0;
 }
 
 /* ============================================================

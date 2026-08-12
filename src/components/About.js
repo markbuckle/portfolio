@@ -28,6 +28,7 @@ export const About = () => {
         <div className="about-card">
           <div className="about-card-inner">
             <p className="about-detail-label">Focus Areas</p>
+            <div className="about-card-rule" aria-hidden="true"></div>
             <div className="about-detail-list">
               <p className="about-detail-value">Full-stack Development</p>
               <p className="about-detail-value">Product Design</p>
@@ -40,6 +41,7 @@ export const About = () => {
         <div className="about-card">
           <div className="about-card-inner">
             <p className="about-detail-label">Education</p>
+            <div className="about-card-rule" aria-hidden="true"></div>
             <div className="about-detail-list">
               <p className="about-detail-value">B. Eng - Memorial University of Newfoundland</p>
               <p className="about-detail-value">Web Development & Product Design - GetCoding</p>
