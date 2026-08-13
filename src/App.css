@@ -743,15 +743,14 @@ section {
   margin-left: auto;
   margin-right: auto;
 }
+.about-bio + .about-bio {
+  margin-top: 1rem;
+}
 
-/* Inline link inside body copy — the global `a` reset strips colour and
-   underline, so it has to opt back in. */
 .bio-link {
-  /* Mid-stop of --teal-dark-gradient rather than the full-brightness accent,
-     so it reads as a link without shouting over the body copy. */
-  color: #00b87a;
+  color: #dbe0df;
   text-decoration: underline;
-  text-decoration-color: rgba(0, 184, 122, 0.35);
+  text-decoration-color: rgba(255, 255, 255, 0.733);
   text-underline-offset: 3px;
   transition: color var(--transition-fast), text-decoration-color var(--transition-fast),
     text-shadow var(--transition-fast);
@@ -760,7 +759,7 @@ section {
 .bio-link:hover {
   color: var(--text-link);
   text-decoration-color: var(--text-link);
-  text-shadow: 0 0 8px #00e5a060, 0 0 18px #00e5a030;
+  text-shadow: 0 0 8px #0eb7843f, 0 0 18px #00e5a030;
 }
 
 .about-details-row {
@@ -1651,10 +1650,43 @@ html.is-preloading {
 }
 
 /* ============================================================
-   CURSOR — simple themed arrow (teal, dark rim)
+   CURSOR — themed arrow (default) + pointing hand (interactive)
    ============================================================ */
+:root {
+  /* teal arrow with dark rim; 24-unit artwork drawn at 20px, hotspot at the tip */
+  --cursor-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 3.2v17.6c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .36-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z' fill='%2300e5a0' stroke='%23002e20' stroke-width='1.3'/%3E%3C/svg%3E") 4 3;
+  /* matching pointing hand; hotspot at the fingertip */
+  --cursor-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 4.6a1.4 1.4 0 0 1 2.8 0v6.6a1.3 1.3 0 0 1 2.6 0v.5a1.3 1.3 0 0 1 2.6 0v.6a1.25 1.25 0 0 1 2.5 0v4.1a5.2 5.2 0 0 1-5.2 5.2h-2.1a4.6 4.6 0 0 1-3.3-1.4l-2.6-2.7a1.35 1.35 0 0 1 1.9-1.9L6.6 12.4Z' fill='%2300e5a0' stroke='%23002e20' stroke-width='1.3' stroke-linejoin='round'/%3E%3C/svg%3E") 8 3;
+}
+
 * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 3.2v17.6c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .36-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z' fill='%2300e5a0' stroke='%23002e20' stroke-width='1.3'/%3E%3C/svg%3E") 5 3, auto !important;
+  cursor: var(--cursor-arrow), auto !important;
+}
+
+/* anything clickable gets the hand (children included — the universal
+   rule above re-asserts the arrow on every descendant) */
+a,
+a *,
+button,
+button *,
+[role="button"],
+[role="button"] *,
+[role="tab"],
+[role="tab"] *,
+summary,
+select,
+label[for],
+.sidebar-toggle,
+.sidebar-toggle *,
+.sidebar-backdrop,
+.tools-toggle,
+.tools-toggle * {
+  cursor: var(--cursor-hand), pointer !important;
+}
+
+button:disabled,
+button:disabled * {
+  cursor: var(--cursor-arrow), not-allowed !important;
 }
 
 input,

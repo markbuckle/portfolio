@@ -9,6 +9,9 @@ import { motion } from 'framer-motion';
    button uses and the two are identical by construction. */
 const ELBOW = ['M1 11h7a2 2 0 0 1 2 2v5', 'M7 16 10 19 13 16'];
 
+/* Flip to true to bring back the Focus Areas / Education plaques. */
+const SHOW_DETAIL_CARDS = false;
+
 /* Pill CTA with the perimeter-trace hover. Each instance needs its own
    gradientId — duplicate SVG ids in one document collide. */
 const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' }) => (
@@ -46,10 +49,14 @@ export const About = () => {
         <p className="section-label">About Me</p>
         <h2 className="section-title2"><span className="white-gradient-text">A builder who </span><span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span><span className="white-gradient-text"> the </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>UX</span></h2>
         <p className="about-bio">
-          I have a mild obsession for next-level user interfaces. I currently build internal tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>. When I'm not building, you can probably find me hiking with my dog Bimber, running or discussing business ideas with friends.
+          I have a mild obsession for next-level user interfaces. I currently build tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
+        </p>
+        <p className="about-bio">
+          When I'm not building, you can probably find me hiking with my dog Bimber, running or discussing business ideas with friends.
         </p>
       </motion.div>
 
+      {SHOW_DETAIL_CARDS && (
       <motion.div
         className="about-details-row"
         initial={{ opacity: 0, y: 20 }}
@@ -82,6 +89,7 @@ export const About = () => {
           </div>
         </div>
       </motion.div>
+      )}
 
       <motion.div
         className="about-cta-row"
