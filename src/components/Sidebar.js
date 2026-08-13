@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import headshotImg from '../assets/img/headshot.jpg';
+// Sidebar headshot is hidden for now — restore this with the markup below.
+// import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
 import { FileDown, Menu } from 'lucide-react';
 import homeIcon from '../assets/icons/nav/home.svg';
@@ -73,9 +74,11 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           <img src={isOpen ? chevronLeftIcon : chevronRightIcon} alt={isOpen ? 'Collapse' : 'Expand'} width={18} height={18} />
         </div>
 
-        {/* Center group — headshot + social + nav, vertically centered */}
+        {/* Center group — nav, vertically centered */}
         <div className="sidebar-center">
-          {/* Headshot */}
+          {/* Headshot — hidden for now. Uncomment along with the import at the
+              top of this file; .sidebar-headshot styles are still in App.css. */}
+          {/*
           <div className={`sidebar-headshot-wrapper ${isOpen ? '' : 'hidden'}`}>
             <img
               src={headshotImg}
@@ -83,6 +86,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
               className="sidebar-headshot"
             />
           </div>
+          */}
 
           {/* Nav links */}
           <nav className="sidebar-nav">

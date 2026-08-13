@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroCanvas } from './HeroCanvas';
 import { PRELOADER_DONE_EVENT, shouldShowPreloader } from './Preloader';
 import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
+import { CtaArrow } from './CtaArrow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -140,7 +141,10 @@ export const Hero = () => {
               onClick={handleCtaClick}
               onAnimationEnd={handleAnimationEnd}
             >
-              <span className="hero-cta-label">About Me <span style={{ fontSize: '1.1rem' }}>→</span></span>
+              {/* Arrow sits outside the label, as it does on the About CTAs —
+                  that's what lets .hero-cta:hover .cta-arrow colour it. */}
+              <span className="hero-cta-label">About Me</span>
+              <CtaArrow />
               <svg className="trace-svg" aria-hidden="true" focusable="false">
                 <defs>
                   <linearGradient id="hero-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">

@@ -8,15 +8,17 @@ import { useCallback, useEffect, useRef, useState } from 'react';
   stay the single source of truth — retune them there and this follows.
 */
 
-/* The last step of the sequence — see @keyframes trace-fill in App.css. */
-const FINAL_ANIMATION = 'trace-fill';
+/* Default last step of the sequence — see @keyframes trace-fill in App.css.
+   Callers with a different animation (the scroll cue's converge) pass their
+   own name in. */
+const DEFAULT_FINAL_ANIMATION = 'trace-fill';
 
 /* animationend never lands if the browser drops the animation — a throttled
    background tab, a node replaced mid-flight. Without this the click would be
    swallowed and the button would sit there dead. Comfortably past trace+fill. */
 const FAILSAFE_MS = 3200;
 
-export const useTraceFire = () => {
+export const useTraceFire = (finalAnimation = DEFAULT_FINAL_ANIMATION) => {
   const [firing, setFiring] = useState(false);
   /* Mirrors `firing` for the callbacks — state would be stale inside them. */
   const firingRef = useRef(false);
@@ -50,11 +52,12 @@ export const useTraceFire = () => {
     timerRef.current = setTimeout(finish, FAILSAFE_MS);
   }, [finish]);
 
-  /* Goes on the button root. The perimeter rect's animation bubbles up here
-     too, hence the name check — only the label's fill ends the sequence. */
+  /* Goes on the button root. Other animations bubble up here too (the
+     perimeter rect, the cue's second half), hence the name check. finish()
+     is idempotent, so a name firing on two elements at once is harmless. */
   const handleAnimationEnd = useCallback((e) => {
-    if (e.animationName === FINAL_ANIMATION) finish();
-  }, [finish]);
+    if (e.animationName === finalAnimation) finish();
+  }, [finish, finalAnimation]);
 
   return { firing, fire, handleAnimationEnd };
 };

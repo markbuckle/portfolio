@@ -1,14 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
-
-/* Elbow: shaft turns the corner and points down. The box is 16x22 and the
-   shaft sits at y=11 — dead centre — so that flex centring lands the
-   horizontal run on the text's midline, leaving room below for the descent.
-   The plain right arrow is the → glyph instead — matching a text glyph's
-   size with SVG is guesswork, so reuse the exact markup the hero's About Me
-   button uses and the two are identical by construction. */
-const ELBOW = ['M1 11h7a2 2 0 0 1 2 2v5', 'M7 16 10 19 13 16'];
+import { CtaArrow } from './CtaArrow';
 
 /* Flip to true to bring back the Focus Areas / Education plaques. */
 const SHOW_DETAIL_CARDS = false;
@@ -37,11 +30,7 @@ const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' })
         {label}
         {arrow === 'right' && <span className="cta-arrow-glyph"> →</span>}
       </span>
-      {arrow === 'elbow' && (
-        <svg className="cta-arrow" viewBox="0 0 16 22" aria-hidden="true" focusable="false">
-          {ELBOW.map((d) => <path key={d} d={d} />)}
-        </svg>
-      )}
+      {arrow === 'elbow' && <CtaArrow />}
       <svg className="trace-svg" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
@@ -117,6 +106,10 @@ export const About = () => {
         transition={{ duration: 0.6, delay: 0.3 }}
       >
         <CtaButton href="#projects" label="View my work" gradientId="about-trace-grad" />
+        {/* Hidden for now — uncomment to bring back. The mobile type/padding
+            rules for .about-cta-row in App.css exist to keep this label on one
+            line, so leave those in place. */}
+        {/*
         <CtaButton
           href="#projects"
           label="How I approach design and engineering"
@@ -124,6 +117,7 @@ export const About = () => {
           className="hero-cta--invert"
           arrow="right"
         />
+        */}
       </motion.div>
     </div>
   );

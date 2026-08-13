@@ -2,6 +2,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
 import { Tilt } from './Tilt';
+import { ScrollCue } from './ScrollCue';
 
 const caseStudies = [
   {
@@ -277,6 +278,8 @@ export const DesignWork = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        <ScrollCue to="#skills" label="Scroll to skills" />
       </div>
     </div>
   );

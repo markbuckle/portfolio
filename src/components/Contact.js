@@ -4,23 +4,28 @@ import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg'
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 import { EnvelopeAnimation } from './EnvelopeAnimation';
 import emailjs from '@emailjs/browser';
-import { useTraceFire } from '../hooks/useTraceFire';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
-  const { firing, fire, handleAnimationEnd } = useTraceFire();
+
+  const isSending = status === 'sending';
+  const isSent = status === 'success';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    /* Clear a finished state once they start a new message — otherwise the
+       button would still read "Sent with Resend!" while they type the next
+       one. */
+    if (status === 'success' || status === 'error') setStatus('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    /* Fired here rather than on click so the trace only runs once the
-       browser's required-field validation has passed. Nothing is deferred
-       behind it — the send starts immediately and the trace plays over it. */
-    fire();
+    if (isSending) return; // a second submit mid-send would post twice
+    /* Driven by status rather than a one-shot fire(): the trace has to keep
+       looping for as long as the request is in flight, which is a duration
+       nothing knows up front. */
     setStatus('sending');
     try {
       await emailjs.send(
@@ -53,6 +58,17 @@ export const Contact = () => {
         <EnvelopeAnimation width={180} height={180} />
         <p className="section-label">Contact</p>
         <h2 className="section-title"><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></h2>
+        <p className="contact-subtitle">
+          Inspired and built with{' '}
+          <a
+            href="https://resend.com/home"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-subtitle-link"
+          >
+            Resend
+          </a>
+        </p>
         <div className="contact-social-row">
           <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="GitHub">
             <GithubIcon width={45} height={45} />
@@ -94,10 +110,12 @@ export const Contact = () => {
           />
           <button
             type="submit"
-            className={`hero-cta btn-trace${firing ? ' is-firing' : ''}`}
-            onAnimationEnd={handleAnimationEnd}
+            className={`hero-cta btn-trace${isSending ? ' is-sending' : ''}`}
           >
-            <span className="hero-cta-label">Send message</span>
+            {isSending && <span className="cta-spinner" aria-hidden="true" />}
+            <span className="hero-cta-label">
+              {isSending ? 'Sending…' : isSent ? 'Sent with Resend!' : 'Send message'}
+            </span>
             <svg className="trace-svg" aria-hidden="true" focusable="false">
               <defs>
                 <linearGradient id="contact-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -108,24 +126,9 @@ export const Contact = () => {
               <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#contact-trace-grad)" />
             </svg>
           </button>
-          {status === 'sending' && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-              <motion.span
-                style={{
-                  display: 'inline-block',
-                  width: 16,
-                  height: 16,
-                  borderRadius: '50%',
-                  border: '2px solid rgba(0,229,160,0.2)',
-                  borderTopColor: 'var(--accent)',
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-              />
-              <span style={{ color: 'var(--accent)', fontSize: '0.85rem' }}>Sending...</span>
-            </div>
-          )}
-          {status === 'success' && <p style={{ color: 'var(--accent)', fontSize: '0.85rem', marginTop: '0.5rem' }}>Message sent! I'll get back to you soon.</p>}
+          {/* The sending indicator lives inside the button now — see the
+              spinner and label above. */}
+          {status === 'success' && <p style={{ color: 'var(--accent)', fontSize: '0.85rem', marginTop: '0.5rem' }}>I'll get back to you soon.</p>}
           {status === 'error' && <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>Something went wrong. Please try again.</p>}
         </form>
       </div>

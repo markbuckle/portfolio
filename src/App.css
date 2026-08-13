@@ -303,13 +303,22 @@ section {
   transform: scale(1.2);
 }
 
+/* Centred against the sidebar itself rather than the leftover flex space.
+   As a flex:1 item it could only centre in the room below the top-pinned
+   toggle, which left the nav sitting half the toggle's height low. */
 .sidebar-center {
-  flex: 1;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  /* Absolute positioning escapes .sidebar's padding, and .sidebar-nav is
+     width:100% — without mirroring the side padding here the nav would gain
+     24px and pull the collapsed icons off-centre. */
+  padding: 0 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   gap: 0.25rem;
 }
 
@@ -464,8 +473,18 @@ section {
   left: calc(100% + 0.75rem);
   top: 50%;
   transform: translateY(-50%) translateX(-6px);
-  background: var(--bg-card);
   color: var(--text-primary);
+  /* Two background layers: the white gradient clipped to the glyphs on top,
+     the card colour filling the pill underneath. background-clip takes one
+     value per layer, which is what lets the label carry a gradient and still
+     keep a solid pill — a single `clip: text` would knock the pill out.
+     The explicit text-fill also overrides the teal the parent's :hover pushes
+     down onto this pseudo-element. */
+  background-image: var(--white-text-gradient),
+    linear-gradient(var(--bg-card), var(--bg-card));
+  -webkit-background-clip: text, border-box;
+  background-clip: text, border-box;
+  -webkit-text-fill-color: transparent;
   font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
@@ -699,10 +718,29 @@ section {
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.hero-cta:hover {
+/* .is-sending holds the same committed look: the label switches to a clipped
+   teal gradient while the request is in flight, and that needs the dark face
+   under it whether or not the pointer is still on the button. */
+.hero-cta:hover,
+.hero-cta.is-sending {
   box-shadow: 0 4px 24px #ffffff1a, 0 0 14px #00e5a09d;
   background: radial-gradient(ellipse at 50% 50%, #2a2a2a 25%, #141414 75%, #030303 100%);
   color: transparent;
+}
+
+/* Sending indicator, inside the button alongside the label. */
+.cta-spinner {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 229, 160, 0.25);
+  border-top-color: var(--accent);
+  animation: cta-spin 0.75s linear infinite;
+}
+
+@keyframes cta-spin {
+  to { transform: rotate(360deg); }
 }
 
 .hero-cta:hover .hero-cta-label {
@@ -797,7 +835,47 @@ section {
   }
 }
 
-.btn-trace.is-firing .hero-cta-label {
+/* ---- Looping variant: the contact button while the email is in flight ----
+   Same two phases, repeated. Both animations run on one shared period
+   (trace + fill) so the border's hand-off into the label stays in step on
+   every cycle; giving them their own durations would let them drift apart
+   after the first repeat, since animation-delay only applies once. */
+.btn-trace.is-sending .trace-svg {
+  opacity: 1;
+  transition: opacity 0s;
+}
+
+.btn-trace.is-sending .trace-rect {
+  animation: trace-snake-loop calc(var(--trace-dur) + var(--fill-dur)) linear infinite;
+}
+
+/* The 74% split is --trace-dur / (--trace-dur + --fill-dur). Keyframe offsets
+   can't be derived from custom properties, so these two need recomputing by
+   hand if those durations change. */
+@keyframes trace-snake-loop {
+  0%   { stroke-dasharray:   0 600; stroke-dashoffset:  0; }
+  37%  { stroke-dasharray: 601 600; stroke-dashoffset:  0; }
+  74%  { stroke-dasharray:   0 600; stroke-dashoffset: -601; }
+  /* Holds empty while the label takes its turn. */
+  100% { stroke-dasharray:   0 600; stroke-dashoffset: -601; }
+}
+
+@keyframes trace-fill-loop {
+  0%, 74% {
+    background-position: 100% 0, 0 0;
+    text-shadow: 0 0 0 rgba(0, 229, 160, 0);
+  }
+  88% {
+    text-shadow: 0 0 12px rgba(0, 229, 160, 0.5);
+  }
+  100% {
+    background-position: 0 0, 0 0;
+    text-shadow: 0 0 0 rgba(0, 229, 160, 0);
+  }
+}
+
+.btn-trace.is-firing .hero-cta-label,
+.btn-trace.is-sending .hero-cta-label {
   /* The sweep layer is 300% wide, so the label shows a third of it at a time.
      The lit band (43%–57%) is deliberately narrower than that window — sized
      to match it, the whole label just pulses in place instead of the highlight
@@ -819,9 +897,19 @@ section {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* Linear, matching the perimeter trace — the light carries into the label at
-     the speed it was already travelling instead of decelerating on arrival. */
+}
+
+/* Animation is set per state, after the shared block above — declaring it
+   there would hand .is-sending the one-shot too, since the two selectors have
+   equal specificity and the shared rule comes later.
+   Linear, matching the perimeter trace, so the light carries into the label at
+   the speed it was already travelling rather than decelerating on arrival. */
+.btn-trace.is-firing .hero-cta-label {
   animation: trace-fill var(--fill-dur) linear var(--trace-dur) both;
+}
+
+.btn-trace.is-sending .hero-cta-label {
+  animation: trace-fill-loop calc(var(--trace-dur) + var(--fill-dur)) linear infinite;
 }
 
 /* ============================================================
@@ -1534,6 +1622,45 @@ section {
   margin-bottom: 0;
 }
 
+/* Newsreader ships real italic cuts (ital 300/400 are in the font link), so
+   this is a drawn italic rather than a synthesised slant. Kept dimmer than
+   the heading above it — the sheen should read as a footnote, not a second
+   title competing with "Let's connect". */
+.contact-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  letter-spacing: 0.01em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(180deg, #c9c9c9 0%, #8f8f8f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* The parent clips its gradient to the text, and -webkit-text-fill-color is
+   inherited — so without re-declaring it here the link would render in the
+   parent's clipped gradient and be indistinguishable from the rest. */
+.contact-subtitle-link {
+  -webkit-text-fill-color: var(--text-primary);
+  color: var(--text-primary);
+  /* text-decoration: underline; */
+  /* text-decoration-color: rgba(255, 255, 255, 0.25); */
+  /* text-underline-offset: 4px; */
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast),
+    text-shadow var(--transition-fast);
+}
+
+.contact-subtitle-link:hover {
+  -webkit-text-fill-color: var(--accent);
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+  text-shadow: 0 0 10px rgba(0, 229, 160, 0.35);
+}
+
 .contact-title-accent {
   background: var(--teal-dark-gradient);
   -webkit-background-clip: text;
@@ -1791,6 +1918,103 @@ textarea {
 }
 
 /* ============================================================
+   SCROLL CUE — down chevron below the case study
+   ============================================================ */
+.scroll-cue {
+  /* Longer than the converge it replaced — the sweep now crosses the whole
+     arrow rather than half of it. */
+  --cue-dur: 0.75s;
+  --cue-size: 40px;
+  display: block;
+  width: var(--cue-size);
+  margin: 2.75rem auto 0;
+  /* The svg is a replaced inline box; without this its baseline gap adds
+     phantom height under the arrow. */
+  line-height: 0;
+}
+
+/* One wrapper carries the bob so the base and both lit copies move as one —
+   three separate animations could drift out of registration. */
+.scroll-cue-bob {
+  position: relative;
+  display: block;
+  width: var(--cue-size);
+  height: var(--cue-size);
+  animation: cue-bob 1.8s ease-in-out infinite;
+}
+
+/* Small travel on purpose — an idle hint, not a bouncing arrow. */
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(-3px); }
+  50%      { transform: translateY(4px); }
+}
+
+.scroll-cue-chevron {
+  position: absolute;
+  top: 0;
+  width: var(--cue-size);
+  height: var(--cue-size);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scroll-cue-chevron--base {
+  left: 0;
+  stroke: var(--text-primary);
+  transition: stroke var(--transition-fast);
+}
+
+.scroll-cue:hover .scroll-cue-chevron--base {
+  stroke: #ffffff;
+}
+
+/* Reveal window over the lit copy. It opens left to right, so the colour
+   appears to run along the arrow's own stroke — the chevron itself never
+   moves or scales. */
+.scroll-cue-lit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  overflow: hidden;
+  /* The glow lives here, not on the svg. A filter on the clipped element
+     would be cut off with it and paint a hard-edged glow rectangle; applied
+     to the window, the filter runs after the clip and is free to spill past
+     the edge, so it hugs the lit stroke instead. */
+  filter: drop-shadow(0 0 3px rgba(0, 229, 160, 0.4))
+    drop-shadow(0 0 8px rgba(0, 212, 255, 0.18));
+}
+
+/* Pinned left at full size, so the window slides over a stationary drawing
+   rather than dragging it across. */
+.scroll-cue-lit .scroll-cue-chevron {
+  left: 0;
+}
+
+/* Heavier than the base stroke so the colour reads at this size, and so it
+   covers the white line underneath rather than leaving pale edges. */
+.scroll-cue-chevron--lit {
+  stroke-width: 2.3;
+}
+
+.scroll-cue.is-firing .scroll-cue-lit {
+  animation: cue-fill var(--cue-dur) ease-in-out forwards;
+}
+
+@keyframes cue-fill {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* Hold still while the colour runs in. */
+.scroll-cue.is-firing .scroll-cue-bob {
+  animation: none;
+}
+
+/* ============================================================
    SCROLL PROGRESS
    ============================================================ */
 .scroll-progress {
@@ -1950,7 +2174,8 @@ textarea {
 
   .sweats-word,
   .sweat-drop,
-  .about-card::before {
+  .about-card::before,
+  .scroll-cue-bob {
     animation: none !important;
   }
 }

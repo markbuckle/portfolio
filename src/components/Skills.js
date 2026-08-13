@@ -1,5 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollCue } from './ScrollCue';
 
 const TABS = [
   { id: 'design', label: 'Design' },
@@ -157,6 +158,8 @@ export const Skills = () => {
             ))}
           </motion.div>
         </AnimatePresence>
+
+        <ScrollCue to="#contact" label="Scroll to contact" />
       </div>
     </div>
   );
