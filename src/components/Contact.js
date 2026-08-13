@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { RotateCcw } from 'lucide-react';
 import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 import { EnvelopeAnimation } from './EnvelopeAnimation';
-import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -11,6 +11,16 @@ export const Contact = () => {
 
   const isSending = status === 'sending';
   const isSent = status === 'success';
+
+  const nameInputRef = useRef(null);
+
+  /* Same reset handleChange does, but reachable without typing: after a send
+     the fields are already blank, so there is nothing to clear — only the
+     success state standing between them and the next message. */
+  const handleReset = () => {
+    setStatus('');
+    nameInputRef.current?.focus();
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,20 +38,23 @@ export const Contact = () => {
        nothing knows up front. */
     setStatus('sending');
     try {
-      await emailjs.send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-        {
-          user_name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        },
-        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
-      );
+      /* Resend's API key can't be shipped to the browser the way EmailJS's
+         public key could, so the send happens in api/contact.js instead. */
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      /* fetch only rejects on network failure — a 400 or 500 still resolves,
+         and would otherwise fall through and report success. */
+      if (!response.ok) {
+        const { error } = await response.json().catch(() => ({}));
+        throw new Error(error || `Request failed with status ${response.status}`);
+      }
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {
-      console.error('EmailJS error:', err);
+      console.error('Contact form error:', err);
       setStatus('error');
     }
   };
@@ -59,7 +72,7 @@ export const Contact = () => {
         <p className="section-label">Contact</p>
         <h2 className="section-title"><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></h2>
         <p className="contact-subtitle">
-          Inspired and built with{' '}
+          Inspired and wired with{' '}
           <a
             href="https://resend.com/home"
             target="_blank"
@@ -86,6 +99,7 @@ export const Contact = () => {
       <div className="contact-form-wrapper">
         <form className="contact-form" onSubmit={handleSubmit}>
           <input
+            ref={nameInputRef}
             type="text"
             name="name"
             placeholder="Name"
@@ -108,24 +122,42 @@ export const Contact = () => {
             onChange={handleChange}
             required
           />
-          <button
-            type="submit"
-            className={`hero-cta btn-trace${isSending ? ' is-sending' : ''}`}
-          >
-            {isSending && <span className="cta-spinner" aria-hidden="true" />}
-            <span className="hero-cta-label">
-              {isSending ? 'Sending…' : isSent ? 'Sent with Resend!' : 'Send message'}
-            </span>
-            <svg className="trace-svg" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="contact-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00e5a0" />
-                  <stop offset="100%" stopColor="#00d4ff" />
-                </linearGradient>
-              </defs>
-              <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#contact-trace-grad)" />
-            </svg>
-          </button>
+          <div className="contact-submit-row">
+            <button
+              type="submit"
+              className={`hero-cta btn-trace${isSending ? ' is-sending' : ''}`}
+            >
+              {isSending && <span className="cta-spinner" aria-hidden="true" />}
+              <span className="hero-cta-label">
+                {isSending ? 'Sending…' : isSent ? 'Sent with Resend!' : 'Send message'}
+              </span>
+              <svg className="trace-svg" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="contact-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#00e5a0" />
+                    <stop offset="100%" stopColor="#00d4ff" />
+                  </linearGradient>
+                </defs>
+                <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#contact-trace-grad)" />
+              </svg>
+            </button>
+            {/* Only offered once there is something to reset. type="button" is
+                load-bearing: the default inside a form is submit, which would
+                fire a second send instead of clearing the state. */}
+            {isSent && (
+              <motion.button
+                type="button"
+                className="contact-refresh"
+                onClick={handleReset}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <RotateCcw size={16} aria-hidden="true" />
+                <span>Refresh to send another</span>
+              </motion.button>
+            )}
+          </div>
           {/* The sending indicator lives inside the button now — see the
               spinner and label above. */}
           {status === 'success' && <p style={{ color: 'var(--accent)', fontSize: '0.85rem', marginTop: '0.5rem' }}>I'll get back to you soon.</p>}

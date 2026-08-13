@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
     "framer-motion": "^10.16.0",
     "gsap": "^3.15.0",
     "lucide-react": "^0.383.0",
@@ -16,9 +15,13 @@
     "three": "^0.185.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "concurrently -k -n web,api -c cyan,magenta \"react-scripts start\" \"npm:dev:api\"",
+    "dev:api": "wrangler pages dev public --port 8788 --compatibility-date=2026-05-03",
+    "build": "react-scripts build",
+    "preview": "npm run build && wrangler pages dev build --compatibility-date=2026-05-03"
   },
+  "_comment_proxy": "CRA's dev server forwards anything it can't serve itself (i.e. /api/*) to Wrangler on 8788, so the app keeps hot reload while the Pages Function handles the form.",
+  "proxy": "http://localhost:8788",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -30,5 +33,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4",
+    "wrangler": "^4.86.0"
   }
 }

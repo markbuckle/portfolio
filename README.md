@@ -2,7 +2,7 @@
 
 My updated portfolio showcasing my product design, full-stack development, and engineering work. 
 
-**Stack:** React · JavaScript · CSS · Framer Motion · EmailJS
+**Stack:** React · JavaScript · CSS · Framer Motion · Resend · Cloudflare Pages Functions
 
 ---
 
@@ -28,6 +28,9 @@ Collapsible navigation that transitions between a 4rem icon rail and a 14rem lab
 Built as a single-page app with React Router's hash-link navigation for smooth in-page scrolling.
 
 ```
+functions/
+└── api/
+    └── contact.js       # Cloudflare Pages Function; sends via Resend
 src/
 ├── components/
 │   ├── Hero.js          # Typewriter hook, animated headline
@@ -45,8 +48,8 @@ Custom `useEffect` hook that cycles between role titles ("Product Designer" / "S
 Framer Motion `whileInView` with `once: true` on every major section. Individual list items stagger at `i * 0.03s` for a ripple feel
 - **Form state machine**
 Contact form tracks idle, sending, success, and error states, with a rotating SVG spinner during submission and inline success/error feedback
-- **EmailJS integration**
-Serverless email delivery. Credentials stored in `.env`
+- **Resend integration**
+The form POSTs to `/api/contact`, a Cloudflare Pages Function that calls Resend's REST API. The key stays on the server — unlike EmailJS's public key, a Resend key is a full-privilege secret, and Resend rejects browser-origin requests outright. The function validates and length-caps every field, escapes the message into the HTML body, and sets `reply_to` to the visitor so a reply in the inbox reaches them directly. It calls the API with `fetch` rather than the `resend` SDK: the SDK eagerly imports a MIME parser and webhook verifier this never uses, and declares `engines.node >= 20` — needless weight and Node-compat risk on the Workers runtime
 
 ---
 
@@ -68,16 +71,24 @@ Serverless email delivery. Credentials stored in `.env`
 │                     │           │                         │ │
 │                     └───────────┼─────────────────────────┘ │
 └─────────────────────────────────┼───────────────────────────┘
-                                  │ EmailJS SDK
+                                  │ POST /api/contact
                                   ▼
+                    ┌──────────────────────────┐
+                    │ functions/api/contact.js │
+                    │ (Cloudflare Pages fn)    │
+                    └────────────┬─────────────┘
+                                 │ fetch · RESEND_API_KEY
+                                 ▼
                          ┌────────────────┐
-                         │  EmailJS API   │
-                         │ (serverless)   │
+                         │   Resend API   │
                          └────────────────┘
 
 Data flow
 ─────────────────────────────────────────────
-.env  ──►  REACT_APP_* keys  ──►  Contact.js
+.dev.vars (local)   ─┐
+Pages dashboard (prod)├─►  env.RESEND_API_KEY
+                     ─┘      └──►  functions/api/contact.js
+                                   (server only · never bundled)
 App.js  ──►  isSidebarOpen  ──►  Sidebar.js
                                  (prop · no global store)
 
@@ -98,7 +109,7 @@ App-level state is only the sidebar toggle boolean; everything else is local to 
 - **Accessibility**
 Semantic HTML throughout, explicit `aria-hidden` on decorative SVGs, visible focus styles
 - **Environment config**
-Sensitive keys in `.env` (gitignored); the build inlines only what Create React App's `REACT_APP_` prefix whitelists
+`RESEND_API_KEY` lives in `.dev.vars` locally and in the Pages dashboard in production — both gitignored or off-repo, and never in `.env`. The Workers runtime doesn't read `.env` anyway, and a `REACT_APP_` prefix is precisely what would inline the secret into the public bundle
 - **Performance**
 React's default lazy image loading, `whileInView` defers animation work until elements are visible, no unnecessary re-renders from stable state shape
 
@@ -108,9 +119,33 @@ React's default lazy image loading, `whileInView` defers animation work until el
 
 ```bash
 npm install
-cp .env.example .env   # add your EmailJS keys
+cp .dev.vars.example .dev.vars   # add your Resend API key
 npm start
 ```
+
+`npm start` runs both halves at once via `concurrently`:
+
+| Process | Port | Serves |
+|---|---|---|
+| `react-scripts start` | 3000 | the app, with hot reload |
+| `wrangler pages dev`  | 8788 | `functions/` on the real Workers runtime |
+
+The `"proxy"` field in `package.json` points the CRA dev server at 8788, so
+anything it can't serve itself — i.e. `/api/*` — is forwarded to the Pages
+Function. The contact form works locally with hot reload intact, and Wrangler
+picks the API key up from `.dev.vars` automatically.
+
+Wrangler is pointed at `public` purely because it wants a static directory;
+CRA serves the actual app, and `functions/` is discovered from the project root
+either way. Run either half alone with `npm run dev:api`, or preview a real
+production build the way Cloudflare will serve it:
+
+```bash
+npm run preview   # build, then wrangler pages dev build
+```
+
+In production the key is set under **Workers & Pages → the project → Settings →
+Variables and Secrets**, added as a **Secret** (encrypted) rather than plaintext.
 
 Build for production:
 

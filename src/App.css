@@ -1760,6 +1760,64 @@ section {
   box-shadow: 0 4px 20px #ffffff1a, 0 0 12px #00e5a04d;
 }
 
+/* The send CTA and the post-send reset share a row, so the row now carries the
+   flex-start alignment the lone button used to hold. Wraps on narrow screens
+   rather than squeezing the caption. */
+.contact-submit-row {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* `.contact-form button` carries align-self: flex-start for the old
+   column layout. Left alone it pins both children to the top of this row,
+   which shows the moment the row wraps. */
+.contact-form .contact-submit-row > button {
+  align-self: center;
+}
+
+/* Deliberately not a second CTA — it reads as a glyph with a caption, so the
+   solid face from `.contact-form button` is stripped back off. That selector
+   is (0,1,1), hence the extra class here to outrank it rather than !important. */
+.contact-form .contact-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.4rem;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.contact-form .contact-refresh:hover {
+  color: var(--accent);
+  /* Cancels the glow `.contact-form button:hover` would otherwise apply. */
+  box-shadow: none;
+}
+
+.contact-form .contact-refresh:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.contact-refresh svg {
+  flex: none;
+  transition: transform var(--transition-slow);
+}
+
+/* The glyph previews the action: hovering winds it back a full turn. */
+.contact-form .contact-refresh:hover svg {
+  transform: rotate(-360deg);
+}
+
 /* ============================================================
    FOOTER
    ============================================================ */
@@ -2177,6 +2235,11 @@ textarea {
   .about-card::before,
   .scroll-cue-bob {
     animation: none !important;
+  }
+
+  /* The colour change still carries the hover state without the spin. */
+  .contact-form .contact-refresh:hover svg {
+    transform: none;
   }
 }
 

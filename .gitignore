@@ -3,6 +3,7 @@ node_modules/
 .vscode/settings.json
 .env
 build/
+.wrangler/
 
 # Local-only envelope/email asset experiments
 src/assets/logos/email2.svg
