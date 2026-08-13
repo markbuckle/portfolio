@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroCanvas } from './HeroCanvas';
 import { PRELOADER_DONE_EVENT, shouldShowPreloader } from './Preloader';
+import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,15 @@ export const Hero = () => {
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const rootRef = useRef(null);
+  const { firing, fire, handleAnimationEnd } = useTraceFire();
+
+  /* Hold the page still until the trace has run the pill and washed the
+     label, then move to the section. */
+  const handleCtaClick = (e) => {
+    if (!isPlainClick(e)) return;
+    e.preventDefault();
+    fire(() => scrollToHash('#about'));
+  };
 
   // Intro reveal — waits for the preloader curtain if it's showing this session
   useEffect(() => {
@@ -105,37 +115,46 @@ export const Hero = () => {
       <div className="hero-vignette" aria-hidden="true" />
 
       <div className="hero-inner">
-        <p className="hero-greeting hero-fade">Hello, I'm</p>
-        <h1 className="hero-name" aria-label={NAME}>
-          {NAME.split(' ').map((word) => (
-            <span className="hero-name-word" key={word} aria-hidden="true">
-              {word.split('').map((ch, i) => (
-                <span className="hero-name-char" key={i}>{ch}</span>
-              ))}
-            </span>
-          ))}
-        </h1>
-        <p className="hero-title-line hero-fade">
-          <span className="typed">{text}</span>
-          <span className="cursor" />
-        </p>
-        <p className="hero-description hero-fade">
-          I build products to help people and companies scale
-        </p>
-        <div className="hero-fade">
-          <a href="#about" className="hero-cta btn-trace">
-            <span className="hero-cta-label">About Me <span style={{ fontSize: '1.1rem' }}>→</span></span>
-            <svg className="trace-svg" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="hero-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#00e5a0" />
-                  <stop offset="100%" stopColor="#00d4ff" />
-                </linearGradient>
-              </defs>
-              <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#hero-trace-grad)" />
-            </svg>
-          </a>
+        <div className="hero-copy">
+          <p className="hero-greeting hero-fade">Hello, I'm</p>
+          <h1 className="hero-name" aria-label={NAME}>
+            {NAME.split(' ').map((word) => (
+              <span className="hero-name-word" key={word} aria-hidden="true">
+                {word.split('').map((ch, i) => (
+                  <span className="hero-name-char" key={i}>{ch}</span>
+                ))}
+              </span>
+            ))}
+          </h1>
+          <p className="hero-title-line hero-fade">
+            <span className="typed">{text}</span>
+            <span className="cursor" />
+          </p>
+          <p className="hero-description hero-fade">
+            I build products to help people and companies scale
+          </p>
+          <div className="hero-fade">
+            <a
+              href="#about"
+              className={`hero-cta btn-trace${firing ? ' is-firing' : ''}`}
+              onClick={handleCtaClick}
+              onAnimationEnd={handleAnimationEnd}
+            >
+              <span className="hero-cta-label">About Me <span style={{ fontSize: '1.1rem' }}>→</span></span>
+              <svg className="trace-svg" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="hero-trace-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#00e5a0" />
+                    <stop offset="100%" stopColor="#00d4ff" />
+                  </linearGradient>
+                </defs>
+                <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke="url(#hero-trace-grad)" />
+              </svg>
+            </a>
+          </div>
         </div>
+
+        <div className="hero-portrait hero-fade" role="img" aria-label={`Portrait of ${NAME}`} />
       </div>
     </div>
   );

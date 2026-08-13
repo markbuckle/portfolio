@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
 
 /* Elbow: shaft turns the corner and points down. The box is 16x22 and the
    shaft sits at y=11 — dead centre — so that flex centring lands the
@@ -12,30 +13,47 @@ const ELBOW = ['M1 11h7a2 2 0 0 1 2 2v5', 'M7 16 10 19 13 16'];
 /* Flip to true to bring back the Focus Areas / Education plaques. */
 const SHOW_DETAIL_CARDS = false;
 
-/* Pill CTA with the perimeter-trace hover. Each instance needs its own
-   gradientId — duplicate SVG ids in one document collide. */
-const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' }) => (
-  <a href={href} className={`hero-cta btn-trace ${className}`.trim()}>
-    <span className="hero-cta-label">
-      {label}
-      {arrow === 'right' && <span className="cta-arrow-glyph"> →</span>}
-    </span>
-    {arrow === 'elbow' && (
-      <svg className="cta-arrow" viewBox="0 0 16 22" aria-hidden="true" focusable="false">
-        {ELBOW.map((d) => <path key={d} d={d} />)}
+/* Pill CTA whose perimeter trace runs on click, holding the scroll until it
+   finishes. Each instance needs its own gradientId — duplicate SVG ids in one
+   document collide — and its own hook state, so the two buttons can't fire
+   each other. */
+const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' }) => {
+  const { firing, fire, handleAnimationEnd } = useTraceFire();
+
+  const handleClick = (e) => {
+    if (!isPlainClick(e)) return;
+    e.preventDefault();
+    fire(() => scrollToHash(href));
+  };
+
+  return (
+    <a
+      href={href}
+      className={`hero-cta btn-trace ${className}${firing ? ' is-firing' : ''}`.trim()}
+      onClick={handleClick}
+      onAnimationEnd={handleAnimationEnd}
+    >
+      <span className="hero-cta-label">
+        {label}
+        {arrow === 'right' && <span className="cta-arrow-glyph"> →</span>}
+      </span>
+      {arrow === 'elbow' && (
+        <svg className="cta-arrow" viewBox="0 0 16 22" aria-hidden="true" focusable="false">
+          {ELBOW.map((d) => <path key={d} d={d} />)}
+        </svg>
+      )}
+      <svg className="trace-svg" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00e5a0" />
+            <stop offset="100%" stopColor="#00d4ff" />
+          </linearGradient>
+        </defs>
+        <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke={`url(#${gradientId})`} />
       </svg>
-    )}
-    <svg className="trace-svg" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#00e5a0" />
-          <stop offset="100%" stopColor="#00d4ff" />
-        </linearGradient>
-      </defs>
-      <rect className="trace-rect" x="1.5" y="1.5" rx="26.5" pathLength="600" stroke={`url(#${gradientId})`} />
-    </svg>
-  </a>
-);
+    </a>
+  );
+};
 
 export const About = () => {
   return (
@@ -52,7 +70,7 @@ export const About = () => {
           I have a mild obsession for next-level user interfaces. I currently build tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
         </p>
         <p className="about-bio">
-          When I'm not building, you can probably find me hiking with my dog Bimber, running or discussing business ideas with friends.
+          When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new.
         </p>
       </motion.div>
 

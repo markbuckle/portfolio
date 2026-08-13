@@ -523,6 +523,7 @@ section {
   overflow: hidden;
 }
 
+/* Two columns: copy on the left, portrait centred against it on the right. */
 .hero-inner {
   position: relative;
   z-index: 2;
@@ -530,6 +531,17 @@ section {
   max-width: 860px;
   margin: 0 auto;
   padding: 6rem 0 4rem;
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* Sized to its text rather than stretching to fill the row — a growing column
+   would push the portrait out to the right edge and open a gap between the two.
+   min-width:0 still lets it shrink when the viewport tightens. */
+.hero-copy {
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .hero-canvas {
@@ -576,6 +588,32 @@ section {
   will-change: transform;
 }
 
+
+/* Circular portrait, right column. The crop is driven by the three values
+   below: --portrait-zoom is the image's width as a share of the circle
+   (anything over 100% zooms in), and the x/y pick which part of that oversized
+   image the circle frames. Tuned so the head fills the frame like a tight
+   headshot crop rather than sitting small in the middle — swap the photo and
+   these three numbers are the only ones to revisit.
+
+   The border paints over the image, so background-clip keeps the photo inside
+   the padding box — --border is translucent white and would otherwise read as
+   a lighter rim of the photo itself rather than a rule. */
+.hero-portrait {
+  --portrait-zoom: 108%;
+  --portrait-x: 33%;
+  --portrait-y: 2%;
+  flex: none;
+  width: clamp(160px, 19vw, 250px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background-image: url('./assets/img/headshot.png');
+  background-repeat: no-repeat;
+  background-size: var(--portrait-zoom) auto;
+  background-position: var(--portrait-x) var(--portrait-y);
+  background-clip: padding-box;
+}
 
 .hero-greeting {
   font-family: var(--font-mono);
@@ -679,11 +717,21 @@ section {
    ============================================================ */
 
 /*
+  Fires on CLICK, not hover — hover keeps the dark face, glow and gradient
+  label, and the border is held back as the reward for committing. The click
+  is deferred until the whole sequence finishes; see hooks/useTraceFire.js,
+  which reads the end of `trace-fill` as its cue. Retune the two durations
+  below and the JS follows automatically.
+
   Technique: SVG <rect> with pathLength="600" normalises the perimeter.
   stroke-dasharray:600 600 (period=1200). dashoffset 600→0 draws the head
   forward; 0→-600 advances the tail so the stroke erases in the same direction.
-  On leave: animation resets instantly while the SVG fades out.
 */
+:root {
+  --trace-dur: 1.4s;
+  --fill-dur: 0.5s;
+}
+
 @keyframes trace-snake {
   0%   { stroke-dasharray:   0 600; stroke-dashoffset:  0; }
   50%  { stroke-dasharray: 601 600; stroke-dashoffset:  0; }
@@ -706,7 +754,7 @@ section {
   transition: opacity 0.3s ease;
 }
 
-.btn-trace:hover .trace-svg {
+.btn-trace.is-firing .trace-svg {
   opacity: 1;
   transition: opacity 0s;
 }
@@ -726,8 +774,54 @@ section {
   animation: none;
 }
 
-.btn-trace:hover .trace-rect {
-  animation: trace-snake 1.4s linear forwards;
+.btn-trace.is-firing .trace-rect {
+  animation: trace-snake var(--trace-dur) linear forwards;
+}
+
+/* Step 2 — the light the border was carrying drains into the label: a bright
+   band sweeps left→right through the type the moment the perimeter closes.
+   It rides as a second background layer over the untouched hover gradient, so
+   the delayed `both` fill-mode holds the label at its normal hover look for
+   the whole trace, with no colour pop when the animation takes over. */
+@keyframes trace-fill {
+  0% {
+    background-position: 100% 0, 0 0;
+    text-shadow: 0 0 0 rgba(0, 229, 160, 0);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(0, 229, 160, 0.55);
+  }
+  100% {
+    background-position: 0 0, 0 0;
+    text-shadow: 0 0 0 rgba(0, 229, 160, 0);
+  }
+}
+
+.btn-trace.is-firing .hero-cta-label {
+  /* The sweep layer is 300% wide, so the label shows a third of it at a time.
+     The lit band (43%–57%) is deliberately narrower than that window — sized
+     to match it, the whole label just pulses in place instead of the highlight
+     travelling across the type. Both ends of the sweep park the window in the
+     clear run, leaving only the base gradient. Explicit rgba(…,0) rather than
+     `transparent`, which some engines interpolate through grey. */
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 212, 255, 0) 43%,
+      #7bffe0 48%,
+      #00d4ff 50%,
+      #7bffe0 52%,
+      rgba(0, 212, 255, 0) 57%
+    ),
+    var(--teal-dark-gradient);
+  background-size: 300% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Linear, matching the perimeter trace — the light carries into the label at
+     the speed it was already travelling instead of decelerating on arrival. */
+  animation: trace-fill var(--fill-dur) linear var(--trace-dur) both;
 }
 
 /* ============================================================
@@ -819,8 +913,10 @@ section {
 }
 
 /* The border has done its job once the trace runs the perimeter — drop it to
-   transparent rather than removing it, so the pill doesn't resize on hover. */
-.hero-cta--invert:hover {
+   transparent rather than removing it, so the pill doesn't resize. Keyed to
+   the firing state, not hover: the trace no longer runs on hover, and hiding
+   the rule there would just leave the pill edgeless under the cursor. */
+.hero-cta--invert.is-firing {
   border-color: transparent;
 }
 
@@ -1794,8 +1890,45 @@ textarea {
     padding: 0 1.5rem;
   }
 
+  /* Two columns don't fit a phone — stack them, portrait under the copy and
+     pushed to the right edge.
+     `stretch` (not flex-start) is load-bearing once the axis flips: the copy
+     has no set width, so flex-start would size it to its longest unwrapped
+     line and run the description off the side of the screen. The portrait sets
+     its own width, so align-self still places it without stretching. */
   .hero-inner {
+    /* Drives both the gap above the portrait and its inset from the screen
+       edge, so the two stay equal from one place. */
+    --portrait-inset: 2rem;
     padding: 5.5rem 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--portrait-inset);
+  }
+
+  .hero-portrait {
+    align-self: flex-end;
+    /* .hero already contributes 1.5rem of side padding — add only the
+       remainder, so the space to the right matches the space above. */
+    margin-right: calc(var(--portrait-inset) - 1.5rem);
+    width: clamp(160px, 46vw, 220px);
+  }
+
+  /* "How I approach design and engineering" needs 345px on one line but only
+     gets ~342px on a 390px phone, so it wraps. Both buttons in the row scale
+     together — sizing only the long one would leave the pair mismatched — and
+     nowrap plus the fluid font/padding holds one line down to ~320px. */
+  .about-cta-row .hero-cta {
+    white-space: nowrap;
+    font-size: clamp(0.78rem, 3.4vw, 0.9rem);
+    padding: 0.75rem clamp(1rem, 4vw, 1.75rem);
+  }
+
+  /* em, not rem, so the glyph tracks the shrinking label instead of holding
+     1.1rem and eating the width the smaller type just freed up. 1.22em is the
+     same size it renders at full scale. */
+  .about-cta-row .cta-arrow-glyph {
+    font-size: 1.22em;
   }
 
   .case-studies {

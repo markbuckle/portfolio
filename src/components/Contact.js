@@ -4,10 +4,12 @@ import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg'
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 import { EnvelopeAnimation } from './EnvelopeAnimation';
 import emailjs from '@emailjs/browser';
+import { useTraceFire } from '../hooks/useTraceFire';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
+  const { firing, fire, handleAnimationEnd } = useTraceFire();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,6 +17,10 @@ export const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    /* Fired here rather than on click so the trace only runs once the
+       browser's required-field validation has passed. Nothing is deferred
+       behind it — the send starts immediately and the trace plays over it. */
+    fire();
     setStatus('sending');
     try {
       await emailjs.send(
@@ -86,7 +92,11 @@ export const Contact = () => {
             onChange={handleChange}
             required
           />
-          <button type="submit" className="hero-cta btn-trace">
+          <button
+            type="submit"
+            className={`hero-cta btn-trace${firing ? ' is-firing' : ''}`}
+            onAnimationEnd={handleAnimationEnd}
+          >
             <span className="hero-cta-label">Send message</span>
             <svg className="trace-svg" aria-hidden="true" focusable="false">
               <defs>
