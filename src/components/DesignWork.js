@@ -11,7 +11,7 @@ const caseStudies = [
     title: 'ClauseKit',
     subtitle: 'AI Legal Contract Review Assistant',
     description:
-      "ClauseKit is a full-stack AI legal assistant built in both the browser and a Microsoft Word add-in. Lawyers can ask questions about the contract they're reviewing and receive risk flags, suggested redlines, analysis, and simulated negotiations.",
+      "ClauseKit is a full-stack AI legal assistant built in both the browser and a Microsoft Word add-in. Lawyers can ask questions about the contract they're reviewing and receive risk flags, suggested redlines, analysis, and simulated negotiations",
     tools: ['Claude Design', 'Figma', 'React', 'TypeScript', 'Fluent UI', 'Node.js', 'Express','tRPC','Office.js','MongoDB','Dockerfile','Anthropic SDK', 'GCP'],
     liveUrl: 'https://clause-kit.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/clausekit',
@@ -23,7 +23,7 @@ const caseStudies = [
     title: 'LifeSync',
     subtitle: 'Text-to-Calendar Management Application',
     description:
-      'A calendar management platform that makes booking appointments, events, and meetings easier than ever. Powered by an AI assistant that helps users stay organized like a personal CEO assistant. Shipped as a web and IOS application.',
+      'A calendar management platform that makes booking appointments, events, and meetings easier than ever. Powered by an AI assistant that helps users stay organized like a personal CEO assistant. Shipped as a web and IOS application',
     tools: ['Figma', 'React', 'TypeScript', 'Tailwind CSS', 'FastAPI', 'GraphQL', 'PostgreSQL', 'Docker', 'Vercel'],
     liveUrl: 'https://thelifesync.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/lifesync',
@@ -35,7 +35,7 @@ const caseStudies = [
     title: 'HealthLync',
     subtitle: 'Personalized Health Tracker',
     description:
-      'Comprehensive health tracking application that enables users to make sense of complex medical information through intelligent data processing, OCR extraction, and AI-powered insights. Features include interactive dashboards, a RAG chatbot for medical information retrieval, and a guided onboarding tutorial system.',
+      'Comprehensive health tracking application that enables users to make sense of complex medical information through intelligent data processing, OCR extraction, and AI-powered insights. Features include interactive dashboards, a RAG chatbot for medical information retrieval, and a guided onboarding tutorial system',
     tools: ['Figma', 'Node.js', 'Express', 'Python', 'MongoDB', 'Plotly.js', 'OpenAI', 'Anthropic Claude', 'Docker'],
     liveUrl: 'https://healthlync.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/health-tracker',
@@ -47,7 +47,7 @@ const caseStudies = [
     title: 'FeedFlo',
     subtitle: 'User Feedback Management Web Application',
     description:
-      'A SaaS platform for collecting, organizing, and acting on product feedback. Built with authentication, subscription billing, and a clean dashboard that helps teams triage and prioritize user insights at scale.',
+      'A SaaS platform for collecting, organizing, and acting on product feedback. Built with authentication, subscription billing, and a clean dashboard that helps teams triage and prioritize user insights at scale',
     tools: ['React', 'Next.js', 'TypeScript', 'Shadcn UI', 'Clerk', 'Supabase', 'PostgreSQL', 'Stripe', 'Vercel'],
     liveUrl: 'https://saasdashboard.vercel.app/',
     gitUrl: 'https://github.com/markbuckle/saas-app',
@@ -207,7 +207,7 @@ export const DesignWork = () => {
         <p className="section-label">Projects</p>
         <h2 className="section-title"><span className="white-gradient-text">My </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>work</span></h2>
         <p className="section-subtitle">
-          Here are a few of my end-to-end projects spanning small scale user research, architecture, design systems, and full-stack development. These are passion side projects so there's still a ton more I would like to do with them... just never enough free time.  
+          Here are a few of my end-to-end projects spanning small scale user research, architecture, design systems, and full-stack development. These are passion side projects so there's still a ton more I would like to do with them... just never enough free time  
         </p>
       </motion.div>
 

@@ -92,7 +92,7 @@ export const Contact = () => {
         </div>
         <p className="contact-description">
           I'm always open to learning more about product design, full-stack development and software engineering opportunities.
-          Whether you have a project in mind or you would like to learn, please reach out.
+          Whether you have a project in mind or you would like to learn, please reach out
         </p>
       </motion.div>
 

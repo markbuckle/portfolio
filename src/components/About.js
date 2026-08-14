@@ -59,7 +59,7 @@ export const About = () => {
           I have a mild obsession for next-level user interfaces. I currently build products and tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
         </p>
         <p className="about-bio">
-          When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new.
+          When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new
         </p>
       </motion.div>
 
