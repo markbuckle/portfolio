@@ -207,7 +207,7 @@ export const DesignWork = () => {
         <p className="section-label">Projects</p>
         <h2 className="section-title"><span className="white-gradient-text">My </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>work</span></h2>
         <p className="section-subtitle">
-          Here are a few of my end-to-end projects spanning small scale user research, architecture, design systems, and full-stack development. These are passion side projects so there's still a ton more I would like to do with them... just never enough free time  
+          Here are a few of my end-to-end projects spanning small scale user research, architecture, and design systems. These are passion side projects so there's always more I would like to do with them... just never enough free time  
         </p>
       </motion.div>
 

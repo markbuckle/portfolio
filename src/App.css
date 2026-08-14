@@ -436,6 +436,29 @@ section {
   flex-shrink: 0;
 }
 
+/* Expanded state — icons and labels scale up to nearly fill the panel,
+   leaving roughly a rem of breathing room on each side. The collapsed rail
+   keeps the 20px icons above; these are scoped to [data-state="open"] so the
+   two states size independently. */
+.sidebar-container[data-state="open"] .sidebar-nav {
+  gap: 0.4rem;
+}
+
+.sidebar-container[data-state="open"] .sidebar-item {
+  gap: 1rem;
+  padding: 0.7rem 0.6rem;
+  font-size: 1.3rem;
+}
+
+.sidebar-container[data-state="open"] .sidebar-item-icon {
+  min-width: 30px;
+}
+
+.sidebar-container[data-state="open"] .sidebar-item-icon img {
+  width: 30px;
+  height: 30px;
+}
+
 .sidebar-item-label {
   opacity: 1;
   transition: opacity var(--transition-fast);
@@ -452,7 +475,7 @@ section {
 }
 
 .sidebar-container[data-state="open"] .sidebar-item:hover .sidebar-item-label {
-  background: var(--teal-dark-gradient);
+  background: var(--white-text-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2404,6 +2427,28 @@ textarea {
   .sidebar-item-icon img {
     width: 28px;
     height: 28px;
+  }
+
+  /* Expanded state — same idea as desktop, scaled to the 17rem mobile panel.
+     These need the [data-state="open"] prefix to match the specificity of the
+     desktop open-state rules above, otherwise those would win here. */
+  .sidebar-container[data-state="open"] .sidebar-nav {
+    gap: 0.6rem;
+  }
+
+  .sidebar-container[data-state="open"] .sidebar-item {
+    gap: 1.25rem;
+    padding: 1rem 0.7rem;
+    font-size: 1.7rem;
+  }
+
+  .sidebar-container[data-state="open"] .sidebar-item-icon {
+    min-width: 40px;
+  }
+
+  .sidebar-container[data-state="open"] .sidebar-item-icon img {
+    width: 40px;
+    height: 40px;
   }
 
   .mobile-toggle {
