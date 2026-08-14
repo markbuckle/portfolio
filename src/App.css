@@ -126,6 +126,23 @@ section {
   padding: 0;
 }
 
+/* Every section holds at least a full viewport. The cues and CTAs all land via
+   scrollIntoView, which lines the target's top edge against the top of the
+   screen (or its bottom edge against the bottom, travelling up — see
+   scrollToHash in useTraceFire.js). A section shorter than a screen therefore
+   leaves a strip of the next one showing, which is how Contact's envelope kept
+   appearing under the Skills chips. With this floor in place the neighbour
+   always starts at or below the fold, whichever way you arrive.
+
+   `vh` rather than `svh`: on mobile `vh` resolves to the tallest the viewport
+   can get, with the browser chrome retracted — and chrome-retracted is exactly
+   the state where a section sized to the smaller viewport would let its
+   neighbour through. Overshooting by the chrome's height costs nothing here;
+   undershooting is the bug. */
+.main-content > section {
+  min-height: 100vh;
+}
+
 /* --- Section Container (used inside each section) --- */
 .section-container {
   max-width: 860px;
