@@ -279,7 +279,12 @@ export const DesignWork = () => {
           )}
         </AnimatePresence>
 
-        <ScrollCue to="#skills" label="Scroll to skills" />
+        <ScrollCue
+          to="#skills"
+          label="Scroll to skills"
+          up="#about"
+          upLabel="Scroll back to about"
+        />
       </div>
     </div>
   );

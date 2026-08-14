@@ -62,13 +62,21 @@ export const useTraceFire = (finalAnimation = DEFAULT_FINAL_ANIMATION) => {
   return { firing, fire, handleAnimationEnd };
 };
 
-/* Same-page hash navigation, minus the anchor's instant jump. Bare
-   `scrollIntoView()` follows the CSS `scroll-behavior`, which App.css already
-   flips to `auto` under prefers-reduced-motion. */
-export const scrollToHash = (hash) => {
+/* Same-page hash navigation, minus the anchor's instant jump. Leaving
+   `behavior` unset follows the CSS `scroll-behavior`, which App.css already
+   flips to `auto` under prefers-reduced-motion.
+
+   `block` is which edge of the target to line up, and it has to follow the
+   direction of travel: 'start' going down puts you at the top of the section
+   you are entering, but 'start' going *up* throws you past a tall section to
+   its far edge — from the bottom of Skills you would land at the top of
+   Projects, a screenful above anything you were looking at, which reads as
+   overshooting into the section before it. 'end' going up lands you on the
+   near edge instead, mirroring the downward case. */
+export const scrollToHash = (hash, block = 'start') => {
   const target = document.querySelector(hash);
   if (!target) return;
-  target.scrollIntoView();
+  target.scrollIntoView({ block });
   /* Keep the URL in step with the view — replace, not push, so the trace
      doesn't stack a history entry per click. */
   window.history.replaceState(null, '', hash);

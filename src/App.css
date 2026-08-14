@@ -926,7 +926,7 @@ section {
   margin-right: auto;
 }
 .about-bio + .about-bio {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .bio-link {
@@ -1982,6 +1982,13 @@ textarea {
   /* Longer than the converge it replaced — the sweep now crosses the whole
      arrow rather than half of it. */
   --cue-dur: 0.75s;
+  /* The turn holds off until the colour has had a clear run at the arrow, then
+     goes at its own pace. Overlapping rather than locked: the fill finishes
+     under way and the arrow simply carries on turning, lit. Navigation waits
+     on the turn, so delay + duration is the whole click-to-scroll wait —
+     keep it well inside FAILSAFE_MS in useTraceFire.js. */
+  --cue-spin-delay: 1s;
+  --cue-spin-dur: 0.9s;
   --cue-size: 40px;
   display: block;
   width: var(--cue-size);
@@ -2007,6 +2014,35 @@ textarea {
   50%      { transform: translateY(4px); }
 }
 
+/* The bob is a direction hint, so it has to follow the arrow round — drifting
+   downwards under an up-arrow reads as a bug. Must stay above the is-firing
+   rule below: equal specificity, and that one needs to win the tie and stop
+   the bob outright while a turn is running. */
+.scroll-cue.is-flipped .scroll-cue-bob {
+  animation-name: cue-bob-up;
+}
+
+@keyframes cue-bob-up {
+  0%, 100% { transform: translateY(3px); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* Positioned, so the chevrons and the reveal window anchor here rather than
+   to the bob — the rotation then carries all three as one piece. */
+.scroll-cue-spin {
+  position: relative;
+  display: block;
+  width: var(--cue-size);
+  height: var(--cue-size);
+}
+
+/* Resting angle once a turn has landed. The arrow is deliberately left
+   pointing back the way it came rather than unwound — it now cues the return
+   trip for whichever section you just scrolled into. */
+.scroll-cue.is-flipped .scroll-cue-spin {
+  transform: rotate(-180deg);
+}
+
 .scroll-cue-chevron {
   position: absolute;
   top: 0;
@@ -2030,14 +2066,23 @@ textarea {
 
 /* Reveal window over the lit copy. It opens left to right, so the colour
    appears to run along the arrow's own stroke — the chevron itself never
-   moves or scales. */
+   moves or scales.
+
+   The window slides rather than growing. Animating `width` is a layout
+   change, and layout does not survive being nested under the spin's
+   transform: the browser composites that subtree and rasterises this
+   filtered element once, so a per-frame width never repaints and the fill
+   stays invisible. Sliding a full-width window and counter-sliding the
+   drawing inside it is pure transform, which composites correctly. */
 .scroll-cue-lit {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 0;
+  width: var(--cue-size);
   overflow: hidden;
+  /* Parked one full width off to the left — nothing showing at rest. */
+  transform: translateX(-100%);
   /* The glow lives here, not on the svg. A filter on the clipped element
      would be cut off with it and paint a hard-edged glow rectangle; applied
      to the window, the filter runs after the clip and is free to spill past
@@ -2046,10 +2091,13 @@ textarea {
     drop-shadow(0 0 8px rgba(0, 212, 255, 0.18));
 }
 
-/* Pinned left at full size, so the window slides over a stationary drawing
-   rather than dragging it across. */
+/* Pushed right by exactly what the window is pushed left, so the two cancel
+   and the lit chevron lands stationary on top of the base one. Both are 100%
+   of the same 40px box, so they stay in registration at every frame — as long
+   as the two animations share a duration and an easing curve. */
 .scroll-cue-lit .scroll-cue-chevron {
   left: 0;
+  transform: translateX(100%);
 }
 
 /* Heavier than the base stroke so the colour reads at this size, and so it
@@ -2062,12 +2110,51 @@ textarea {
   animation: cue-fill var(--cue-dur) ease-in-out forwards;
 }
 
-@keyframes cue-fill {
-  from { width: 0; }
-  to   { width: 100%; }
+/* Same duration and easing as cue-fill — they have to cancel frame for frame,
+   or the lit chevron drifts sideways off the base one as the window opens. */
+.scroll-cue.is-firing .scroll-cue-lit .scroll-cue-chevron {
+  animation: cue-fill-hold var(--cue-dur) ease-in-out forwards;
 }
 
-/* Hold still while the colour runs in. */
+@keyframes cue-fill {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes cue-fill-hold {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* Starts after the fill is already under way — see --cue-spin-delay. The two
+   overlap rather than running as one, so the colour reaching the far tip and
+   the arrow coming upright are separate beats. */
+.scroll-cue.is-firing .scroll-cue-spin {
+  animation: cue-spin-down var(--cue-spin-dur) var(--cue-spin-delay) ease-in-out forwards;
+}
+
+.scroll-cue.is-firing.is-flipped .scroll-cue-spin {
+  animation-name: cue-spin-up;
+}
+
+@keyframes cue-spin-down {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-180deg); }
+}
+
+/* Carries on the same way round — a second half turn anticlockwise, not an
+   unwind. -360deg renders identically to the 0deg resting angle, so dropping
+   is-flipped on the frame the animation is removed is invisible. */
+@keyframes cue-spin-up {
+  from { transform: rotate(-180deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Drop the idle bob for the duration — the fill and the turn are the only
+   motion that should read once a click has landed, and a translate bobbing
+   under a rotation just makes the arrow look unsteady. Deliberately last of
+   the .scroll-cue-bob rules: it ties on specificity with the is-flipped one
+   above and has to win. */
 .scroll-cue.is-firing .scroll-cue-bob {
   animation: none;
 }

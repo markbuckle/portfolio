@@ -56,7 +56,7 @@ export const About = () => {
         <p className="section-label">About Me</p>
         <h2 className="section-title2"><span className="white-gradient-text">A builder who </span><span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span><span className="white-gradient-text"> the </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>UX</span></h2>
         <p className="about-bio">
-          I have a mild obsession for next-level user interfaces. I currently build tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
+          I have a mild obsession for next-level user interfaces. I currently build products and tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
         </p>
         <p className="about-bio">
           When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new.

@@ -159,7 +159,12 @@ export const Skills = () => {
           </motion.div>
         </AnimatePresence>
 
-        <ScrollCue to="#contact" label="Scroll to contact" />
+        <ScrollCue
+          to="#contact"
+          label="Scroll to contact"
+          up="#projects"
+          upLabel="Scroll back to projects"
+        />
       </div>
     </div>
   );
