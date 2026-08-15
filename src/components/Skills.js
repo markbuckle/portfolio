@@ -1,6 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollCue } from './ScrollCue';
+import { ScrollReveal } from './ScrollReveal';
 
 const TABS = [
   { id: 'design', label: 'Design' },
@@ -72,27 +73,23 @@ export const Skills = () => {
 
   return (
     <div className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <p className="section-label">Skills & Tools</p>
-        <h2 className="section-title">
-          <span className="white-gradient-text">What I </span>
-          <span style={{
-            background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}>build</span>
-          <span className="white-gradient-text"> with</span>
-        </h2>
-      </motion.div>
+      <ScrollReveal as="p" className="section-label">Skills & Tools</ScrollReveal>
+      <ScrollReveal as="h2" className="section-title" delay={0.08}>
+        <span className="white-gradient-text">What I </span>
+        <span style={{
+          background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}>build</span>
+        <span className="white-gradient-text"> with</span>
+      </ScrollReveal>
 
       <div className="skills-toggle-wrapper">
-        <div className="skills-toggle-outer">
+        {/* The tab bar's active pill is positioned from getBoundingClientRect
+            deltas between the button and the track, so a translate on this
+            ancestor shifts both by the same amount and cancels out. */}
+        <ScrollReveal className="skills-toggle-outer" delay={0.14}>
           <div className="skills-toggle-track" ref={trackRef} role="tablist">
             <svg
               className="skills-toggle-svg"
@@ -142,22 +139,27 @@ export const Skills = () => {
               </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            className="skills-grid"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18 }}
-          >
-            {SKILLS[activeTab].map((skill, i) => (
-              <SkillChip key={skill} name={skill} delay={i * 0.02} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Two opacities stack here and that is deliberate: this one is tied to
+            scroll position, the inner one to the tab swap. They multiply, so a
+            tab switched mid-reveal still crossfades correctly. */}
+        <ScrollReveal delay={0.2}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              className="skills-grid"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              {SKILLS[activeTab].map((skill, i) => (
+                <SkillChip key={skill} name={skill} delay={i * 0.02} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </ScrollReveal>
 
         <ScrollCue
           to="#contact"

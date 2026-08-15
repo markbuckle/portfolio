@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
 import { Tilt } from './Tilt';
 import { ScrollCue } from './ScrollCue';
+import { ScrollReveal } from './ScrollReveal';
 
 const caseStudies = [
   {
@@ -77,14 +78,13 @@ const CaseStudyCard = ({ study, index }) => {
     setGlowX(((e.clientX - rect.left) / rect.width) * 100);
   };
 
+  /* The reveal is scroll-linked rather than a tween on mount because this sits
+     inside an AnimatePresence keyed on the active study: a fixed reveal
+     replayed its whole 0.5s slide on every tab switch, underneath the
+     crossfade already running. Tied to position, it is simply already
+     resolved when the card swaps. */
   return (
-    <motion.div
-      className="case-study-reveal"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
+    <ScrollReveal className="case-study-reveal" distance={44}>
     <Tilt className="case-study-card" max={2.5}>
       {study.image ? (
         <img src={study.image} alt={study.title} className="case-study-image" />
@@ -161,7 +161,7 @@ const CaseStudyCard = ({ study, index }) => {
         </div>
       </div>
     </Tilt>
-    </motion.div>
+    </ScrollReveal>
   );
 };
 
@@ -198,21 +198,14 @@ export const DesignWork = () => {
 
   return (
     <div className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <p className="section-label">Projects</p>
-        <h2 className="section-title"><span className="white-gradient-text">My </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>work</span></h2>
-        <p className="section-subtitle">
-          Here are a few of my end-to-end projects spanning small scale user research, architecture, and design systems. These are passion side projects so there's always more I would like to do with them... just never enough free time  
-        </p>
-      </motion.div>
+      <ScrollReveal as="p" className="section-label">Projects</ScrollReveal>
+      <ScrollReveal as="h2" className="section-title" delay={0.08}><span className="white-gradient-text">My </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>work</span></ScrollReveal>
+      <ScrollReveal as="p" className="section-subtitle" delay={0.14}>
+        Here are a few of my end-to-end projects spanning small scale user research, architecture, and design systems. These are passion side projects so there's always more I would like to do with them... just never enough free time
+      </ScrollReveal>
 
       <div className="skills-toggle-wrapper">
-        <div className="skills-toggle-outer">
+        <ScrollReveal className="skills-toggle-outer" delay={0.18}>
           <div className="skills-toggle-track" ref={trackRef} role="tablist">
             <svg
               className="skills-toggle-svg"
@@ -262,7 +255,7 @@ export const DesignWork = () => {
               </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         <AnimatePresence mode="wait">
           {activeStudy && (

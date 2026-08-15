@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
 import { CtaArrow } from './CtaArrow';
+import { ScrollReveal } from './ScrollReveal';
 
 /* Flip to true to bring back the Focus Areas / Education plaques. */
 const SHOW_DETAIL_CARDS = false;
@@ -47,30 +47,21 @@ const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' })
 export const About = () => {
   return (
     <div className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <p className="section-label">About Me</p>
-        <h2 className="section-title2"><span className="white-gradient-text">A builder who </span><span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span><span className="white-gradient-text"> the </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>UX</span></h2>
-        <p className="about-bio">
-          I have a mild obsession for next-level user interfaces. I currently build products and tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
-        </p>
-        <p className="about-bio">
-          When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new
-        </p>
-      </motion.div>
+      {/* One reveal per element rather than one for the block: each crosses the
+          fade window at its own height on the screen, so the stack cascades
+          instead of arriving as a slab. The small `delay` bumps deepen a
+          cascade the 35px between a label and its title barely registers on. */}
+      <ScrollReveal as="p" className="section-label">About Me</ScrollReveal>
+      <ScrollReveal as="h2" className="section-title2" delay={0.08}><span className="white-gradient-text">A builder who </span><span className="sweats-word">sweats<span className="sweat-drop" style={{ left: '50%' }}></span></span><span className="white-gradient-text"> the </span><span style={{ background: 'linear-gradient(180deg, #00e5a0 0%, #00b87a 55%, #007a52 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>UX</span></ScrollReveal>
+      <ScrollReveal as="p" className="about-bio" delay={0.14}>
+        I have a mild obsession for next-level user interfaces. I currently build products and tools at <a href="https://verafin.com/canada/" target="_blank" rel="noopener noreferrer" className="bio-link">Nasdaq-Verafin</a>
+      </ScrollReveal>
+      <ScrollReveal as="p" className="about-bio" delay={0.18}>
+        When I'm not building, you can probably find me hiking with my dog Bimber, listening to a podcast and/or travelling somewhere new
+      </ScrollReveal>
 
       {SHOW_DETAIL_CARDS && (
-      <motion.div
-        className="about-details-row"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-      >
+      <ScrollReveal className="about-details-row" delay={0.2}>
         <div className="about-card">
           <div className="about-card-inner">
             <p className="about-detail-label">Focus Areas</p>
@@ -95,16 +86,10 @@ export const About = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </ScrollReveal>
       )}
 
-      <motion.div
-        className="about-cta-row"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+      <ScrollReveal className="about-cta-row" delay={0.2}>
         <CtaButton href="#projects" label="View my work" gradientId="about-trace-grad" />
         {/* Hidden for now — uncomment to bring back. The mobile type/padding
             rules for .about-cta-row in App.css exist to keep this label on one
@@ -118,7 +103,7 @@ export const About = () => {
           arrow="right"
         />
         */}
-      </motion.div>
+      </ScrollReveal>
     </div>
   );
 };

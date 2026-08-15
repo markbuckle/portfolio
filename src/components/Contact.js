@@ -4,6 +4,7 @@ import { RotateCcw } from 'lucide-react';
 import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
 import { EnvelopeAnimation } from './EnvelopeAnimation';
+import { ScrollReveal } from './ScrollReveal';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -61,17 +62,13 @@ export const Contact = () => {
 
   return (
     <div className="section-container contact-section">
-      <motion.div
-        className="contact-header"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <EnvelopeAnimation width={180} height={180} />
-        <p className="section-label">Contact</p>
-        <h2 className="section-title"><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></h2>
-        <p className="contact-subtitle">
+      <div className="contact-header">
+        <ScrollReveal>
+          <EnvelopeAnimation width={180} height={180} />
+        </ScrollReveal>
+        <ScrollReveal as="p" className="section-label" delay={0.08}>Contact</ScrollReveal>
+        <ScrollReveal as="h2" className="section-title" delay={0.12}><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></ScrollReveal>
+        <ScrollReveal as="p" className="contact-subtitle" delay={0.16}>
           Inspired and wired with{' '}
           <a
             href="https://resend.com/home"
@@ -81,20 +78,20 @@ export const Contact = () => {
           >
             Resend
           </a>
-        </p>
-        <div className="contact-social-row">
+        </ScrollReveal>
+        <ScrollReveal className="contact-social-row" delay={0.2}>
           <a href="https://github.com/markbuckle" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="GitHub">
             <GithubIcon width={45} height={45} />
           </a>
           <a href="https://www.linkedin.com/in/mark-buckle-146316326/" target="_blank" rel="noopener noreferrer" className="contact-social-link" aria-label="LinkedIn">
             <LinkedinIcon width={45} height={45} />
           </a>
-        </div>
-        <p className="contact-description">
+        </ScrollReveal>
+        <ScrollReveal as="p" className="contact-description" delay={0.24}>
           I'm always open to learning more about product design, full-stack development and software engineering opportunities.
           Whether you have a project in mind or you would like to learn, please reach out
-        </p>
-      </motion.div>
+        </ScrollReveal>
+      </div>
 
       <div className="contact-form-wrapper">
         <form className="contact-form" onSubmit={handleSubmit}>
