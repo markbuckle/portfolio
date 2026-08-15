@@ -10,7 +10,7 @@
   --bg-secondary: #0a0a0a;
   --bg-card: #111111;
   --bg-card-hover: #1a1a1a;
-  --bg-sidebar: #050505;
+  --bg-sidebar: #030304;
 
   --text-primary: #fafafa;
   --text-secondary: #a1a1a1;
@@ -45,7 +45,7 @@
   --radius-xl: 24px;
   --radius-2xl: 30px;
 
-  --sidebar-width-open: 14rem;
+  --sidebar-width-open: 12.5rem;
   --sidebar-width-closed: 4rem;
 
   --transition-fast: 0.15s ease;
@@ -269,12 +269,51 @@ section {
   align-items: flex-start;
 }
 
+/* --- Lit satin backdrop ---------------------------------------------------
+   Both states carry the same surface: a light source off the top-right corner,
+   a second softer fold further down the right edge so the middle third doesn't
+   go dead flat, a teal/cyan bloom at the foot (the only colour in the stack),
+   and a base falloff running lit at the crown to near-black through the belly.
+   Layers paint first-listed-on-top.
+
+   Only --panel-folds differs between the two states. Radial gradients size
+   against their own box, so the open panel's ellipses squeezed into the 4rem
+   rail would smear into a vertical streak — the rail needs its highlights much
+   wider and shallower in percentage terms to land in the same place. The base
+   falloff is a near-vertical linear gradient, so it's width-independent and
+   written once, which is also what keeps the swap on open/close from reading
+   as a flash: only the subtle radials change.
+
+   Every layer is a gradient — no blur, so nothing bleeds past the panel and
+   there's no filter cost on a surface that animates its width. The page-wide
+   .grain-overlay sits at z-index 9000 and already lays film grain over this. */
 .sidebar {
+  --panel-folds:
+    radial-gradient(200% 22% at 118% -2%,
+      rgba(234, 246, 242, 0.17) 0%,
+      rgba(152, 180, 174, 0.07) 28%,
+      rgba(255, 255, 255, 0.018) 54%,
+      rgba(255, 255, 255, 0) 78%),
+    radial-gradient(170% 15% at 130% 50%,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.012) 46%,
+      rgba(255, 255, 255, 0) 76%),
+    radial-gradient(210% 18% at -40% 103%,
+      rgba(0, 229, 160, 0.11) 0%,
+      rgba(0, 212, 255, 0.035) 44%,
+      rgba(0, 212, 255, 0) 78%);
+
   height: 100%;
   padding: 1.25rem 0.75rem;
-  background: var(--bg-sidebar);
+  background-color: var(--bg-sidebar);
+  background-image: var(--panel-folds),
+    linear-gradient(166deg, #131719 0%, #090a0c 32%, #030304 60%, #060809 100%);
   position: relative;
-  box-shadow: 4px 0 16px #00e5a026, 8px 0 40px #00e5a014, 12px 0 60px #00d4ff0a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    4px 0 16px #00e5a026,
+    8px 0 40px #00e5a014,
+    12px 0 60px #00d4ff0a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -283,19 +322,65 @@ section {
   backdrop-filter: blur(12px);
 }
 
+.sidebar-container[data-state="open"] .sidebar {
+  --panel-folds:
+    radial-gradient(125% 42% at 116% -8%,
+      rgba(234, 246, 242, 0.21) 0%,
+      rgba(152, 180, 174, 0.085) 26%,
+      rgba(255, 255, 255, 0.02) 52%,
+      rgba(255, 255, 255, 0) 76%),
+    radial-gradient(85% 28% at 126% 52%,
+      rgba(255, 255, 255, 0.065) 0%,
+      rgba(255, 255, 255, 0.015) 46%,
+      rgba(255, 255, 255, 0) 74%),
+    radial-gradient(105% 34% at -20% 104%,
+      rgba(0, 229, 160, 0.13) 0%,
+      rgba(0, 212, 255, 0.04) 44%,
+      rgba(0, 212, 255, 0) 76%);
+}
+
+/* Right seam — a hairline catching the same light, brightest just below the
+   toggle and gone by the floor. Reads as the panel's lit edge rather than a
+   border. Held back on the rail: at 4rem the seam is most of what you see of
+   the sidebar, and at full strength it reads as a glowing strip rather than an
+   edge. It brightens as the panel opens. */
 .sidebar::after {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
-  width: 2px;
+  width: 1px;
   height: 100%;
-  /* background: linear-gradient(to right, #2b2b2ba4, #dbdbdbab); */
   pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.17) 14%,
+    rgba(0, 229, 160, 0.13) 46%,
+    rgba(255, 255, 255, 0.03) 74%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* .sidebar's own `transition: all` doesn't reach its pseudo-elements. */
+  transition: background var(--transition-base);
+}
+
+.sidebar-container[data-state="open"] .sidebar::after {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 14%,
+    rgba(0, 229, 160, 0.22) 46%,
+    rgba(255, 255, 255, 0.05) 74%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .sidebar-toggle {
   align-self: center;
+  /* Above the panel's gradient layers — .sidebar-center is positioned and
+     would otherwise be the only child painting over them. */
+  position: relative;
+  z-index: 1;
   padding: 0.35rem;
   border-radius: var(--radius-sm);
   color: var(--text-tertiary);
@@ -418,6 +503,9 @@ section {
 .sidebar-item {
   display: flex;
   align-items: center;
+  /* Anchors the collapsed-state tooltip (::after) and the expanded-state
+     accent bar (::before). */
+  position: relative;
   gap: 0.75rem;
   padding: 0.6rem 0.65rem;
   border-radius: var(--radius-sm);
@@ -453,27 +541,73 @@ section {
   flex-shrink: 0;
 }
 
-/* Expanded state — icons and labels scale up to nearly fill the panel,
-   leaving roughly a rem of breathing room on each side. The collapsed rail
-   keeps the 20px icons above; these are scoped to [data-state="open"] so the
-   two states size independently. */
+/* Expanded state — the collapsed rail keeps the 20px icons above; everything
+   here is scoped to [data-state="open"] so the two states size independently.
+
+   The nav shrink-wraps its widest row and .sidebar-center centres that block,
+   so the group is centred by construction while the labels stay left-aligned
+   against a shared icon column. Type sits at 1.05rem rather than filling the
+   panel edge to edge — at the old 1.3rem/30px the ragged right edge of the
+   labels was doing all the talking and the block read as off-centre. */
 .sidebar-container[data-state="open"] .sidebar-nav {
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .sidebar-container[data-state="open"] .sidebar-item {
-  gap: 1rem;
-  padding: 0.7rem 0.6rem;
-  font-size: 1.3rem;
+  gap: 0.85rem;
+  padding: 0.7rem 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 460;
+  letter-spacing: 0.015em;
+  border-radius: var(--radius-md);
+  color: rgba(250, 250, 250, 0.66);
 }
 
 .sidebar-container[data-state="open"] .sidebar-item-icon {
-  min-width: 30px;
+  min-width: 24px;
+  opacity: 0.82;
+  transition: opacity var(--transition-fast);
 }
 
 .sidebar-container[data-state="open"] .sidebar-item-icon img {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar-container[data-state="open"] .sidebar-item:hover .sidebar-item-icon {
+  opacity: 1;
+}
+
+/* Hover pill — lit from the left so it sits with the panel's own light,
+   falling off to nothing before the right edge. */
+.sidebar-container[data-state="open"] .sidebar-item:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 229, 160, 0.1) 0%,
+    rgba(255, 255, 255, 0.045) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Accent bar on the pill's leading edge. Every row shares this left edge, so
+   the bar lands on a single vertical line and anchors the block — that line is
+   what the eye reads as "centred", not the ragged ends of the labels. */
+.sidebar-container[data-state="open"] .sidebar-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2px;
+  height: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-end) 100%);
+  box-shadow: 0 0 10px rgba(0, 229, 160, 0.55);
+  transform: translateY(-50%);
+  transition: height var(--transition-fast);
+}
+
+.sidebar-container[data-state="open"] .sidebar-item:hover::before {
+  height: 95%;
 }
 
 .sidebar-item-label {
@@ -485,10 +619,6 @@ section {
   opacity: 0;
   width: 0;
   overflow: hidden;
-}
-
-.sidebar-container[data-state="closed"] .sidebar-item {
-  position: relative;
 }
 
 .sidebar-container[data-state="open"] .sidebar-item:hover .sidebar-item-label {
@@ -2405,7 +2535,7 @@ textarea {
   }
 
   :root {
-    --sidebar-width-open: 17rem;
+    --sidebar-width-open: 15.3rem;
   }
 
   .sidebar-toggle img {
@@ -2446,26 +2576,40 @@ textarea {
     height: 28px;
   }
 
-  /* Expanded state — same idea as desktop, scaled to the 17rem mobile panel.
-     These need the [data-state="open"] prefix to match the specificity of the
-     desktop open-state rules above, otherwise those would win here. */
+  /* Expanded state — same idea as desktop, scaled up a step for touch targets
+     on the wider drawer. These need the [data-state="open"] prefix to match the
+     specificity of the desktop open-state rules above, otherwise those would
+     win here. Everything not restated (label colour, hover pill, accent bar)
+     inherits from those rules. */
   .sidebar-container[data-state="open"] .sidebar-nav {
-    gap: 0.6rem;
+    gap: 0.45rem;
   }
 
   .sidebar-container[data-state="open"] .sidebar-item {
-    gap: 1.25rem;
-    padding: 1rem 0.7rem;
-    font-size: 1.7rem;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    font-size: 1.35rem;
   }
 
   .sidebar-container[data-state="open"] .sidebar-item-icon {
-    min-width: 40px;
+    min-width: 30px;
   }
 
   .sidebar-container[data-state="open"] .sidebar-item-icon img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* The drawer floats over the page here rather than sitting flush against
+     it, so the seam runs the full height instead of fading out at the floor. */
+  .sidebar-container[data-state="open"] .sidebar::after {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.3) 16%,
+      rgba(0, 229, 160, 0.24) 52%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
   }
 
   .mobile-toggle {
