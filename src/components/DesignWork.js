@@ -7,6 +7,18 @@ import { ScrollReveal } from './ScrollReveal';
 
 const caseStudies = [
   {
+    id: 4,
+    // tag: 'Developer Tools · Full-Stack',
+    title: 'Dispatch',
+    subtitle: 'Email API for Developers',
+    description:
+      'Dispatch is a developer email API that sends real mail through AWS SES. Verify a domain, create an API key, and send with one HTTP request, while delivery, bounce, and complaint events come back as signed webhooks. A queued, idempotent pipeline keeps the API fast and retries safely when sends fail',
+    tools: ['Figma', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Hono', 'PostgreSQL', 'Drizzle', 'Supabase', 'Upstash Redis', 'Inngest', 'AWS SES', 'Terraform', 'Vercel', 'Playwright', 'Claude'],
+    liveUrl: 'https://dispatchit.ca',
+    gitUrl: 'https://github.com/markbuckle/dispatch',
+    image: null,
+  },
+  {
     id: 0,
     // tag: 'Product Design · Full-Stack',
     title: 'ClauseKit',

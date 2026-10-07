@@ -22,13 +22,15 @@ const SKILLS = {
     'MongoDB', 'GraphQL', 'FastAPI', 'AWS', 'Docker', 'Git', 
   ],
   engineering: [
-    'Systems Design', 'API Design', 'AI/ML Integration', 'RAG Pipelines',
-    'Data Pipelines', 'Cloud Architecture', 'CI/CD', 'Database Architecture',
-    'Performance Optimization', 'Agile / Scrum',
+    'API Design', 'Systems Design', 'SDK Integration', 'CLI Tools', 'Auth & API Keys', 'Rate Limiting',
+    'Idempotency & Retries', 'Queues & Background Jobs', 'Webhooks',
+    'Error Handling & Recovery', 'Structured Logging', 'Testing (Vitest, Playwright)',
+    'CI/CD', 'Infrastructure as Code', 'Database Architecture',
   ],
   ai: [
-    'Prompt Engineering', 'RAG', 'Vector Databases', 'Claude Design', 'Claude Code', 'Claude API', 'Anthropic SDK', 'Model Fine-tuning', 'AI Safety', 'LangChain', 'AI Agents',
-    'Multi-agent Systems',
+    'Agents', 'MCP Servers', 'Agent Tooling', 'Claude', 'Kiro',
+    'Anthropic SDK', 'RAG', 'Vector Databases',
+    'Prompt Engineering', 'LangChain',
   ],
 };
 
