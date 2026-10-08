@@ -218,7 +218,7 @@ export const DesignWork = () => {
 
       <div className="skills-toggle-wrapper">
         <ScrollReveal className="skills-toggle-outer" delay={0.18}>
-          <div className="skills-toggle-track" ref={trackRef} role="tablist">
+          <div className="skills-toggle-track skills-toggle-track--projects" ref={trackRef} role="tablist">
             <svg
               className="skills-toggle-svg"
               width="100%"

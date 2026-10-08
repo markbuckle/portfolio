@@ -2685,11 +2685,28 @@ textarea {
     text-align: center;
   }
 
+  /* Projects has five tabs: let them share the track width instead of
+     overflowing it */
+  .skills-toggle-track--projects .skills-toggle-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 9px 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
 
   .skills-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .skills-toggle-track--projects .skills-toggle-btn {
+    padding: 8px 4px;
+    font-size: 0.66rem;
   }
 }
