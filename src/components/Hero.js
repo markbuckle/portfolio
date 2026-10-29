@@ -9,7 +9,7 @@ import { CtaArrow } from './CtaArrow';
 gsap.registerPlugin(ScrollTrigger);
 
 const NAME = 'Mark Buckle';
-const ROLES = ['Product Designer', 'Software Developer', 'Engineer'];
+const ROLES = ['Engineer', 'Developer', 'Designer'];
 
 export const Hero = () => {
   const [started, setStarted] = useState(false);
