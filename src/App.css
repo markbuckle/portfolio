@@ -669,36 +669,72 @@ section {
   opacity: 1;
 }
 
-/* Hover pill — lit from the left so it sits with the panel's own light,
-   falling off to nothing before the right edge. */
+/* Hover: a small flashlight sits on the row's trailing edge, pointing back at
+   it, and throws a cone of light across the row — the row is lit by the torch
+   rather than filled in.
+
+   ::before is the torch head: a trapezoid, narrow at the handle and flaring to
+   the lens, with the last stretch of the gradient bright as the glass.
+   ::after is the beam: a cone from the lens, narrow at the head and spreading
+   to the row's far (left) edge, taller than the row so the light spills a little above and
+   below it, as a real beam would. A touch of blur softens the cone's edges,
+   and the lens end carries a hot core that falls off along the beam. Both
+   sit at z-index -1 (inside .sidebar-center's stacking context) so the light
+   falls behind the icon and label rather than washing over them. */
 .sidebar-container[data-state="open"] .sidebar-item:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(0, 229, 160, 0.1) 0%,
-    rgba(255, 255, 255, 0.045) 45%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: transparent;
 }
 
-/* Accent bar on the pill's leading edge. Every row shares this left edge, so
-   the bar lands on a single vertical line and anchors the block — that line is
-   what the eye reads as "centred", not the ragged ends of the labels. */
 .sidebar-container[data-state="open"] .sidebar-item::before {
   content: '';
   position: absolute;
+  right: -0.3rem;
+  top: 50%;
+  z-index: -1;
+  width: 13px;
+  height: 29px;
+  background: linear-gradient(270deg, #2c3133 0%, #5d6568 45%, #aeb7b9 72%, #effffb 100%);
+  clip-path: polygon(100% 30%, 0 0, 0 100%, 100% 70%);
+  opacity: 0;
+  transform: translateY(-50%) scale(0.6);
+  transform-origin: 100% 50%;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.sidebar-container[data-state="open"] .sidebar-item::after {
+  content: '';
+  position: absolute;
+  right: calc(-0.3rem + 12px);
   left: 0;
   top: 50%;
-  width: 2px;
-  height: 0;
-  border-radius: 2px;
-  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-end) 100%);
-  box-shadow: 0 0 10px rgba(0, 229, 160, 0.55);
-  transform: translateY(-50%);
-  transition: height var(--transition-fast);
+  z-index: -1;
+  height: 150%;
+  background:
+    radial-gradient(ellipse 55% 60% at 100% 50%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(
+      270deg,
+      rgba(0, 229, 160, 0.17) 0%,
+      rgba(255, 255, 255, 0.065) 45%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  clip-path: polygon(100% 31%, 0 8%, 0 92%, 100% 69%);
+  filter: blur(1.5px);
+  opacity: 0;
+  transform: translateY(-50%) scaleX(0.5);
+  transform-origin: 100% 50%;
+  transition: opacity var(--transition-fast),
+    transform 260ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
 }
 
 .sidebar-container[data-state="open"] .sidebar-item:hover::before {
-  height: 95%;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.sidebar-container[data-state="open"] .sidebar-item:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) scaleX(1);
 }
 
 .sidebar-item-label {
