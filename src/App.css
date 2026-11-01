@@ -95,6 +95,15 @@ body {
   color: var(--bg-primary);
 }
 
+/* Page scrollbar: the browser's own bar, arrows and hover shade included, with
+   only the track made transparent. The standard property is used rather than
+   ::-webkit-scrollbar because styling any webkit part throws away the native
+   arrows and thumb. The thumb colour has to be stated alongside the track —
+   the property takes both — so it is set to match the native grey. */
+html {
+  scrollbar-color: #9e9e9e transparent;
+}
+
 a {
   color: inherit;
   text-decoration: none;
