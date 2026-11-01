@@ -4,6 +4,7 @@ import { ExternalLink, Github, Plus, Minus } from 'lucide-react';
 import { Tilt } from './Tilt';
 import { ScrollCue } from './ScrollCue';
 import { ScrollReveal } from './ScrollReveal';
+import { SpotlightTitle } from './SpotlightTitle';
 
 const caseStudies = [
   {
@@ -77,17 +78,11 @@ const gradients = [
 const CaseStudyCard = ({ study, index }) => {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [rotation, setRotation] = useState(0);
-  const [glowX, setGlowX] = useState(null);
 
   const handleToggle = () => {
     const next = !toolsOpen;
     setRotation(r => next ? r + 720 : r - 720);
     setToolsOpen(next);
-  };
-
-  const handleTitleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setGlowX(((e.clientX - rect.left) / rect.width) * 100);
   };
 
   /* The reveal is scroll-linked rather than a tween on mount because this sits
@@ -110,13 +105,7 @@ const CaseStudyCard = ({ study, index }) => {
             justifyContent: 'center',
           }}
         >
-          <span
-            className="case-study-image-title"
-            data-title={study.title}
-            onMouseMove={handleTitleMouseMove}
-            onMouseLeave={() => setGlowX(null)}
-            style={glowX !== null ? { '--glow-x': `${glowX}%` } : {}}
-          >{study.title}</span>
+          <SpotlightTitle className="case-study-image-title" text={study.title} />
         </div>
       )}
 

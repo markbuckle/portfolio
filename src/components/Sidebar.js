@@ -4,20 +4,16 @@ import { motion } from 'framer-motion';
 // import headshotImg from '../assets/img/headshot.jpg';
 import { HashLink as Link } from 'react-router-hash-link';
 import { FileDown, Menu } from 'lucide-react';
-import homeIcon from '../assets/icons/nav/home.svg';
 import chevronRightIcon from '../assets/icons/nav/chevron-right.svg';
 import chevronLeftIcon from '../assets/icons/nav/chevron-left.svg';
-import aboutIcon from '../assets/icons/nav/about.svg';
-import projectsIcon from '../assets/icons/nav/projects.svg';
-import skillsIcon from '../assets/icons/nav/skills.svg';
-import contactIcon from '../assets/icons/nav/contact.svg';
+import { HomeIcon, AboutIcon, ProjectsIcon, SkillsIcon, ContactIcon } from './NavIcons';
 
 const navItems = [
-  { icon: <img src={homeIcon} alt="Home" width={24} height={24} />, name: 'Home', to: '#home' },
-  { icon: <img src={aboutIcon} alt="About" width={24} height={24} />, name: 'About', to: '#about' },
-  { icon: <img src={projectsIcon} alt="Projects" width={24} height={24} />, name: 'Projects', to: '#projects' },
-  { icon: <img src={skillsIcon} alt="Skills" width={24} height={24} />, name: 'Skills', to: '#skills' },
-  { icon: <img src={contactIcon} alt="Contact" width={24} height={24} />, name: 'Contact', to: '#contact' },
+  { icon: <HomeIcon />, name: 'Home', to: '#home' },
+  { icon: <AboutIcon />, name: 'About', to: '#about' },
+  { icon: <ProjectsIcon />, name: 'Projects', to: '#projects' },
+  { icon: <SkillsIcon />, name: 'Skills', to: '#skills' },
+  { icon: <ContactIcon />, name: 'Contact', to: '#contact' },
 ];
 
 const SidebarItem = ({ icon, name, to, isOpen, onNavigate }) => (
@@ -71,7 +67,12 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       <div className="sidebar">
         {/* Toggle — pinned top */}
         <div className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
-          <img src={isOpen ? chevronLeftIcon : chevronRightIcon} alt={isOpen ? 'Collapse' : 'Expand'} width={18} height={18} />
+          <img
+            src={isOpen ? chevronLeftIcon : chevronRightIcon}
+            alt={isOpen ? 'Collapse' : 'Expand'}
+            width={18}
+            height={18}
+          />
         </div>
 
         {/* Center group — nav, vertically centered */}

@@ -375,6 +375,62 @@ section {
   );
 }
 
+/* --- Floating panel (desktop) ----------------------------------------------
+   Rather than a full-height rail, the sidebar is a rounded panel about the
+   height of the hero content, centred vertically and inset from the left edge
+   so its whole outline (and glow) shows. The mobile drawer keeps its own
+   full-height treatment further down. */
+@media (min-width: 769px) {
+  :root {
+    --sidebar-inset: 1.25rem;
+    --sidebar-height: clamp(21rem, 50vh, 29rem);
+  }
+
+  .main-content {
+    margin-left: calc(var(--sidebar-width-closed) + var(--sidebar-inset));
+  }
+
+  .main-content.sidebar-open {
+    margin-left: calc(var(--sidebar-width-open) + var(--sidebar-inset));
+  }
+
+  .sidebar-container {
+    top: 50%;
+    left: var(--sidebar-inset);
+    height: var(--sidebar-height);
+    transform: translateY(-50%);
+  }
+
+  /* Nudged below the panel's midpoint to open a gap under the toggle. */
+  .sidebar .sidebar-center {
+    top: calc(50% + 1.1rem);
+  }
+
+  .sidebar {
+    border-radius: 1.75rem;
+    /* Glow on every side, not just the right. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 16px #00e5a026,
+      0 0 40px #00e5a014,
+      0 0 60px #00d4ff0a;
+  }
+
+  /* The seam becomes a hairline ring following the rounded outline: a 1px
+     padded box with the gradient, masked down to just its border area. */
+  .sidebar::after,
+  .sidebar-container[data-state="open"] .sidebar::after {
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-radius: inherit;
+    padding: 1px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+}
+
 .sidebar-toggle {
   align-self: center;
   /* Above the panel's gradient layers — .sidebar-center is positioned and
@@ -403,6 +459,28 @@ section {
 .sidebar-toggle:hover img {
   filter: drop-shadow(0 0 10px #00e5a0dc) drop-shadow(0 0 15px #00e5a0ae);
   transform: scale(1.2);
+  /* One clockwise turn per hover. The keyframes carry the 1.2 scale so the end
+     state matches the hover rest. */
+  animation: toggle-spin 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes toggle-spin {
+  from { transform: rotate(0deg) scale(1.2) }
+  to { transform: rotate(360deg) scale(1.2) }
+}
+
+/* Open state spins the other way. */
+@keyframes toggle-spin-ccw {
+  from { transform: rotate(0deg) scale(1.2) }
+  to { transform: rotate(-360deg) scale(1.2) }
+}
+
+.sidebar-container[data-state="open"] .sidebar-toggle:hover img {
+  animation-name: toggle-spin-ccw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-toggle img { animation: none !important; }
 }
 
 /* Centred against the sidebar itself rather than the leftover flex space.
@@ -535,10 +613,13 @@ section {
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.sidebar-item-icon img {
+.sidebar-item-icon img,
+.sidebar-item-icon .nav-icon {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  /* Hover gestures swing parts past the icon's edge. */
+  overflow: visible;
 }
 
 /* Expanded state — the collapsed rail keeps the 20px icons above; everything
@@ -569,7 +650,8 @@ section {
   transition: opacity var(--transition-fast);
 }
 
-.sidebar-container[data-state="open"] .sidebar-item-icon img {
+.sidebar-container[data-state="open"] .sidebar-item-icon img,
+.sidebar-container[data-state="open"] .sidebar-item-icon .nav-icon {
   width: 24px;
   height: 24px;
 }
@@ -671,6 +753,61 @@ section {
 .sidebar-container[data-state="closed"] .sidebar-item:hover::after {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
+}
+
+/* Sidebar icon gestures — one move per hover, as in the Dispatch dashboard nav.
+   Lengths are in the icon's own 200-unit grid (viewBox 18 18 164 164), and
+   transform-box: view-box keeps origins in that same space. */
+@keyframes nav-icon-door { 0%, 100% { transform: scaleX(1) } 45% { transform: scaleX(0.25) } }
+@keyframes nav-icon-head {
+  0%, 100% { transform: translateY(0) }
+  35% { transform: translateY(-10px) }
+}
+@keyframes nav-icon-body {
+  0%, 100% { transform: scaleY(1) }
+  35% { transform: scaleY(0.9) }
+}
+@keyframes nav-icon-bracket-l { 0%, 100% { transform: translateX(0) } 40% { transform: translateX(-10px) } }
+@keyframes nav-icon-bracket-r { 0%, 100% { transform: translateX(0) } 40% { transform: translateX(10px) } }
+@keyframes nav-icon-slash { to { transform: rotate(180deg) } }
+@keyframes nav-icon-layer-top { 0%, 100% { transform: translateY(0) } 40% { transform: translateY(-11px) } }
+@keyframes nav-icon-layer-bottom { 0%, 100% { transform: translateY(0) } 40% { transform: translateY(9px) } }
+/* The middle layer turns once about its vertical axis: width follows the cosine
+   of an eased angle, so it narrows to nothing, shows its back, and returns. */
+@keyframes nav-icon-layer-middle {
+  0% { transform: scaleX(1) }
+  12.5% { transform: scaleX(0.964) }
+  25% { transform: scaleX(0.707) }
+  37.5% { transform: scaleX(-0.406) }
+  50% { transform: scaleX(-1) }
+  62.5% { transform: scaleX(-0.406) }
+  75% { transform: scaleX(0.707) }
+  87.5% { transform: scaleX(0.964) }
+  100% { transform: scaleX(1) }
+}
+@keyframes nav-icon-flap { 0%, 100% { transform: scaleY(1) } 45% { transform: scaleY(-0.55) } }
+
+.nav-icon-door, .nav-icon-head, .nav-icon-body, .nav-icon-bracket-l, .nav-icon-bracket-r,
+.nav-icon-slash, .nav-icon-layer-top, .nav-icon-layer-middle, .nav-icon-layer-bottom, .nav-icon-flap { transform-box: view-box; }
+.nav-icon-layer-middle { transform-origin: 100px 100px; }
+.nav-icon-door { transform-origin: 80px 0; }
+.nav-icon-body { transform-origin: 0 170px; }
+.nav-icon-slash { transform-origin: 100px 100px; }
+.nav-icon-flap { transform-origin: 0 60px; }
+
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-door { animation: nav-icon-door 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-head { animation: nav-icon-head 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-body { animation: nav-icon-body 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-bracket-l { animation: nav-icon-bracket-l 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-bracket-r { animation: nav-icon-bracket-r 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-slash { animation: nav-icon-slash 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-layer-top { animation: nav-icon-layer-top 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-layer-middle { animation: nav-icon-layer-middle 800ms linear; }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-layer-bottom { animation: nav-icon-layer-bottom 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-link:is(:hover, :focus-visible) .nav-icon-flap { animation: nav-icon-flap 650ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-icon * { animation: none !important; }
 }
 
 .sidebar-download {
@@ -1130,7 +1267,19 @@ section {
 }
 
 /* Elbow arrow: runs right, turns the corner, and points down — these buttons
-   send you further down the page, so the head follows the travel. */
+   send you further down the page, so the head follows the travel.
+
+   At rest it is fully drawn. On hover it starts again from nothing: the head
+   fades in at the left, runs right, rounds the corner and drops, drawing the
+   shaft behind it. Hover and click are two copies of the same move under
+   different names — a name change is what restarts a running animation, so the
+   click replays it from the top when the trace begins, stretched to the
+   trace's length so the head lands as the border closes.
+
+   The keyframes are generated from the path itself (a 7-unit run, a radius-2
+   quarter turn, a 6-unit drop; ~16.1 units in all) with the head's heading
+   following the curve, and sampled through the same ease as the rest of the
+   motion — so shaft and head stay locked together under a linear timing. */
 .cta-arrow {
   /* Matches the 16x22 viewBox 1:1 — any other ratio would letterbox the
      drawing and knock the shaft off the text's midline. */
@@ -1142,7 +1291,212 @@ section {
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
+  overflow: visible;
   transition: stroke var(--transition-fast);
+}
+
+/* pathLength is 1 on the shaft, so one dash covers it whatever its length. */
+.cta-arrow-shaft {
+  stroke-dasharray: 1 1;
+}
+
+/* Resting pose: the tip at the foot of the drop, pointing down. */
+.cta-arrow-head {
+  transform: translate(10px, 19px) rotate(90deg);
+}
+
+.hero-cta:is(:hover, :focus-visible) .cta-arrow-shaft {
+  animation: cta-arrow-head-shaft-hover 760ms linear;
+}
+
+.hero-cta:is(:hover, :focus-visible) .cta-arrow-head {
+  animation: cta-arrow-head 760ms linear;
+}
+
+/* Click: later in the file at equal specificity, so it takes over from hover. */
+.hero-cta.is-firing .cta-arrow-shaft {
+  animation: cta-arrow-fire-shaft var(--trace-dur) linear both;
+}
+
+.hero-cta.is-firing .cta-arrow-head {
+  animation: cta-arrow-fire-head var(--trace-dur) linear both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-arrow-shaft, .cta-arrow-head { animation: none !important; }
+}
+
+@keyframes cta-arrow-head {
+  0% { transform: translate(1.00px, 11.00px) rotate(0.0deg); opacity: 0.00 }
+  2.5% { transform: translate(1.02px, 11.00px) rotate(0.0deg); opacity: 0.31 }
+  5% { transform: translate(1.09px, 11.00px) rotate(0.0deg); opacity: 0.62 }
+  7.5% { transform: translate(1.22px, 11.00px) rotate(0.0deg); opacity: 0.94 }
+  10% { transform: translate(1.42px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  12.5% { transform: translate(1.69px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  15% { transform: translate(2.06px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  17.5% { transform: translate(2.55px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  20% { transform: translate(3.16px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  22.5% { transform: translate(3.92px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  25% { transform: translate(4.82px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  27.5% { transform: translate(5.84px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  30% { transform: translate(6.93px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  32.5% { transform: translate(8.02px, 11.00px) rotate(0.7deg); opacity: 1.00 }
+  35% { transform: translate(9.02px, 11.28px) rotate(30.7deg); opacity: 1.00 }
+  37.5% { transform: translate(9.70px, 11.95px) rotate(58.3deg); opacity: 1.00 }
+  40% { transform: translate(9.99px, 12.76px) rotate(83.2deg); opacity: 1.00 }
+  42.5% { transform: translate(10.00px, 13.54px) rotate(90.0deg); opacity: 1.00 }
+  45% { transform: translate(10.00px, 14.23px) rotate(90.0deg); opacity: 1.00 }
+  47.5% { transform: translate(10.00px, 14.84px) rotate(90.0deg); opacity: 1.00 }
+  50% { transform: translate(10.00px, 15.38px) rotate(90.0deg); opacity: 1.00 }
+  52.5% { transform: translate(10.00px, 15.86px) rotate(90.0deg); opacity: 1.00 }
+  55% { transform: translate(10.00px, 16.28px) rotate(90.0deg); opacity: 1.00 }
+  57.5% { transform: translate(10.00px, 16.66px) rotate(90.0deg); opacity: 1.00 }
+  60% { transform: translate(10.00px, 17.00px) rotate(90.0deg); opacity: 1.00 }
+  62.5% { transform: translate(10.00px, 17.30px) rotate(90.0deg); opacity: 1.00 }
+  65% { transform: translate(10.00px, 17.56px) rotate(90.0deg); opacity: 1.00 }
+  67.5% { transform: translate(10.00px, 17.80px) rotate(90.0deg); opacity: 1.00 }
+  70% { transform: translate(10.00px, 18.00px) rotate(90.0deg); opacity: 1.00 }
+  72.5% { transform: translate(10.00px, 18.19px) rotate(90.0deg); opacity: 1.00 }
+  75% { transform: translate(10.00px, 18.34px) rotate(90.0deg); opacity: 1.00 }
+  77.5% { transform: translate(10.00px, 18.48px) rotate(90.0deg); opacity: 1.00 }
+  80% { transform: translate(10.00px, 18.60px) rotate(90.0deg); opacity: 1.00 }
+  82.5% { transform: translate(10.00px, 18.70px) rotate(90.0deg); opacity: 1.00 }
+  85% { transform: translate(10.00px, 18.79px) rotate(90.0deg); opacity: 1.00 }
+  87.5% { transform: translate(10.00px, 18.85px) rotate(90.0deg); opacity: 1.00 }
+  90% { transform: translate(10.00px, 18.91px) rotate(90.0deg); opacity: 1.00 }
+  92.5% { transform: translate(10.00px, 18.95px) rotate(90.0deg); opacity: 1.00 }
+  95% { transform: translate(10.00px, 18.98px) rotate(90.0deg); opacity: 1.00 }
+  97.5% { transform: translate(10.00px, 18.99px) rotate(90.0deg); opacity: 1.00 }
+  100% { transform: translate(10.00px, 19.00px) rotate(90.0deg); opacity: 1.00 }
+}
+@keyframes cta-arrow-head-shaft-hover {
+  0% { stroke-dashoffset: 1.000; opacity: 0.00 }
+  2.5% { stroke-dashoffset: 0.999; opacity: 0.31 }
+  5% { stroke-dashoffset: 0.994; opacity: 0.62 }
+  7.5% { stroke-dashoffset: 0.986; opacity: 0.94 }
+  10% { stroke-dashoffset: 0.974; opacity: 1.00 }
+  12.5% { stroke-dashoffset: 0.957; opacity: 1.00 }
+  15% { stroke-dashoffset: 0.934; opacity: 1.00 }
+  17.5% { stroke-dashoffset: 0.904; opacity: 1.00 }
+  20% { stroke-dashoffset: 0.866; opacity: 1.00 }
+  22.5% { stroke-dashoffset: 0.819; opacity: 1.00 }
+  25% { stroke-dashoffset: 0.763; opacity: 1.00 }
+  27.5% { stroke-dashoffset: 0.700; opacity: 1.00 }
+  30% { stroke-dashoffset: 0.633; opacity: 1.00 }
+  32.5% { stroke-dashoffset: 0.565; opacity: 1.00 }
+  35% { stroke-dashoffset: 0.500; opacity: 1.00 }
+  37.5% { stroke-dashoffset: 0.440; opacity: 1.00 }
+  40% { stroke-dashoffset: 0.386; opacity: 1.00 }
+  42.5% { stroke-dashoffset: 0.338; opacity: 1.00 }
+  45% { stroke-dashoffset: 0.296; opacity: 1.00 }
+  47.5% { stroke-dashoffset: 0.258; opacity: 1.00 }
+  50% { stroke-dashoffset: 0.224; opacity: 1.00 }
+  52.5% { stroke-dashoffset: 0.195; opacity: 1.00 }
+  55% { stroke-dashoffset: 0.168; opacity: 1.00 }
+  57.5% { stroke-dashoffset: 0.145; opacity: 1.00 }
+  60% { stroke-dashoffset: 0.124; opacity: 1.00 }
+  62.5% { stroke-dashoffset: 0.106; opacity: 1.00 }
+  65% { stroke-dashoffset: 0.089; opacity: 1.00 }
+  67.5% { stroke-dashoffset: 0.075; opacity: 1.00 }
+  70% { stroke-dashoffset: 0.062; opacity: 1.00 }
+  72.5% { stroke-dashoffset: 0.050; opacity: 1.00 }
+  75% { stroke-dashoffset: 0.041; opacity: 1.00 }
+  77.5% { stroke-dashoffset: 0.032; opacity: 1.00 }
+  80% { stroke-dashoffset: 0.025; opacity: 1.00 }
+  82.5% { stroke-dashoffset: 0.018; opacity: 1.00 }
+  85% { stroke-dashoffset: 0.013; opacity: 1.00 }
+  87.5% { stroke-dashoffset: 0.009; opacity: 1.00 }
+  90% { stroke-dashoffset: 0.006; opacity: 1.00 }
+  92.5% { stroke-dashoffset: 0.003; opacity: 1.00 }
+  95% { stroke-dashoffset: 0.001; opacity: 1.00 }
+  97.5% { stroke-dashoffset: 0.000; opacity: 1.00 }
+  100% { stroke-dashoffset: 0.000; opacity: 1.00 }
+}
+@keyframes cta-arrow-fire-head {
+  0% { transform: translate(1.00px, 11.00px) rotate(0.0deg); opacity: 0.00 }
+  2.5% { transform: translate(1.02px, 11.00px) rotate(0.0deg); opacity: 0.31 }
+  5% { transform: translate(1.09px, 11.00px) rotate(0.0deg); opacity: 0.62 }
+  7.5% { transform: translate(1.22px, 11.00px) rotate(0.0deg); opacity: 0.94 }
+  10% { transform: translate(1.42px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  12.5% { transform: translate(1.69px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  15% { transform: translate(2.06px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  17.5% { transform: translate(2.55px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  20% { transform: translate(3.16px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  22.5% { transform: translate(3.92px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  25% { transform: translate(4.82px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  27.5% { transform: translate(5.84px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  30% { transform: translate(6.93px, 11.00px) rotate(0.0deg); opacity: 1.00 }
+  32.5% { transform: translate(8.02px, 11.00px) rotate(0.7deg); opacity: 1.00 }
+  35% { transform: translate(9.02px, 11.28px) rotate(30.7deg); opacity: 1.00 }
+  37.5% { transform: translate(9.70px, 11.95px) rotate(58.3deg); opacity: 1.00 }
+  40% { transform: translate(9.99px, 12.76px) rotate(83.2deg); opacity: 1.00 }
+  42.5% { transform: translate(10.00px, 13.54px) rotate(90.0deg); opacity: 1.00 }
+  45% { transform: translate(10.00px, 14.23px) rotate(90.0deg); opacity: 1.00 }
+  47.5% { transform: translate(10.00px, 14.84px) rotate(90.0deg); opacity: 1.00 }
+  50% { transform: translate(10.00px, 15.38px) rotate(90.0deg); opacity: 1.00 }
+  52.5% { transform: translate(10.00px, 15.86px) rotate(90.0deg); opacity: 1.00 }
+  55% { transform: translate(10.00px, 16.28px) rotate(90.0deg); opacity: 1.00 }
+  57.5% { transform: translate(10.00px, 16.66px) rotate(90.0deg); opacity: 1.00 }
+  60% { transform: translate(10.00px, 17.00px) rotate(90.0deg); opacity: 1.00 }
+  62.5% { transform: translate(10.00px, 17.30px) rotate(90.0deg); opacity: 1.00 }
+  65% { transform: translate(10.00px, 17.56px) rotate(90.0deg); opacity: 1.00 }
+  67.5% { transform: translate(10.00px, 17.80px) rotate(90.0deg); opacity: 1.00 }
+  70% { transform: translate(10.00px, 18.00px) rotate(90.0deg); opacity: 1.00 }
+  72.5% { transform: translate(10.00px, 18.19px) rotate(90.0deg); opacity: 1.00 }
+  75% { transform: translate(10.00px, 18.34px) rotate(90.0deg); opacity: 1.00 }
+  77.5% { transform: translate(10.00px, 18.48px) rotate(90.0deg); opacity: 1.00 }
+  80% { transform: translate(10.00px, 18.60px) rotate(90.0deg); opacity: 1.00 }
+  82.5% { transform: translate(10.00px, 18.70px) rotate(90.0deg); opacity: 1.00 }
+  85% { transform: translate(10.00px, 18.79px) rotate(90.0deg); opacity: 1.00 }
+  87.5% { transform: translate(10.00px, 18.85px) rotate(90.0deg); opacity: 1.00 }
+  90% { transform: translate(10.00px, 18.91px) rotate(90.0deg); opacity: 1.00 }
+  92.5% { transform: translate(10.00px, 18.95px) rotate(90.0deg); opacity: 1.00 }
+  95% { transform: translate(10.00px, 18.98px) rotate(90.0deg); opacity: 1.00 }
+  97.5% { transform: translate(10.00px, 18.99px) rotate(90.0deg); opacity: 1.00 }
+  100% { transform: translate(10.00px, 19.00px) rotate(90.0deg); opacity: 1.00 }
+}
+@keyframes cta-arrow-fire-shaft {
+  0% { stroke-dashoffset: 1.000; opacity: 0.00 }
+  2.5% { stroke-dashoffset: 0.999; opacity: 0.31 }
+  5% { stroke-dashoffset: 0.994; opacity: 0.62 }
+  7.5% { stroke-dashoffset: 0.986; opacity: 0.94 }
+  10% { stroke-dashoffset: 0.974; opacity: 1.00 }
+  12.5% { stroke-dashoffset: 0.957; opacity: 1.00 }
+  15% { stroke-dashoffset: 0.934; opacity: 1.00 }
+  17.5% { stroke-dashoffset: 0.904; opacity: 1.00 }
+  20% { stroke-dashoffset: 0.866; opacity: 1.00 }
+  22.5% { stroke-dashoffset: 0.819; opacity: 1.00 }
+  25% { stroke-dashoffset: 0.763; opacity: 1.00 }
+  27.5% { stroke-dashoffset: 0.700; opacity: 1.00 }
+  30% { stroke-dashoffset: 0.633; opacity: 1.00 }
+  32.5% { stroke-dashoffset: 0.565; opacity: 1.00 }
+  35% { stroke-dashoffset: 0.500; opacity: 1.00 }
+  37.5% { stroke-dashoffset: 0.440; opacity: 1.00 }
+  40% { stroke-dashoffset: 0.386; opacity: 1.00 }
+  42.5% { stroke-dashoffset: 0.338; opacity: 1.00 }
+  45% { stroke-dashoffset: 0.296; opacity: 1.00 }
+  47.5% { stroke-dashoffset: 0.258; opacity: 1.00 }
+  50% { stroke-dashoffset: 0.224; opacity: 1.00 }
+  52.5% { stroke-dashoffset: 0.195; opacity: 1.00 }
+  55% { stroke-dashoffset: 0.168; opacity: 1.00 }
+  57.5% { stroke-dashoffset: 0.145; opacity: 1.00 }
+  60% { stroke-dashoffset: 0.124; opacity: 1.00 }
+  62.5% { stroke-dashoffset: 0.106; opacity: 1.00 }
+  65% { stroke-dashoffset: 0.089; opacity: 1.00 }
+  67.5% { stroke-dashoffset: 0.075; opacity: 1.00 }
+  70% { stroke-dashoffset: 0.062; opacity: 1.00 }
+  72.5% { stroke-dashoffset: 0.050; opacity: 1.00 }
+  75% { stroke-dashoffset: 0.041; opacity: 1.00 }
+  77.5% { stroke-dashoffset: 0.032; opacity: 1.00 }
+  80% { stroke-dashoffset: 0.025; opacity: 1.00 }
+  82.5% { stroke-dashoffset: 0.018; opacity: 1.00 }
+  85% { stroke-dashoffset: 0.013; opacity: 1.00 }
+  87.5% { stroke-dashoffset: 0.009; opacity: 1.00 }
+  90% { stroke-dashoffset: 0.006; opacity: 1.00 }
+  92.5% { stroke-dashoffset: 0.003; opacity: 1.00 }
+  95% { stroke-dashoffset: 0.001; opacity: 1.00 }
+  97.5% { stroke-dashoffset: 0.000; opacity: 1.00 }
+  100% { stroke-dashoffset: 0.000; opacity: 1.00 }
 }
 
 /* Same size as the → on the hero's About Me button. Sits inside the label,
@@ -1389,40 +1743,84 @@ section {
   padding: 0 1.5rem;
 }
 
+/* Title in the card's banner. The lit state is the Dispatch footer-wordmark
+   spotlight (see SpotlightTitle.js): a localised white inner glow, outline and
+   hotspot that follow the cursor, replacing the old teal text-shadow bloom. */
 .case-study-image-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #111111;
   letter-spacing: -0.02em;
-  text-shadow: 0 0 10px #b4b4b433, 0 0 20px #8c8c8c1a;
   cursor: default;
+}
+
+.spotlight-title {
   position: relative;
   display: inline-block;
-  isolation: isolate;
+  /* Room for the outline and glow either side of the letters. */
+  padding: 0.1rem 0.25rem;
+  /* Pan-y keeps a vertical swipe scrolling the page. */
+  touch-action: pan-y;
+  --spotlight-radius: 64px;
+  --spotlight-hotspot-radius: 26px;
 }
 
-.case-study-image-title::before {
-  content: attr(data-title);
-  position: absolute;
-  inset: -1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
+/* Sizes the box and carries the real text; the svg draws what you see. */
+.spotlight-title-text {
   color: transparent;
-  text-shadow: 0 0 4px #00e5a042, 0 0 8px #00e5a060;
-  mask: radial-gradient(circle at var(--glow-x, 50%) 50%, black 0%, transparent 70%);
-  -webkit-mask: radial-gradient(circle at var(--glow-x, 50%) 50%, black 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
-  z-index: -1;
 }
 
-.case-study-image-title:hover::before {
+.spotlight-title-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.spotlight-title-base {
+  fill: #111111;
+}
+
+/* Soft halo around the resting letters, as the title always had. */
+.spotlight-title-svg:not(.spotlight-title-mask) {
+  filter: drop-shadow(0 0 10px #b4b4b433) drop-shadow(0 0 20px #8c8c8c1a);
+}
+
+.spotlight-title-lit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.spotlight-title-lit.is-lit {
   opacity: 1;
+}
+
+/* Bright right under the pointer, falling off slowly outwards. */
+.spotlight-title-mask {
+  -webkit-mask-image: radial-gradient(var(--spotlight-radius) circle at var(--spot-x, 50%) var(--spot-y, 50%), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+  mask-image: radial-gradient(var(--spotlight-radius) circle at var(--spot-x, 50%) var(--spot-y, 50%), black, rgb(0 0 0 / 0.55) 20%, rgb(0 0 0 / 0.2) 50%, transparent);
+}
+
+.spotlight-title-mask--hotspot {
+  -webkit-mask-image: radial-gradient(var(--spotlight-hotspot-radius) circle at var(--spot-x, 50%) var(--spot-y, 50%), black, transparent);
+  mask-image: radial-gradient(var(--spotlight-hotspot-radius) circle at var(--spot-x, 50%) var(--spot-y, 50%), black, transparent);
+}
+
+/* The filtered layers only read the letters' alpha, so any solid fill will do. */
+.spotlight-title-source {
+  fill: #fff;
+}
+
+/* The faint fill that goes with the outline. */
+.spotlight-title-wash {
+  fill: rgba(255, 255, 255, 0.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-title-lit { transition: none; }
 }
 
 .case-study-content {
@@ -2151,14 +2549,16 @@ textarea {
 .scroll-cue {
   /* Longer than the converge it replaced — the sweep now crosses the whole
      arrow rather than half of it. */
-  --cue-dur: 0.75s;
+  --cue-dur: 0.7s;
+  --cue-fill-ease: cubic-bezier(0.3, 0, 0.2, 1);
+  --cue-spin-ease: cubic-bezier(0.45, 0, 0.15, 1);
   /* The turn holds off until the colour has had a clear run at the arrow, then
      goes at its own pace. Overlapping rather than locked: the fill finishes
      under way and the arrow simply carries on turning, lit. Navigation waits
      on the turn, so delay + duration is the whole click-to-scroll wait —
      keep it well inside FAILSAFE_MS in useTraceFire.js. */
-  --cue-spin-delay: 1s;
-  --cue-spin-dur: 0.9s;
+  --cue-spin-delay: 0.35s;
+  --cue-spin-dur: 0.75s;
   --cue-size: 40px;
   display: block;
   width: var(--cue-size);
@@ -2277,13 +2677,13 @@ textarea {
 }
 
 .scroll-cue.is-firing .scroll-cue-lit {
-  animation: cue-fill var(--cue-dur) ease-in-out forwards;
+  animation: cue-fill var(--cue-dur) var(--cue-fill-ease) forwards;
 }
 
 /* Same duration and easing as cue-fill — they have to cancel frame for frame,
    or the lit chevron drifts sideways off the base one as the window opens. */
 .scroll-cue.is-firing .scroll-cue-lit .scroll-cue-chevron {
-  animation: cue-fill-hold var(--cue-dur) ease-in-out forwards;
+  animation: cue-fill-hold var(--cue-dur) var(--cue-fill-ease) forwards;
 }
 
 @keyframes cue-fill {
@@ -2300,7 +2700,7 @@ textarea {
    overlap rather than running as one, so the colour reaching the far tip and
    the arrow coming upright are separate beats. */
 .scroll-cue.is-firing .scroll-cue-spin {
-  animation: cue-spin-down var(--cue-spin-dur) var(--cue-spin-delay) ease-in-out forwards;
+  animation: cue-spin-down var(--cue-spin-dur) var(--cue-spin-delay) var(--cue-spin-ease) forwards;
 }
 
 .scroll-cue.is-firing.is-flipped .scroll-cue-spin {
@@ -2571,7 +2971,8 @@ textarea {
     min-width: 28px;
   }
 
-  .sidebar-item-icon img {
+  .sidebar-item-icon img,
+  .sidebar-item-icon .nav-icon {
     width: 28px;
     height: 28px;
   }
@@ -2595,7 +2996,8 @@ textarea {
     min-width: 30px;
   }
 
-  .sidebar-container[data-state="open"] .sidebar-item-icon img {
+  .sidebar-container[data-state="open"] .sidebar-item-icon img,
+  .sidebar-container[data-state="open"] .sidebar-item-icon .nav-icon {
     width: 30px;
     height: 30px;
   }
