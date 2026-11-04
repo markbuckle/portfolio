@@ -12,14 +12,13 @@ const TABS = [
 
 const SKILLS = {
   design: [
-    'Figma', 'Claude Design', 'Photoshop', 'Wireframing', 'High Fidelity',
+    'Figma', 'Spline', 'Claude Design', 'Photoshop', 'Wireframing', 'High Fidelity',
     'Prototyping', 'Interaction Design', 'Design Systems', 'User Research',
-    'Usability Testing',
   ],
   development: [
     'JavaScript', 'Next.js', 'React', 'Node.js', 'Python',
     'Java', 'HTML', 'CSS', 'Tailwind CSS', 'PostgreSQL',
-    'MongoDB', 'GraphQL', 'FastAPI', 'AWS', 'Docker', 'Git', 
+    'MongoDB', 'GraphQL', 'AWS', 'Docker', 'Git', 
   ],
   engineering: [
     'API Design', 'Systems Design', 'SDK Integration', 'CLI Tools', 'Auth & API Keys', 'Rate Limiting',
