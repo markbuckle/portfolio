@@ -6,7 +6,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import { FileDown, Menu } from 'lucide-react';
 import chevronRightIcon from '../assets/icons/nav/chevron-right.svg';
 import chevronLeftIcon from '../assets/icons/nav/chevron-left.svg';
-import { HomeIcon, AboutIcon, ProjectsIcon, SkillsIcon, ContactIcon } from './NavIcons';
+import { HomeIcon, AboutIcon, ProjectsIcon, SkillsIcon, ContactIcon, BurgerIcon } from './NavIcons';
 
 const navItems = [
   { icon: <HomeIcon />, name: 'Home', to: '#home' },
@@ -68,11 +68,14 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* Toggle — pinned top */}
         <div className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
           <img
+            className="toggle-chevron"
             src={isOpen ? chevronLeftIcon : chevronRightIcon}
             alt={isOpen ? 'Collapse' : 'Expand'}
             width={18}
             height={18}
           />
+          {/* Phones only (see App.css): the open hamburger replaces the chevron. */}
+          <BurgerIcon />
         </div>
 
         {/* Center group — nav, vertically centered */}

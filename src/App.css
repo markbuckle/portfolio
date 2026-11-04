@@ -465,6 +465,61 @@ section {
   transition: filter var(--transition-fast), transform var(--transition-fast);
 }
 
+/* Mobile-only close icon (BurgerIcon in NavIcons.js) — hidden until the phone
+   block below swaps it in for the chevron. At rest the three lines sit in the
+   open (X) shape; the hover move relaxes them into a hamburger and back. */
+.toggle-burger {
+  display: none;
+  overflow: visible;
+}
+
+.burger-line {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+}
+
+.burger-top { transform: rotate(45deg) translateY(5px); }
+.burger-bot { transform: rotate(-45deg) translateY(-5px); }
+.burger-mid { transform: scaleX(0); opacity: 0; }
+
+@keyframes burger-top {
+  0%, 100% { transform: rotate(45deg) translateY(5px); }
+  50%      { transform: rotate(0deg) translateY(0); }
+}
+@keyframes burger-bot {
+  0%, 100% { transform: rotate(-45deg) translateY(-5px); }
+  50%      { transform: rotate(0deg) translateY(0); }
+}
+@keyframes burger-mid {
+  0%, 100% { transform: scaleX(0); opacity: 0; }
+  50%      { transform: scaleX(1); opacity: 1; }
+}
+@keyframes burger-turn {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+
+.sidebar-toggle:is(:hover, :focus-visible, :active) .toggle-burger {
+  filter: drop-shadow(0 0 8px #00e5a0b0);
+  animation: burger-turn 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-toggle:is(:hover, :focus-visible, :active) .burger-top {
+  animation: burger-top 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-toggle:is(:hover, :focus-visible, :active) .burger-bot {
+  animation: burger-bot 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-toggle:is(:hover, :focus-visible, :active) .burger-mid {
+  animation: burger-mid 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle-burger, .burger-line { animation: none !important; }
+}
+
 .sidebar-toggle:hover img {
   filter: drop-shadow(0 0 10px #00e5a0dc) drop-shadow(0 0 15px #00e5a0ae);
   transform: scale(1.2);
@@ -3118,13 +3173,30 @@ textarea {
     margin-left: 0 !important;
   }
 
+  /* The open menu is a floating rounded panel, as on desktop, centred in the
+     viewport on both axes: the top and bottom insets are equal, and the left
+     edge sits at 50% pulled back by half the panel's own width, so the side
+     gaps are equal whatever width framer is animating it to. Closed, it slides
+     away past the left edge — the extra 5rem clears the glow, which would
+     otherwise peek in. */
   .sidebar-container {
-    transform: translateX(-100%);
+    top: 50%;
+    bottom: auto;
+    left: 50%;
+    /* 80% of the full-height-less-5rem panel it used to be, centred on the
+       viewport's midline by the -50% in the transforms below. dvh where
+       supported, so the mobile browser bars don't push it off-centre. */
+    height: calc((100vh - 5rem) * 0.8);
+    height: calc((100dvh - 5rem) * 0.8);
+    /* framer sets an inline width; this keeps a minimum gap to each side on
+       very narrow phones. */
+    max-width: calc(100vw - 3rem);
+    transform: translate(calc(-50% - 50vw - 5rem), -50%);
     transition: transform var(--transition-base);
   }
 
   .sidebar-container[data-state="open"] {
-    transform: translateX(0);
+    transform: translate(-50%, -50%);
   }
 
   .sidebar-container[data-state="closed"] .sidebar {
@@ -3135,6 +3207,28 @@ textarea {
      whole sidebar layer softly; the background is near-opaque so drop it. */
   .sidebar {
     backdrop-filter: none;
+    border-radius: 1.25rem;
+    padding: 1.1rem 0.9rem;
+    /* Glow on every side, not just the right. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 0 14px #00e5a026,
+      0 0 34px #00e5a014,
+      0 0 50px #00d4ff0a;
+  }
+
+  /* The open hamburger stands in for the chevron. */
+  .sidebar-toggle .toggle-chevron {
+    display: none;
+  }
+
+  .sidebar-toggle .toggle-burger {
+    display: block;
+  }
+
+  /* Nudged below the panel's midpoint to leave a gap under the toggle. */
+  .sidebar .sidebar-center {
+    top: calc(50% + 1.25rem);
   }
 
   /* The collapsed-rail hover tooltip is desktop-only. On touch devices a tap
@@ -3212,9 +3306,18 @@ textarea {
     height: 30px;
   }
 
-  /* The drawer floats over the page here rather than sitting flush against
-     it, so the seam runs the full height instead of fading out at the floor. */
+  /* The panel floats over the page, so the lit edge becomes a hairline ring
+     following its rounded outline (a 1px padded box masked down to its border
+     area) rather than a seam down the right-hand side. */
   .sidebar-container[data-state="open"] .sidebar::after {
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-radius: inherit;
+    padding: 1px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.12) 0%,

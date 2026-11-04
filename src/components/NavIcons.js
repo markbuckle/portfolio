@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // The sidebar icon set, drawn on the original 200-unit grid (viewBox 18 18 164 164).
 // Inlined rather than <img> so each part can be animated on hover — the gestures
@@ -83,3 +83,38 @@ export const ContactIcon = () => (
     <path className="nav-icon-flap" d="M36 60 L100 120 L164 60" />
   </NavIconBase>
 );
+
+/* Mobile close control, shown in place of the desktop chevron. It is the
+   hamburger's own three lines held in their "open" shape — the outer two
+   crossed into an X, the middle one collapsed — and on hover or tap they relax
+   back into the hamburger and cross again, with the whole icon turning a half
+   turn on the way (an X lands on itself every 180 degrees). The lines are laid
+   out as a hamburger and moved into the X by transform, so the keyframes in
+   App.css only have to animate towards "no transform". */
+export const BurgerIcon = () => {
+  const gradientId = `burger-grad-${useId().replace(/:/g, '')}`;
+  return (
+    <svg
+      className="toggle-burger"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={`url(#${gradientId})`}
+      strokeWidth={2}
+      strokeLinecap="round"
+      role="img"
+      aria-label="Close navigation"
+    >
+      <defs>
+        <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="3" y1="0" x2="21" y2="0">
+          <stop offset="0%" stopColor="#777777" />
+          <stop offset="100%" stopColor="#ffffff" />
+        </linearGradient>
+      </defs>
+      <path className="burger-line burger-top" d="M5 7H19" />
+      <path className="burger-line burger-mid" d="M5 12H19" />
+      <path className="burger-line burger-bot" d="M5 17H19" />
+    </svg>
+  );
+};
