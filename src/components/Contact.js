@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { RotateCcw } from 'lucide-react';
 import { ReactComponent as GithubIcon } from '../assets/icons/social/github.svg';
 import { ReactComponent as LinkedinIcon } from '../assets/icons/social/linkedin.svg';
-import { EnvelopeAnimation } from './EnvelopeAnimation';
+// import { EnvelopeAnimation } from './EnvelopeAnimation';
+import { EnvelopeSpline } from './EnvelopeSpline';
 import { ScrollReveal } from './ScrollReveal';
 
 export const Contact = () => {
@@ -64,7 +65,8 @@ export const Contact = () => {
     <div className="section-container contact-section">
       <div className="contact-header">
         <ScrollReveal>
-          <EnvelopeAnimation width={180} height={180} />
+          {/* <EnvelopeAnimation width={180} height={180} /> */}
+          <EnvelopeSpline width={240} height={240} />
         </ScrollReveal>
         <ScrollReveal as="p" className="section-label" delay={0.08}>Contact</ScrollReveal>
         <ScrollReveal as="h2" className="section-title" delay={0.12}><span className="white-gradient-text">Let's </span><span className="contact-title-accent">connect</span></ScrollReveal>
