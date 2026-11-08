@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 // Sidebar headshot is hidden for now — restore this with the markup below.
 // import headshotImg from '../assets/img/headshot.jpg';
@@ -35,13 +35,45 @@ const SidebarItem = ({ icon, name, to, isOpen, onNavigate }) => (
 );
 
 export const Sidebar = ({ isOpen, setIsOpen }) => {
+  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+  // On phones the panel just appears/disappears — no width tween or slide.
+  const duration = isMobile() ? 0 : 0.3;
   const variants = {
-    open: { width: 'var(--sidebar-width-open)', transition: { duration: 0.3, ease: 'easeInOut' } },
-    closed: { width: 'var(--sidebar-width-closed)', transition: { duration: 0.3, ease: 'easeInOut' } },
+    open: { width: 'var(--sidebar-width-open)', transition: { duration, ease: 'easeInOut' } },
+    closed: { width: 'var(--sidebar-width-closed)', transition: { duration, ease: 'easeInOut' } },
+  };
+
+  // Phones: hold the menu open ~1s after a tap so the touched icon's hover
+  // animation (the :active/:hover state persists on touch) is visible first.
+  const closeTimer = useRef(null);
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
+  const CLOSE_DELAY = 750;
+
+  const FADE_MS = 280;
+  const [closing, setClosing] = useState(false);
+  useEffect(() => { if (!isOpen) setClosing(false); }, [isOpen]);
+
+  // Fade out first, then unmount/close once the fade has finished.
+  const fadeClose = (delay) => {
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setClosing(true);
+      closeTimer.current = setTimeout(() => setIsOpen(false), FADE_MS);
+    }, delay);
   };
 
   const closeOnMobile = () => {
-    if (window.matchMedia('(max-width: 768px)').matches) setIsOpen(false);
+    if (isMobile()) fadeClose(CLOSE_DELAY);
+  };
+
+  const handleToggle = () => {
+    if (isOpen && isMobile()) fadeClose(CLOSE_DELAY);
+    else setIsOpen(!isOpen);
+  };
+
+  const handleBackdrop = () => {
+    if (isMobile()) fadeClose(0);
+    else setIsOpen(false);
   };
 
   return (
@@ -56,9 +88,9 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
         <Menu size={20} />
       </button>
     )}
-    {isOpen && <div className="sidebar-backdrop" onClick={() => setIsOpen(false)} aria-hidden="true" />}
+    {isOpen && <div className={`sidebar-backdrop${closing ? ' is-closing' : ''}`} onClick={handleBackdrop} aria-hidden="true" />}
     <motion.div
-      className="sidebar-container"
+      className={`sidebar-container${closing ? ' is-closing' : ''}`}
       data-state={isOpen ? 'open' : 'closed'}
       initial="closed"
       animate={isOpen ? 'open' : 'closed'}
@@ -66,7 +98,7 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
     >
       <div className="sidebar">
         {/* Toggle — pinned top */}
-        <div className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
+        <div className="sidebar-toggle" onClick={handleToggle}>
           <img
             className="toggle-chevron"
             src={isOpen ? chevronLeftIcon : chevronRightIcon}

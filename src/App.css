@@ -3192,12 +3192,38 @@ textarea {
        very narrow phones. */
     max-width: calc(100vw - 3rem);
     transform: translate(calc(-50% - 50vw - 5rem), -50%);
-    transition: transform var(--transition-base);
+    /* No slide: the panel simply appears and disappears. */
+    transition: none;
   }
 
+  /* Smooth fade + very slight scale — no slide, no overshoot. */
   .sidebar-container[data-state="open"] {
     transform: translate(-50%, -50%);
+    animation: mobile-menu-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+
+  .sidebar-container[data-state="open"].is-closing {
+    animation: mobile-menu-out 280ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  .sidebar-backdrop {
+    animation: mobile-fade-in 280ms ease both;
+  }
+
+  .sidebar-backdrop.is-closing {
+    animation: mobile-fade-out 280ms ease both;
+  }
+
+  @keyframes mobile-menu-in {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes mobile-menu-out {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to   { opacity: 0; transform: translate(-50%, -50%) scale(0.97); }
+  }
+  @keyframes mobile-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes mobile-fade-out { from { opacity: 1; } to { opacity: 0; } }
 
   .sidebar-container[data-state="closed"] .sidebar {
     box-shadow: none;
@@ -3239,12 +3265,13 @@ textarea {
   }
 
   :root {
-    --sidebar-width-open: 15.3rem;
+    --sidebar-width-open: 17.5rem;
   }
 
-  .sidebar-toggle img {
-    width: 24px;
-    height: 24px;
+  .sidebar-toggle img,
+  .sidebar-toggle .toggle-burger {
+    width: 30px;
+    height: 30px;
   }
 
   .sidebar-headshot {
@@ -3293,17 +3320,17 @@ textarea {
   .sidebar-container[data-state="open"] .sidebar-item {
     gap: 1rem;
     padding: 0.85rem 1rem;
-    font-size: 1.35rem;
+    font-size: 1.65rem;
   }
 
   .sidebar-container[data-state="open"] .sidebar-item-icon {
-    min-width: 30px;
+    min-width: 38px;
   }
 
   .sidebar-container[data-state="open"] .sidebar-item-icon img,
   .sidebar-container[data-state="open"] .sidebar-item-icon .nav-icon {
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
   }
 
   /* The panel floats over the page, so the lit edge becomes a hairline ring
