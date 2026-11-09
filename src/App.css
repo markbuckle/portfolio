@@ -3411,6 +3411,38 @@ textarea {
     padding: 4rem 1.5rem;
   }
 
+  /* About on mobile: the scene leads, alone in its own viewport — centered
+     with black above and below — and the title follows once you scroll. The
+     negative margins cancel the container's padding so the block is exactly a
+     screen tall and full width. */
+  .about-layout {
+    gap: 0;
+  }
+  .about-scene {
+    order: -1;
+    max-width: none;
+    width: calc(100% + 3rem);
+    margin: -4rem -1.5rem 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-scene {
+    overflow: hidden;
+  }
+  /* Full width, and nudged right and up: the scene's two dice sit left of and
+     below the middle of its own frame, so the box itself is shifted to put the
+     dice on the screen's centre. */
+  .about-scene .spline-scene {
+    width: min(100vw, 480px);
+    transform: translate(7.5%, -10%);
+  }
+  .about-text {
+    padding-top: 1rem;
+  }
+
   .about-details-row {
     flex-direction: column;
     align-items: center;
