@@ -2,6 +2,9 @@ import React from 'react';
 import { useTraceFire, scrollToHash, isPlainClick } from '../hooks/useTraceFire';
 import { CtaArrow } from './CtaArrow';
 import { ScrollReveal } from './ScrollReveal';
+import { SplineScene } from './SplineScene';
+
+const ABOUT_SCENE = 'https://prod.spline.design/EOX8kg9pt7IBXk5z/scene.splinecode';
 
 /* Flip to true to bring back the Focus Areas / Education plaques. */
 const SHOW_DETAIL_CARDS = false;
@@ -46,7 +49,8 @@ const CtaButton = ({ href, label, gradientId, className = '', arrow = 'elbow' })
 
 export const About = () => {
   return (
-    <div className="section-container">
+    <div className="section-container about-layout">
+      <div className="about-text">
       {/* One reveal per element rather than one for the block: each crosses the
           fade window at its own height on the screen, so the stack cascades
           instead of arriving as a slab. The small `delay` bumps deepen a
@@ -103,6 +107,11 @@ export const About = () => {
           arrow="right"
         />
         */}
+      </ScrollReveal>
+      </div>
+
+      <ScrollReveal className="about-scene" delay={0.1}>
+        <SplineScene scene={ABOUT_SCENE} renderer="webgpu" />
       </ScrollReveal>
     </div>
   );

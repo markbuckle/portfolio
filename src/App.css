@@ -1322,6 +1322,45 @@ section {
 /* ============================================================
    ABOUT
    ============================================================ */
+/* Spline scenes (see SplineScene.js): the runtime forces its canvas to the
+   scene's authored 1080px, so this holds it to the box. */
+.spline-scene {
+  aspect-ratio: 1;
+  overflow: hidden;
+  /* The runtime positions a scene's HTML-frame iframe against this box, and
+     warns if it isn't positioned. Without it the iframe escapes and paints a
+     white square over the canvas. */
+  position: relative;
+}
+.spline-scene canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Text left, scene right. Wider than the usual 860px container so the copy
+   keeps its width beside the scene; stacks below 900px. */
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  align-items: center;
+  gap: 3rem;
+  max-width: 1120px;
+}
+.about-scene {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .about-scene {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
 .about-bio {
   color: var(--text-secondary);
   font-size: 1.05rem;
