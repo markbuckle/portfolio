@@ -81,7 +81,7 @@ export const Preloader = () => {
         <span className="preloader-word"><span>Buckle</span></span>
       </div>
       <div className="preloader-meta">
-        <span className="preloader-roles">design · develop · engineer</span>
+        <span className="preloader-roles">prototyping...</span>
         <span className="preloader-counter">000</span>
       </div>
       <div className="preloader-bar"><div className="preloader-bar-fill" /></div>
