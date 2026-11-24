@@ -49,7 +49,8 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
   useEffect(() => () => clearTimeout(closeTimer.current), []);
   const CLOSE_DELAY = 750;
 
-  const FADE_MS = 280;
+  // Matches the mobile-menu-out animation length in App.css.
+  const FADE_MS = 300;
   const [closing, setClosing] = useState(false);
   useEffect(() => { if (!isOpen) setClosing(false); }, [isOpen]);
 

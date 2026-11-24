@@ -90,6 +90,25 @@ body {
   overflow-x: hidden;
 }
 
+/* iPhone only (-webkit-touch-callout exists only on iOS WebKit). Safari
+   ignores overflow-x:hidden on <body> for touch panning, so if anything
+   pokes past the right edge the page can be dragged sideways and springs back
+   — the "bounce to the right". Clip at the root as well, and turn off the
+   horizontal rubber-band. `clip` rather than `hidden` so no extra scroll
+   container is created. */
+@supports (-webkit-touch-callout: none) {
+  html,
+  body {
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    max-width: 100%;
+  }
+
+  .app {
+    overflow-x: clip;
+  }
+}
+
 ::selection {
   background: var(--accent);
   color: var(--bg-primary);
@@ -564,6 +583,22 @@ section {
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
+}
+
+/* Opening (desktop): the open-state nav is laid out for the full-width panel —
+   bigger icons, labels, wider rows — but data-state flips the instant it's
+   clicked while the width is still tweening from the rail. Shown straight
+   away, that wider nav spills out of the narrow panel for a beat before the
+   panel catches up. Hold it invisible until the panel is most of the way open,
+   then fade it in. Closing isn't affected: the animation only exists while the
+   state is open, so it's gone the moment the state flips back. */
+.sidebar-container[data-state="open"] .sidebar-center {
+  animation: sidebar-content-in 200ms ease-out 180ms both;
+}
+
+@keyframes sidebar-content-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .sidebar-headshot-wrapper {
@@ -3126,6 +3161,7 @@ textarea {
     inset: 0;
     z-index: 99;
     background: rgba(0, 0, 0, 0.6);
+    -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
   }
 
@@ -3218,49 +3254,91 @@ textarea {
      gaps are equal whatever width framer is animating it to. Closed, it slides
      away past the left edge — the extra 5rem clears the glow, which would
      otherwise peek in. */
+  /* Centred with auto margins on a fixed box rather than left:50% plus a
+     translate. Nothing about the panel's position depends on transforms or on
+     vw maths any more — the transform is free to carry just the open/close
+     animation — and it can't be pushed sideways by a width change mid-frame.
+     Width is pinned here with !important because framer writes an inline
+     width (and on phones it has nothing to tween). */
   .sidebar-container {
-    top: 50%;
-    bottom: auto;
-    left: 50%;
-    /* 80% of the full-height-less-5rem panel it used to be, centred on the
-       viewport's midline by the -50% in the transforms below. dvh where
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    /* 80% of the full-height-less-5rem panel it used to be. dvh where
        supported, so the mobile browser bars don't push it off-centre. */
     height: calc((100vh - 5rem) * 0.8);
     height: calc((100dvh - 5rem) * 0.8);
-    /* framer sets an inline width; this keeps a minimum gap to each side on
-       very narrow phones. */
-    max-width: calc(100vw - 3rem);
-    transform: translate(calc(-50% - 50vw - 5rem), -50%);
-    /* No slide: the panel simply appears and disappears. */
+    width: var(--sidebar-width-open) !important;
+    /* Keeps a minimum gap to each side on very narrow phones. */
+    max-width: calc(100% - 3rem);
+    transform: none;
     transition: none;
+    /* Where the hamburger sits: the panel grows from / shrinks back to here.
+       The toggle is 1rem from the corner and about 38px square. */
+    --menu-from-x: calc(1rem + 19px - 50vw);
+    --menu-from-y: calc(1rem + 19px - 50vh);
+    /* Don't let a horizontal drag on the panel pan the page behind it. */
+    touch-action: pan-y;
+    overscroll-behavior: contain;
   }
 
-  /* Smooth fade + very slight scale — no slide, no overshoot. */
+  @supports (height: 100dvh) {
+    .sidebar-container {
+      --menu-from-y: calc(1rem + 19px - 50dvh);
+    }
+  }
+
+  /* Closed, the panel isn't rendered at all. It used to be parked off the left
+     edge with a transform; taking it out of layout removes any chance of it
+     (or its glow) contributing to the page's scrollable width. */
+  .sidebar-container[data-state="closed"] {
+    display: none;
+  }
+
+  /* Grows out of the hamburger, and goes back into it on close. */
   .sidebar-container[data-state="open"] {
-    transform: translate(-50%, -50%);
-    animation: mobile-menu-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: mobile-menu-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: transform, opacity;
+    transform-origin: 50% 50%;
   }
 
   .sidebar-container[data-state="open"].is-closing {
-    animation: mobile-menu-out 280ms cubic-bezier(0.4, 0, 1, 1) both;
+    animation: mobile-menu-out 300ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  }
+
+  /* Contents arrive a beat after the panel starts growing and leave first, so
+     the labels never show squashed at the small end of the scale. */
+  .sidebar-container[data-state="open"] .sidebar-center {
+    animation: sidebar-content-in 220ms ease-out 140ms both;
+  }
+
+  .sidebar-container[data-state="open"].is-closing .sidebar-center {
+    animation: sidebar-content-out 120ms ease-in both;
   }
 
   .sidebar-backdrop {
-    animation: mobile-fade-in 280ms ease both;
+    animation: mobile-fade-in 380ms ease both;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
   }
 
   .sidebar-backdrop.is-closing {
-    animation: mobile-fade-out 280ms ease both;
+    animation: mobile-fade-out 300ms ease both;
   }
 
   @keyframes mobile-menu-in {
-    from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
-    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    from { opacity: 0; transform: translate(var(--menu-from-x), var(--menu-from-y)) scale(0.12); }
+    35%  { opacity: 1; }
+    to   { opacity: 1; transform: translate(0, 0) scale(1); }
   }
   @keyframes mobile-menu-out {
-    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    to   { opacity: 0; transform: translate(-50%, -50%) scale(0.97); }
+    from { opacity: 1; transform: translate(0, 0) scale(1); }
+    65%  { opacity: 1; }
+    to   { opacity: 0; transform: translate(var(--menu-from-x), var(--menu-from-y)) scale(0.12); }
   }
+  @keyframes sidebar-content-out { from { opacity: 1; } to { opacity: 0; } }
   @keyframes mobile-fade-in  { from { opacity: 0; } to { opacity: 1; } }
   @keyframes mobile-fade-out { from { opacity: 1; } to { opacity: 0; } }
 
@@ -3295,6 +3373,7 @@ textarea {
   .sidebar .sidebar-center {
     top: calc(50% + 1.25rem);
   }
+
 
   /* The collapsed-rail hover tooltip is desktop-only. On touch devices a tap
      leaves the item stuck in :hover, and once the sidebar slides off-screen
